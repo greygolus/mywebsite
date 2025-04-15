@@ -25,6 +25,79 @@
   .gradient-text {
     @apply bg-gradient-to-r from-glow-purple via-glow-blue to-glow-cyan text-transparent bg-clip-text;
   }
+  
+  /* Animation utilities for scroll effects */
+  @keyframes fade-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  
+  @keyframes fade-in-up {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  @keyframes pulse-glow {
+    0%, 100% {
+      filter: brightness(1) blur(10px);
+    }
+    50% {
+      filter: brightness(1.2) blur(15px);
+    }
+  }
+  
+  @keyframes float {
+    0% {
+      transform: translateY(0px);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
+    100% {
+      transform: translateY(0px);
+    }
+  }
+  
+  .animate-fade-in {
+    animation: fade-in 1s ease-out forwards;
+  }
+  
+  .animate-fade-in-up {
+    animation: fade-in-up 1s ease-out forwards;
+  }
+  
+  .animate-pulse-glow {
+    animation: pulse-glow 3s ease-in-out infinite;
+  }
+  
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
+  
+  /* Dark theme card and hover states for homepage */
+  .bg-dark-card {
+    @apply bg-gray-900 bg-opacity-40 backdrop-blur-sm;
+  }
+  
+  .bg-dark-hover {
+    @apply bg-gray-800 bg-opacity-50;
+  }
+  
+  /* For zoom animation */
+  .scale-transition {
+    transition: transform 0.5s cubic-bezier(0.25, 0.1, 0.25, 1);
+  }
+  
+  /* For parallax depth effect */
+  .hover-interactive {
+    transition: transform 0.3s ease-out;
+  }
 
   /* Gradient border element */
   .gradient-border {
