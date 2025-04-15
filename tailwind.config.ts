@@ -11,6 +11,21 @@ export default {
         sm: "calc(var(--radius) - 4px)",
       },
       colors: {
+        // Custom colors for greygolus.com
+        dark: {
+          background: "#1e1e20", // ChatGPT-like dark background
+          card: "#252529",       // Slightly lighter for cards
+          hover: "#2a2a2e",      // Hover state color
+          border: "#34343a",     // Border color
+          muted: "#4a4a52",      // Muted elements
+        },
+        // Gradient colors
+        glow: {
+          purple: "#a78bfa",     // Purple component of gradient 
+          blue: "#60a5fa",       // Blue component of gradient
+          cyan: "#67e8f9",       // Cyan component of gradient
+        },
+        // Original theme colors
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         card: {
@@ -79,10 +94,31 @@ export default {
             height: "0",
           },
         },
+        "fade-in": {
+          "0%": { opacity: "0" },
+          "100%": { opacity: "1" },
+        },
+        "fade-in-up": {
+          "0%": { opacity: "0", transform: "translateY(20px)" },
+          "100%": { opacity: "1", transform: "translateY(0)" },
+        },
+        "pulse-glow": {
+          "0%, 100%": { 
+            opacity: "0.6",
+            filter: "blur(8px)" 
+          },
+          "50%": { 
+            opacity: "1", 
+            filter: "blur(12px)" 
+          },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+        "fade-in": "fade-in 0.6s ease-out",
+        "fade-in-up": "fade-in-up 0.8s ease-out",
+        "pulse-glow": "pulse-glow 4s ease-in-out infinite",
       },
     },
   },

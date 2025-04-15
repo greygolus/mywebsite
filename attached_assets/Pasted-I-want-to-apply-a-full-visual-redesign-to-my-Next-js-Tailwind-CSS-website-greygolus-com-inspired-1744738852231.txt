@@ -1,0 +1,73 @@
+I want to apply a full visual redesign to my Next.js + Tailwind CSS website, greygolus.com, inspired by the dark mode aesthetic of apple.com, but with my own custom styling preferences.
+
+⸻
+
+VISUAL STYLE GOALS:
+	•	Dark mode base: Clean, modern, minimal — like dark-mode Apple
+	•	Use unique colors that reflect my personal preferences:
+	•	Background: Use ChatGPT’s dark grey (e.g. #1e1e20, or similar neutral dark)
+	•	Primary text: White (#ffffff)
+	•	Section titles / headers: Apply a custom gradient text (purple → blue → cyan)
+	•	Example gradient: from-purple-400 via-blue-400 to-cyan-300
+	•	Use Tailwind bg-clip-text text-transparent bg-gradient-to-r style
+	•	Accents / highlights: Use subtle glow or border-color variants of the gradient
+	•	Keep all page structure the same (do not remove or re-route anything)
+
+⸻
+
+GLOBAL TYPOGRAPHY & LAYOUT:
+	•	Font: System stack or -apple-system, Segoe UI, sans-serif
+	•	Line height: leading-relaxed, extra spacing for clarity
+	•	Font sizes: Balanced — large headers (text-4xl–text-6xl), normal text (text-base)
+	•	Section padding: Use py-24 for large sections, px-6 for side margins
+	•	Max width: Use max-w-screen-xl or max-w-7xl for centered content
+
+⸻
+
+COMPONENT STYLING:
+
+Navbar
+	•	Sticky top, dark transparent background (bg-black bg-opacity-50)
+	•	Smooth transition on scroll
+	•	Links: white with hover glow using purple/blue accent
+
+Buttons
+	•	Gradient border or background using the purple-blue-cyan gradient
+	•	Rounded, pill-shaped or slight radius
+	•	Use hover:scale-105, transition duration-300
+
+Hero / Countdown Page
+	•	Large white countdown numbers (text-6xl, font-bold)
+	•	Subheading or label in gradient
+	•	Centered vertically, fade-in animation on load
+
+⸻
+
+/reference Page Styling:
+
+Tables:
+	•	Dark-themed tables with headers in gradient text
+	•	Row hover: hover:bg-gray-800
+	•	Rounded first and last cell in each row
+	•	Use bg-gray-900 or similar for table body
+	•	Text color: white for cells, gradient for section headers (Symbols, Constants, Formulas)
+	•	Column header styling: bold, slight tracking, subtle borders
+
+Formulas Section:
+	•	Group formulas into sections (e.g. Energy, Angles, Lenses…)
+	•	Make each section title a gradient link to its corresponding calculator page
+	•	Use hover:underline on links and gradient text-transparent bg-clip-text
+
+⸻
+
+INTERACTIONS:
+	•	Use transition-all ease-in-out duration-300 globally
+	•	Add backdrop-blur, drop-shadow or ring effects sparingly to highlight elements
+	•	Dark mode should be default and consistent
+	•	You can optionally define colors in tailwind.config.js for reusability
+
+⸻
+
+FINAL NOTE:
+
+Do not restructure or rename any pages. This is a visual re-skin only of greygolus.com. Apply the above styles using Tailwind utility classes or scoped CSS Modules. The feel should be futuristic, dark, smooth, and high-end — like a personalized dark-mode Apple site with my unique gradient twist.
