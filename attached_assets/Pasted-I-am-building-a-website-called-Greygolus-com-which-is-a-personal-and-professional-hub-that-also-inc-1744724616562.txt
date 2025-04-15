@@ -1,0 +1,83 @@
+I am building a website called Greygolus.com, which is a personal and professional hub that also includes a major educational section called “Optics Unified”. I want the site to be built using Next.js and Tailwind CSS. The project is already initialized and live on Vercel and linked to a GitHub repo (https://github.com/greygolus/greygolus.git). I need the full website structure and logic generated cleanly and modularly, including pages, styling, and interactivity.
+
+Here’s what I want:
+
+⸻
+
+OVERALL SITE STRUCTURE:
+	•	A clean, modern, minimalistic design using Tailwind CSS.
+	•	Built with Next.js pages or the App Router system.
+	•	A sticky navbar with dropdown menus for navigating between sections. This includes:
+	•	Home
+	•	Directory
+	•	Reference (Symbols, Constants, and Formulas)
+	•	Calculators (Wavelength ↔ Energy ↔ Frequency, Snell’s Law, Critical Angle, Lenses/Mirrors, Diffraction, Power, Combined Color Estimator, etc.)
+	•	Countdown (for a fixed future date)
+
+⸻
+
+HOMEPAGE (/):
+	•	Hero section with site title: Greygolus.com
+	•	A description of what the site is:
+“Greygolus.com is a personal and academic site by Grey Golus, focused on optics education and tools. The Optics Unified section offers interactive calculators, visual references, and learning resources designed for optical engineering students and enthusiasts.”
+	•	A countdown timer live-updating without needing to reload, counting down to April 28, 2025 at 11:50 AM.
+	•	Format: Days ##, Hours ##, Minutes ##
+	•	Use JavaScript setInterval() or similar approach.
+
+⸻
+
+DIRECTORY PAGE (/directory):
+	•	List of all tools and calculators with links.
+	•	Each calculator should be clearly labeled and described (you can use placeholder text or basic logic for now).
+
+⸻
+
+SYMBOLS, CONSTANTS, AND FORMULAS PAGE (/reference):
+	•	Three sections on one page, clearly separated:
+	1.	Symbols Table: table with columns for “Symbol”, “Name”, and “Description”
+	2.	Constants Table: “Name”, “Symbol”, “Value”, “Units”
+	3.	Formulas Table: “Formula”, “What It Describes”, “Variables”
+
+(You can auto-generate these from previous chart examples or add placeholder entries I can edit later.)
+
+⸻
+
+CALCULATOR PAGES:
+
+Implement at least one fully functional calculator page, and create templates/components for others.
+
+Start with the Wavelength/Energy/Frequency Converter (/calculators/wavelength-energy-frequency):
+	•	Accepts any two values, and computes the third.
+	•	Supports multiple input units (e.g., nm, μm, Hz, eV, J, m).
+	•	Handles scientific notation.
+	•	Includes constants like h, c, and λ visibly.
+	•	Includes inline explanations of formulas.
+
+Set up templates or stub pages for:
+	•	Snell’s Law Calculator
+	•	Critical Angle Calculator
+	•	Lens/Mirror Equation Calculator
+	•	Optical and Electrical Power Calculator
+	•	Diffraction Grating Calculator
+	•	Combined Light Color Estimator (Future)
+
+⸻
+
+TECH STACK + SETTINGS:
+	•	Tailwind CSS for all styling.
+	•	Responsive layout (desktop, tablet, and mobile).
+	•	GitHub and Vercel integration already set up.
+	•	Dropdown menus in navbar should work on hover and click.
+	•	Use functional React components and proper modular file structure.
+	•	Support for dark mode is a nice bonus but optional for now.
+
+⸻
+
+ADDITIONAL NOTES:
+	•	This site is currently in a “function-first, design-later” phase. So focus on getting the logic, structure, and interactivity working first.
+	•	I may want to use Gamma AI later for design cleanup, but not now.
+	•	I may later integrate refractive index data from refractiveindex.info via GitHub, so keep things modular where possible.
+
+⸻
+
+GOAL: Generate a fully structured, clean Next.js + Tailwind site that matches this plan. Prioritize proper routing, calculator logic, and educational formatting. Add placeholder values, but make everything modular and editable.
