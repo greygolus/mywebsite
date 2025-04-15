@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useLocation } from 'wouter';
+import { useLocation, Link } from 'wouter';
 import DataTable from '@/components/ui/data-table';
 import { SYMBOLS, CONSTANTS, FORMULAS } from '@/lib/constants';
 import { Switch } from "@/components/ui/switch";
@@ -70,8 +70,14 @@ const Reference = () => {
     { header: 'Variables', accessorKey: 'variables' },
   ];
 
-  // Group formulas by category
-  const formulaCategories = [...new Set(FORMULAS.map(f => f.category))];
+  // Extract unique categories
+  const uniqueCategories = FORMULAS.reduce<string[]>((acc, formula) => {
+    if (formula.category && !acc.includes(formula.category)) {
+      acc.push(formula.category);
+    }
+    return acc;
+  }, []);
+  const formulaCategories = uniqueCategories;
   
   return (
     <section className="py-16">
@@ -137,16 +143,38 @@ const Reference = () => {
             Key equations used in optical engineering and physics, organized by category.
           </p>
           
-          {formulaCategories.map((category) => (
-            <div key={category} className="mb-8">
-              <h3 className="text-xl font-medium mb-3 text-blue-600">{category}</h3>
-              <DataTable 
-                columns={formulaColumns} 
-                data={FORMULAS.filter(f => f.category === category)}
-                className="rounded-lg border mb-6" 
-              />
-            </div>
-          ))}
+          {formulaCategories.map((category) => {
+            // Map categories to their respective calculator pages
+            const calculatorLinkMap: Record<string, string> = {
+              'Wave / Energy / Frequency': '/calculators/wavelength-energy-frequency',
+              'Angles': '/calculators/angle-calculator',
+              'Lenses & Mirrors': '/calculators/lenses-mirrors',
+              'Diffraction / Interference': '/calculators/diffraction',
+              'Efficiency / Power / Visibility': '/calculators/power'
+            };
+            
+            const calculatorLink = calculatorLinkMap[category] || '';
+            
+            return (
+              <div key={category} className="mb-8">
+                <h3 className="text-xl font-medium mb-3 text-blue-600">
+                  {calculatorLink ? (
+                    <Link href={calculatorLink} className="hover:underline flex items-center gap-1">
+                      {category}
+                      <span className="text-sm text-blue-500">→</span>
+                    </Link>
+                  ) : (
+                    category
+                  )}
+                </h3>
+                <DataTable 
+                  columns={formulaColumns} 
+                  data={FORMULAS.filter(f => f.category === category)}
+                  className="rounded-lg border mb-6" 
+                />
+              </div>
+            );
+          })}
         </div>
       </div>
     </section>
