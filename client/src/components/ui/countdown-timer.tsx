@@ -54,42 +54,42 @@ const CountdownTimer = ({ targetDate, className = '', largeDisplay = false }: Co
 
   if (largeDisplay) {
     return (
-      <div className={`max-w-4xl mx-auto bg-white rounded-lg shadow-lg overflow-hidden ${className}`}>
-        <div className="bg-gradient-to-r from-blue-600 to-indigo-600 py-8 px-6 text-white text-center">
-          <h2 className="text-2xl font-semibold">Time Remaining</h2>
+      <div className={`max-w-4xl mx-auto overflow-hidden ${className}`}>
+        <div className="text-center">
+          <h2 className="text-3xl font-bold gradient-text mb-8">Time Remaining</h2>
         </div>
         
-        <div className="p-8 flex flex-col items-center">
-          <div className="flex flex-wrap justify-center space-x-8 text-center">
+        <div className="flex flex-col items-center">
+          <div className="flex flex-wrap justify-center gap-8 text-center">
             <div className="countdown-block">
-              <div className="bg-gray-100 rounded-lg p-6 w-36 h-36 flex flex-col items-center justify-center mb-2">
-                <div className="text-6xl font-mono font-bold text-blue-500">
+              <div className="border border-dark-border bg-black bg-opacity-40 rounded-xl p-6 w-40 h-40 flex flex-col items-center justify-center mb-4 shadow-lg backdrop-blur-sm">
+                <div className="text-6xl font-mono font-bold gradient-text">
                   {formatNumber(timeRemaining.days, 3)}
                 </div>
-                <div className="text-xs uppercase tracking-wider text-gray-500 mt-1">Days</div>
+                <div className="text-xs uppercase tracking-wider text-gray-300 mt-2">DAYS</div>
               </div>
             </div>
             
             <div className="countdown-block">
-              <div className="bg-gray-100 rounded-lg p-6 w-36 h-36 flex flex-col items-center justify-center mb-2">
-                <div className="text-6xl font-mono font-bold text-blue-500">
+              <div className="border border-dark-border bg-black bg-opacity-40 rounded-xl p-6 w-40 h-40 flex flex-col items-center justify-center mb-4 shadow-lg backdrop-blur-sm">
+                <div className="text-6xl font-mono font-bold gradient-text">
                   {formatNumber(timeRemaining.hours, 2)}
                 </div>
-                <div className="text-xs uppercase tracking-wider text-gray-500 mt-1">Hours</div>
+                <div className="text-xs uppercase tracking-wider text-gray-300 mt-2">HOURS</div>
               </div>
             </div>
             
             <div className="countdown-block">
-              <div className="bg-gray-100 rounded-lg p-6 w-36 h-36 flex flex-col items-center justify-center mb-2">
-                <div className="text-6xl font-mono font-bold text-blue-500">
+              <div className="border border-dark-border bg-black bg-opacity-40 rounded-xl p-6 w-40 h-40 flex flex-col items-center justify-center mb-4 shadow-lg backdrop-blur-sm">
+                <div className="text-6xl font-mono font-bold gradient-text">
                   {formatNumber(timeRemaining.minutes, 2)}
                 </div>
-                <div className="text-xs uppercase tracking-wider text-gray-500 mt-1">Minutes</div>
+                <div className="text-xs uppercase tracking-wider text-gray-300 mt-2">MINUTES</div>
               </div>
             </div>
           </div>
           
-          <div className="mt-8 text-center text-gray-600">
+          <div className="mt-8 text-center text-gray-300">
             <p className="mb-2">Target Date: {targetDate.toLocaleString()}</p>
             <p>Current time: {currentTime.toLocaleString()}</p>
           </div>
@@ -99,29 +99,27 @@ const CountdownTimer = ({ targetDate, className = '', largeDisplay = false }: Co
   }
 
   return (
-    <div className={`bg-gray-50 rounded-lg shadow-md p-6 md:p-8 ${className}`}>
-      <h2 className="text-2xl font-semibold text-center mb-8">Countdown to April 28, 2025</h2>
-      
-      <div className="flex flex-wrap justify-center space-x-4 text-center">
+    <div className={`${className}`}>      
+      <div className="flex flex-wrap justify-center gap-6 text-center">
         <div className="countdown-item mb-4">
-          <div className="text-4xl font-mono font-bold text-blue-500 mb-1">
+          <div className="text-5xl font-mono font-bold gradient-text mb-2">
             {formatNumber(timeRemaining.days, 3)}
           </div>
-          <div className="text-sm uppercase tracking-wider text-gray-600">Days</div>
+          <div className="text-sm uppercase tracking-wider text-gray-300">DAYS</div>
         </div>
         
         <div className="countdown-item mb-4">
-          <div className="text-4xl font-mono font-bold text-blue-500 mb-1">
+          <div className="text-5xl font-mono font-bold gradient-text mb-2">
             {formatNumber(timeRemaining.hours, 2)}
           </div>
-          <div className="text-sm uppercase tracking-wider text-gray-600">Hours</div>
+          <div className="text-sm uppercase tracking-wider text-gray-300">HOURS</div>
         </div>
         
         <div className="countdown-item mb-4">
-          <div className="text-4xl font-mono font-bold text-blue-500 mb-1">
+          <div className="text-5xl font-mono font-bold gradient-text mb-2">
             {formatNumber(timeRemaining.minutes, 2)}
           </div>
-          <div className="text-sm uppercase tracking-wider text-gray-600">Minutes</div>
+          <div className="text-sm uppercase tracking-wider text-gray-300">MINUTES</div>
         </div>
       </div>
     </div>
