@@ -137,26 +137,16 @@ const Reference = () => {
             Key equations used in optical engineering and physics, organized by category.
           </p>
           
-          {formulaCategories.map((category) => {
-            // Convert category name to URL-friendly format
-            const calculatorPath = category.toLowerCase().replace(/\s+/g, '-').replace(/\//g, '-');
-            
-            return (
-              <div key={category} className="mb-8">
-                <Link 
-                  href={`/calculators/${calculatorPath}`}
-                  className="inline-block hover:text-blue-700 transition-colors"
-                >
-                  <h3 className="text-xl font-medium mb-3 text-blue-600">{category}</h3>
-                </Link>
-                <DataTable 
-                  columns={formulaColumns} 
-                  data={FORMULAS.filter(f => f.category === category)}
-                  className="rounded-lg border mb-6" 
-                />
-              </div>
-            );
-          })}
+          {formulaCategories.map((category) => (
+            <div key={category} className="mb-8">
+              <h3 className="text-xl font-medium mb-3 text-blue-600">{category}</h3>
+              <DataTable 
+                columns={formulaColumns} 
+                data={FORMULAS.filter(f => f.category === category)}
+                className="rounded-lg border mb-6" 
+              />
+            </div>
+          ))}
         </div>
       </div>
     </section>
