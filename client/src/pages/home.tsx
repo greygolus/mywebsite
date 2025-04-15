@@ -3,6 +3,443 @@ import { motion, useScroll, useTransform, useMotionValueEvent } from 'framer-mot
 import { useRef, useState, useEffect } from 'react';
 
 // SVG Components for animation scenes
+const CosmicWebSVG = () => (
+  <svg className="w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid slice">
+    <defs>
+      <radialGradient id="cosmicGradient" cx="50%" cy="50%" r="100%" fx="50%" fy="50%">
+        <stop offset="0%" stopColor="#8B5CF6" stopOpacity="0.2" />
+        <stop offset="50%" stopColor="#6D28D9" stopOpacity="0.1" />
+        <stop offset="100%" stopColor="#4C1D95" stopOpacity="0" />
+      </radialGradient>
+    </defs>
+    <rect width="100" height="100" fill="url(#cosmicGradient)" />
+    {/* Cosmic web-like structure */}
+    {Array.from({ length: 20 }).map((_, i) => (
+      <motion.path
+        key={`cosmic-web-${i}`}
+        d={`M${Math.random() * 100},${Math.random() * 100} C${Math.random() * 100},${Math.random() * 100} ${Math.random() * 100},${Math.random() * 100} ${Math.random() * 100},${Math.random() * 100}`}
+        stroke="#A78BFA"
+        strokeWidth="0.2"
+        strokeOpacity="0.6"
+        fill="none"
+        initial={{ pathLength: 0 }}
+        animate={{ pathLength: 1 }}
+        transition={{ duration: 2.5 + Math.random() * 2, repeat: Infinity, repeatType: "reverse" }}
+      />
+    ))}
+    {Array.from({ length: 50 }).map((_, i) => (
+      <motion.circle
+        key={`cosmic-node-${i}`}
+        cx={Math.random() * 100}
+        cy={Math.random() * 100}
+        r={Math.random() * 0.7 + 0.3}
+        fill="#C4B5FD"
+        initial={{ opacity: 0.2 }}
+        animate={{ opacity: [0.2, 0.8, 0.2] }}
+        transition={{ duration: 2 + Math.random() * 3, repeat: Infinity }}
+      />
+    ))}
+  </svg>
+);
+
+const GalaxySVG = () => (
+  <svg className="w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid slice">
+    <defs>
+      <radialGradient id="galaxyGradient" cx="50%" cy="50%" r="100%" fx="50%" fy="50%">
+        <stop offset="0%" stopColor="#93C5FD" stopOpacity="0.8" />
+        <stop offset="30%" stopColor="#60A5FA" stopOpacity="0.6" />
+        <stop offset="70%" stopColor="#2563EB" stopOpacity="0.3" />
+        <stop offset="100%" stopColor="#1E40AF" stopOpacity="0" />
+      </radialGradient>
+      <filter id="galaxyGlow" x="-50%" y="-50%" width="200%" height="200%">
+        <feGaussianBlur stdDeviation="2" result="blur" />
+        <feComposite in="SourceGraphic" in2="blur" operator="over" />
+      </filter>
+    </defs>
+    <circle cx="50" cy="50" r="25" fill="url(#galaxyGradient)" filter="url(#galaxyGlow)" />
+    
+    {/* Spiral arms */}
+    <motion.path
+      d="M50,50 Q60,30 80,20 T50,10 T20,20 T40,30 T50,50"
+      fill="none"
+      stroke="#93C5FD"
+      strokeWidth="0.5"
+      strokeOpacity="0.6"
+      initial={{ pathLength: 0, rotate: 0 }}
+      animate={{ pathLength: 1, rotate: 360 }}
+      transition={{ pathLength: { duration: 3 }, rotate: { duration: 60, repeat: Infinity, ease: "linear" } }}
+    />
+    <motion.path
+      d="M50,50 Q60,70 80,80 T50,90 T20,80 T40,70 T50,50"
+      fill="none"
+      stroke="#93C5FD"
+      strokeWidth="0.5"
+      strokeOpacity="0.6"
+      initial={{ pathLength: 0, rotate: 0 }}
+      animate={{ pathLength: 1, rotate: 360 }}
+      transition={{ pathLength: { duration: 3 }, rotate: { duration: 60, repeat: Infinity, ease: "linear" } }}
+    />
+
+    {/* Stars */}
+    {Array.from({ length: 80 }).map((_, i) => {
+      const distance = 20 + Math.random() * 30;
+      const angle = Math.random() * Math.PI * 2;
+      const x = 50 + Math.cos(angle) * distance;
+      const y = 50 + Math.sin(angle) * distance;
+      return (
+        <motion.circle
+          key={`galaxy-star-${i}`}
+          cx={x}
+          cy={y}
+          r={Math.random() * 0.4 + 0.1}
+          fill="white"
+          initial={{ opacity: 0.1 }}
+          animate={{ opacity: [0.2, 0.8, 0.2] }}
+          transition={{ duration: 1 + Math.random() * 3, repeat: Infinity }}
+        />
+      );
+    })}
+  </svg>
+);
+
+const OortCloudSVG = () => (
+  <svg className="w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid slice">
+    <defs>
+      <radialGradient id="oortGradient" cx="50%" cy="50%" r="100%" fx="50%" fy="50%">
+        <stop offset="0%" stopColor="#0F172A" />
+        <stop offset="70%" stopColor="#1E293B" />
+        <stop offset="100%" stopColor="#334155" />
+      </radialGradient>
+    </defs>
+    <rect width="100" height="100" fill="url(#oortGradient)" />
+    
+    {/* Central star */}
+    <motion.circle
+      cx="50"
+      cy="50"
+      r="2"
+      fill="#FBBF24"
+      animate={{ 
+        opacity: [0.7, 1, 0.7],
+        scale: [0.95, 1.05, 0.95]
+      }}
+      transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+    />
+    
+    {/* Dust and comet particles */}
+    {Array.from({ length: 200 }).map((_, i) => {
+      const distance = 10 + Math.random() * 40;
+      const angle = Math.random() * Math.PI * 2;
+      const x = 50 + Math.cos(angle) * distance;
+      const y = 50 + Math.sin(angle) * distance;
+      return (
+        <motion.circle
+          key={`oort-particle-${i}`}
+          cx={x}
+          cy={y}
+          r={Math.random() * 0.3 + 0.1}
+          fill={Math.random() > 0.8 ? "#94A3B8" : "#CBD5E1"}
+          initial={{ opacity: Math.random() * 0.5 + 0.1 }}
+          animate={{ 
+            opacity: [0.1, 0.3, 0.1],
+            cx: [x, x + Math.random() * 2 - 1, x],
+            cy: [y, y + Math.random() * 2 - 1, y]
+          }}
+          transition={{ 
+            duration: 2 + Math.random() * 5, 
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
+        />
+      );
+    })}
+    
+    {/* Occasional comets */}
+    {Array.from({ length: 3 }).map((_, i) => {
+      const startAngle = Math.random() * Math.PI * 2;
+      const endAngle = startAngle + Math.PI * (1 + Math.random());
+      const distance = 25 + Math.random() * 20;
+      const startX = 50 + Math.cos(startAngle) * distance;
+      const startY = 50 + Math.sin(startAngle) * distance;
+      const endX = 50 + Math.cos(endAngle) * distance;
+      const endY = 50 + Math.sin(endAngle) * distance;
+      
+      return (
+        <motion.g key={`comet-${i}`}>
+          <motion.path
+            d={`M${startX},${startY} Q${50},${50} ${endX},${endY}`}
+            stroke="rgba(255, 255, 255, 0.4)"
+            strokeWidth="0.5"
+            fill="none"
+            strokeDasharray="1 3"
+            initial={{ pathLength: 0 }}
+            animate={{ pathLength: 1 }}
+            transition={{ duration: 8 + i * 4, repeat: Infinity, repeatDelay: 2 }}
+          />
+          <motion.circle
+            cx={startX}
+            cy={startY}
+            r="0.7"
+            fill="#F1F5F9"
+            initial={{ opacity: 0 }}
+            animate={{ 
+              opacity: [0, 1, 0],
+              x: [0, endX - startX, endX - startX],
+              y: [0, endY - startY, endY - startY]
+            }}
+            transition={{ 
+              duration: 8 + i * 4, 
+              repeat: Infinity, 
+              repeatDelay: 2,
+              times: [0, 0.8, 1]
+            }}
+          />
+        </motion.g>
+      );
+    })}
+  </svg>
+);
+
+const SolarSystemSVG = () => (
+  <svg className="w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid slice">
+    <defs>
+      <radialGradient id="sunGlow" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
+        <stop offset="0%" stopColor="#FEF3C7" />
+        <stop offset="50%" stopColor="#F59E0B" />
+        <stop offset="100%" stopColor="#D97706" />
+      </radialGradient>
+      <filter id="sunFilter" x="-50%" y="-50%" width="200%" height="200%">
+        <feGaussianBlur stdDeviation="1" result="blur" />
+        <feComposite in="SourceGraphic" in2="blur" operator="over" />
+      </filter>
+    </defs>
+    
+    {/* Sun */}
+    <motion.circle
+      cx="50"
+      cy="50"
+      r="5"
+      fill="url(#sunGlow)"
+      filter="url(#sunFilter)"
+      animate={{ 
+        scale: [1, 1.05, 1] 
+      }}
+      transition={{ 
+        duration: 3, 
+        repeat: Infinity, 
+        ease: "easeInOut" 
+      }}
+    />
+    
+    {/* Planets and orbits */}
+    {[
+      { radius: 10, speed: 8, color: "#A1A1AA", size: 1 },  // Mercury
+      { radius: 15, speed: 12, color: "#FB923C", size: 1.3 },  // Venus
+      { radius: 20, speed: 15, color: "#60A5FA", size: 1.5 },  // Earth
+      { radius: 25, speed: 20, color: "#EF4444", size: 1.2 },  // Mars
+      { radius: 32, speed: 25, color: "#F59E0B", size: 3 },    // Jupiter
+      { radius: 38, speed: 30, color: "#FBBF24", size: 2.5 },  // Saturn
+    ].map((planet, i) => (
+      <g key={`planet-${i}`}>
+        <circle
+          cx="50"
+          cy="50"
+          r={planet.radius}
+          fill="none"
+          stroke="rgba(255, 255, 255, 0.1)"
+          strokeWidth="0.2"
+          strokeDasharray={i % 2 === 0 ? "0.5 0.5" : ""}
+        />
+        <motion.circle
+          cx={50 + planet.radius}
+          cy="50"
+          r={planet.size * 0.5}
+          fill={planet.color}
+          animate={{ 
+            rotate: 360
+          }}
+          transition={{ 
+            duration: planet.speed,
+            repeat: Infinity,
+            ease: "linear"
+          }}
+          style={{ 
+            originX: "50px", 
+            originY: "50px" 
+          }}
+        />
+      </g>
+    ))}
+    
+    {/* Asteroid belt */}
+    {Array.from({ length: 100 }).map((_, i) => {
+      const distance = 27 + Math.random() * 3;
+      const angle = Math.random() * Math.PI * 2;
+      const x = 50 + Math.cos(angle) * distance;
+      const y = 50 + Math.sin(angle) * distance;
+      return (
+        <motion.circle
+          key={`asteroid-${i}`}
+          cx={x}
+          cy={y}
+          r={Math.random() * 0.2 + 0.1}
+          fill="#94A3B8"
+          animate={{ 
+            rotate: 360
+          }}
+          transition={{ 
+            duration: 20 + Math.random() * 10,
+            repeat: Infinity,
+            ease: "linear"
+          }}
+          style={{ 
+            originX: "50px", 
+            originY: "50px" 
+          }}
+        />
+      );
+    })}
+  </svg>
+);
+
+const EarthSVG = () => (
+  <svg className="w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid slice">
+    <defs>
+      <radialGradient id="earthGradient" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
+        <stop offset="0%" stopColor="#2563EB" />
+        <stop offset="50%" stopColor="#1D4ED8" />
+        <stop offset="100%" stopColor="#1E40AF" />
+      </radialGradient>
+      <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+        <feGaussianBlur stdDeviation="0.5" result="blur" />
+        <feComposite in="SourceGraphic" in2="blur" operator="over" />
+      </filter>
+    </defs>
+    
+    {/* Earth */}
+    <motion.circle
+      cx="50"
+      cy="50"
+      r="25"
+      fill="url(#earthGradient)"
+      filter="url(#glow)"
+      animate={{
+        rotate: 360
+      }}
+      transition={{
+        duration: 60,
+        repeat: Infinity,
+        ease: "linear"
+      }}
+    />
+    
+    {/* Continents */}
+    <motion.path
+      d="M40,35 Q55,30 60,40 T70,50 T65,60 T50,65 T40,55 T35,45 Z"
+      fill="#10B981"
+      animate={{
+        rotate: 360
+      }}
+      transition={{
+        duration: 60,
+        repeat: Infinity,
+        ease: "linear"
+      }}
+      style={{
+        transformOrigin: "center"
+      }}
+    />
+    <motion.path
+      d="M30,50 Q35,45 45,43 T50,40 T45,35 T35,40 T30,45 Z"
+      fill="#10B981"
+      animate={{
+        rotate: 360
+      }}
+      transition={{
+        duration: 60,
+        repeat: Infinity,
+        ease: "linear"
+      }}
+      style={{
+        transformOrigin: "center"
+      }}
+    />
+    <motion.path
+      d="M55,70 Q65,65 67,60 T65,55 T60,58 T55,65 Z"
+      fill="#10B981"
+      animate={{
+        rotate: 360
+      }}
+      transition={{
+        duration: 60,
+        repeat: Infinity,
+        ease: "linear"
+      }}
+      style={{
+        transformOrigin: "center"
+      }}
+    />
+    
+    {/* Clouds */}
+    <motion.path
+      d="M25,35 Q40,25 55,35 T70,45 T65,55 T50,50 T35,55 T25,45 Z"
+      fill="rgba(255,255,255,0.3)"
+      animate={{
+        rotate: 360,
+        opacity: [0.3, 0.5, 0.3]
+      }}
+      transition={{
+        rotate: {
+          duration: 45,
+          repeat: Infinity,
+          ease: "linear"
+        },
+        opacity: {
+          duration: 10,
+          repeat: Infinity,
+          ease: "easeInOut"
+        }
+      }}
+      style={{
+        transformOrigin: "center"
+      }}
+    />
+    <motion.path
+      d="M40,60 Q50,55 60,60 T75,70 T70,80 T55,75 T45,80 T35,70 Z"
+      fill="rgba(255,255,255,0.3)"
+      animate={{
+        rotate: 360,
+        opacity: [0.3, 0.5, 0.3]
+      }}
+      transition={{
+        rotate: {
+          duration: 50,
+          repeat: Infinity,
+          ease: "linear"
+        },
+        opacity: {
+          duration: 12,
+          repeat: Infinity,
+          ease: "easeInOut"
+        }
+      }}
+      style={{
+        transformOrigin: "center"
+      }}
+    />
+    
+    {/* Atmosphere glow */}
+    <circle
+      cx="50"
+      cy="50"
+      r="28"
+      fill="none"
+      stroke="rgba(96, 165, 250, 0.2)"
+      strokeWidth="4"
+    />
+  </svg>
+);
+
 const TelescopeSVG = () => (
   <svg className="w-24 h-24 md:w-32 md:h-32 lg:w-40 lg:h-40" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
     <motion.path 
@@ -63,43 +500,6 @@ const EyeSVG = () => (
   </svg>
 );
 
-const NeuronsSVG = () => (
-  <svg className="absolute w-full h-full opacity-60" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid slice">
-    <motion.path 
-      d="M10,50 Q30,20 50,50 T90,50" 
-      stroke="#9333EA" 
-      strokeWidth="0.5" 
-      fill="none"
-      initial={{ pathLength: 0 }}
-      whileInView={{ pathLength: 1 }}
-      transition={{ duration: 2 }}
-    />
-    <motion.path 
-      d="M20,70 Q40,90 60,70 T95,60" 
-      stroke="#A855F7" 
-      strokeWidth="0.5" 
-      fill="none"
-      initial={{ pathLength: 0 }}
-      whileInView={{ pathLength: 1 }}
-      transition={{ duration: 2, delay: 0.3 }}
-    />
-    <motion.path 
-      d="M30,30 Q50,10 70,30 T90,20" 
-      stroke="#6366F1" 
-      strokeWidth="0.5" 
-      fill="none"
-      initial={{ pathLength: 0 }}
-      whileInView={{ pathLength: 1 }}
-      transition={{ duration: 2, delay: 0.6 }}
-    />
-    <motion.circle cx="20" cy="50" r="3" fill="#9333EA" />
-    <motion.circle cx="50" cy="30" r="3" fill="#6366F1" />
-    <motion.circle cx="80" cy="60" r="3" fill="#A855F7" />
-    <motion.circle cx="65" cy="45" r="3" fill="#6366F1" />
-    <motion.circle cx="35" cy="70" r="3" fill="#9333EA" />
-  </svg>
-);
-
 const DNASVG = () => (
   <svg className="absolute w-full h-full opacity-70" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid slice">
     <motion.path 
@@ -127,6 +527,229 @@ const DNASVG = () => (
   </svg>
 );
 
+const AtomSVG = () => (
+  <svg className="w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid slice">
+    <defs>
+      <radialGradient id="atomCore" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
+        <stop offset="0%" stopColor="#F9A8D4" />
+        <stop offset="100%" stopColor="#DB2777" />
+      </radialGradient>
+    </defs>
+    
+    {/* Electron orbits */}
+    <motion.ellipse
+      cx="50"
+      cy="50"
+      rx="35"
+      ry="15"
+      fill="none"
+      stroke="rgba(249, 168, 212, 0.3)"
+      strokeWidth="0.5"
+      animate={{
+        rotate: 360
+      }}
+      transition={{
+        duration: 10,
+        repeat: Infinity,
+        ease: "linear"
+      }}
+      style={{
+        transformOrigin: "center"
+      }}
+    />
+    
+    <motion.ellipse
+      cx="50"
+      cy="50"
+      rx="30"
+      ry="30"
+      fill="none"
+      stroke="rgba(249, 168, 212, 0.3)"
+      strokeWidth="0.5"
+      animate={{
+        rotate: 360
+      }}
+      transition={{
+        duration: 15,
+        repeat: Infinity,
+        ease: "linear"
+      }}
+      style={{
+        transformOrigin: "center",
+        rotateX: "60deg"
+      }}
+    />
+    
+    <motion.ellipse
+      cx="50"
+      cy="50"
+      rx="15"
+      ry="35"
+      fill="none"
+      stroke="rgba(249, 168, 212, 0.3)"
+      strokeWidth="0.5"
+      animate={{
+        rotate: 360
+      }}
+      transition={{
+        duration: 12,
+        repeat: Infinity,
+        ease: "linear"
+      }}
+      style={{
+        transformOrigin: "center"
+      }}
+    />
+    
+    {/* Electrons */}
+    <motion.circle
+      cx="85"
+      cy="50"
+      r="1.5"
+      fill="#F9A8D4"
+      animate={{
+        rotate: 360
+      }}
+      transition={{
+        duration: 10,
+        repeat: Infinity,
+        ease: "linear"
+      }}
+      style={{
+        transformOrigin: "center"
+      }}
+    />
+    
+    <motion.circle
+      cx="50"
+      cy="80"
+      r="1.5"
+      fill="#F9A8D4"
+      animate={{
+        rotate: 360
+      }}
+      transition={{
+        duration: 15,
+        repeat: Infinity,
+        ease: "linear"
+      }}
+      style={{
+        transformOrigin: "center",
+        rotateX: "60deg"
+      }}
+    />
+    
+    <motion.circle
+      cx="35"
+      cy="15"
+      r="1.5"
+      fill="#F9A8D4"
+      animate={{
+        rotate: 360
+      }}
+      transition={{
+        duration: 12,
+        repeat: Infinity,
+        ease: "linear"
+      }}
+      style={{
+        transformOrigin: "center"
+      }}
+    />
+    
+    {/* Nucleus */}
+    <motion.circle
+      cx="50"
+      cy="50"
+      r="5"
+      fill="url(#atomCore)"
+      animate={{
+        scale: [1, 1.1, 1]
+      }}
+      transition={{
+        duration: 3,
+        repeat: Infinity,
+        ease: "easeInOut"
+      }}
+    />
+  </svg>
+);
+
+const NucleusSVG = () => (
+  <svg className="w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid slice">
+    <defs>
+      <radialGradient id="protonGradient" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
+        <stop offset="0%" stopColor="#FCA5A5" />
+        <stop offset="100%" stopColor="#EF4444" />
+      </radialGradient>
+      <radialGradient id="neutronGradient" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
+        <stop offset="0%" stopColor="#E5E7EB" />
+        <stop offset="100%" stopColor="#9CA3AF" />
+      </radialGradient>
+    </defs>
+    
+    {/* Force field glow */}
+    <motion.circle
+      cx="50"
+      cy="50"
+      r="30"
+      fill="none"
+      stroke="rgba(239, 68, 68, 0.1)"
+      strokeWidth="15"
+      animate={{
+        opacity: [0.1, 0.2, 0.1]
+      }}
+      transition={{
+        duration: 3,
+        repeat: Infinity,
+        ease: "easeInOut"
+      }}
+    />
+    
+    {/* Protons and neutrons */}
+    {[
+      { x: 46, y: 46, type: "proton" },
+      { x: 54, y: 46, type: "neutron" },
+      { x: 50, y: 42, type: "proton" },
+      { x: 46, y: 54, type: "neutron" },
+      { x: 54, y: 54, type: "proton" },
+      { x: 50, y: 58, type: "neutron" },
+      { x: 42, y: 50, type: "proton" },
+      { x: 58, y: 50, type: "neutron" },
+    ].map((particle, i) => (
+      <motion.circle
+        key={`particle-${i}`}
+        cx={particle.x}
+        cy={particle.y}
+        r="5"
+        fill={particle.type === "proton" ? "url(#protonGradient)" : "url(#neutronGradient)"}
+        animate={{
+          x: [0, Math.random() * 2 - 1, 0],
+          y: [0, Math.random() * 2 - 1, 0],
+          scale: [1, 1.05, 1]
+        }}
+        transition={{
+          duration: 2 + Math.random(),
+          repeat: Infinity,
+          ease: "easeInOut"
+        }}
+      />
+    ))}
+    
+    {/* Connection lines between particles */}
+    <motion.line x1="46" y1="46" x2="54" y2="46" stroke="rgba(255, 255, 255, 0.2)" strokeWidth="0.5" />
+    <motion.line x1="46" y1="46" x2="50" y2="42" stroke="rgba(255, 255, 255, 0.2)" strokeWidth="0.5" />
+    <motion.line x1="54" y1="46" x2="50" y2="42" stroke="rgba(255, 255, 255, 0.2)" strokeWidth="0.5" />
+    <motion.line x1="46" y1="54" x2="54" y2="54" stroke="rgba(255, 255, 255, 0.2)" strokeWidth="0.5" />
+    <motion.line x1="46" y1="54" x2="50" y2="58" stroke="rgba(255, 255, 255, 0.2)" strokeWidth="0.5" />
+    <motion.line x1="54" y1="54" x2="50" y2="58" stroke="rgba(255, 255, 255, 0.2)" strokeWidth="0.5" />
+    <motion.line x1="42" y1="50" x2="46" y2="46" stroke="rgba(255, 255, 255, 0.2)" strokeWidth="0.5" />
+    <motion.line x1="42" y1="50" x2="46" y2="54" stroke="rgba(255, 255, 255, 0.2)" strokeWidth="0.5" />
+    <motion.line x1="58" y1="50" x2="54" y2="46" stroke="rgba(255, 255, 255, 0.2)" strokeWidth="0.5" />
+    <motion.line x1="58" y1="50" x2="54" y2="54" stroke="rgba(255, 255, 255, 0.2)" strokeWidth="0.5" />
+  </svg>
+);
+
 // Define types for our components
 interface Particle {
   x: number;
@@ -147,7 +770,7 @@ interface Star {
   twinkleSpeed: number;
 }
 
-const ParticlesSVG = () => {
+const QuarksSVG = () => {
   const [particles, setParticles] = useState<Particle[]>([]);
   
   useEffect(() => {
@@ -244,26 +867,56 @@ const Home = () => {
     offset: ["start start", "end end"]
   });
   
-  // Scene 1: Telescope and stars (scale transforms)
-  const telescopeScale = useTransform(scrollYProgress, [0, 0.15], [1, 30]);
-  const telescopeOpacity = useTransform(scrollYProgress, [0, 0.13, 0.15], [1, 0.5, 0]);
-  const starfieldOpacity = useTransform(scrollYProgress, [0, 0.1, 0.2], [1, 0.5, 0]);
-  
-  // Scene 2: Eye (opacity transforms)
-  const eyeOpacity = useTransform(scrollYProgress, [0.15, 0.2, 0.35, 0.4], [0, 1, 1, 0]);
-  const eyeTextOpacity = useTransform(scrollYProgress, [0.22, 0.25, 0.32, 0.35], [0, 1, 1, 0]);
-  
-  // Scene 3: Neurons (opacity transforms)
-  const neuronsOpacity = useTransform(scrollYProgress, [0.35, 0.4, 0.55, 0.6], [0, 1, 1, 0]);
-  const neuronsTextOpacity = useTransform(scrollYProgress, [0.42, 0.45, 0.52, 0.55], [0, 1, 1, 0]);
-  
-  // Scene 4: DNA (opacity transforms)
-  const dnaOpacity = useTransform(scrollYProgress, [0.55, 0.6, 0.75, 0.8], [0, 1, 1, 0]);
-  const dnaTextOpacity = useTransform(scrollYProgress, [0.62, 0.65, 0.72, 0.75], [0, 1, 1, 0]);
-  
-  // Scene 5: Final particles (opacity transforms)
-  const particlesOpacity = useTransform(scrollYProgress, [0.75, 0.8], [0, 1]);
-  const finalTextOpacity = useTransform(scrollYProgress, [0.82, 0.85], [0, 1]);
+  // Define progress ranges for each of the 12 stages
+  const stageRanges = {
+    // Scene 1: Cosmic Web
+    cosmicWebOpacity: useTransform(scrollYProgress, [0, 0.07, 0.09], [1, 0.5, 0]),
+    cosmicWebTextOpacity: useTransform(scrollYProgress, [0.01, 0.03, 0.06, 0.08], [0, 1, 1, 0]),
+    
+    // Scene 2: Galaxy
+    galaxyOpacity: useTransform(scrollYProgress, [0.08, 0.09, 0.16, 0.18], [0, 1, 1, 0]),
+    galaxyTextOpacity: useTransform(scrollYProgress, [0.1, 0.12, 0.15, 0.17], [0, 1, 1, 0]),
+    
+    // Scene 3: Oort Cloud
+    oortCloudOpacity: useTransform(scrollYProgress, [0.17, 0.18, 0.25, 0.27], [0, 1, 1, 0]),
+    oortCloudTextOpacity: useTransform(scrollYProgress, [0.19, 0.21, 0.24, 0.26], [0, 1, 1, 0]),
+    
+    // Scene 4: Solar System
+    solarSystemOpacity: useTransform(scrollYProgress, [0.26, 0.27, 0.34, 0.36], [0, 1, 1, 0]),
+    solarSystemTextOpacity: useTransform(scrollYProgress, [0.28, 0.3, 0.33, 0.35], [0, 1, 1, 0]),
+    
+    // Scene 5: Earth
+    earthOpacity: useTransform(scrollYProgress, [0.35, 0.36, 0.43, 0.45], [0, 1, 1, 0]),
+    earthTextOpacity: useTransform(scrollYProgress, [0.37, 0.39, 0.42, 0.44], [0, 1, 1, 0]),
+    
+    // Scene 6: Telescope
+    telescopeOpacity: useTransform(scrollYProgress, [0.44, 0.45, 0.52, 0.54], [0, 1, 1, 0]),
+    telescopeTextOpacity: useTransform(scrollYProgress, [0.46, 0.48, 0.51, 0.53], [0, 1, 1, 0]),
+    
+    // Scene 7: Eye
+    eyeOpacity: useTransform(scrollYProgress, [0.53, 0.54, 0.61, 0.63], [0, 1, 1, 0]),
+    eyeTextOpacity: useTransform(scrollYProgress, [0.55, 0.57, 0.6, 0.62], [0, 1, 1, 0]),
+    
+    // Scene 8: DNA / Cell
+    dnaOpacity: useTransform(scrollYProgress, [0.62, 0.63, 0.7, 0.72], [0, 1, 1, 0]),
+    dnaTextOpacity: useTransform(scrollYProgress, [0.64, 0.66, 0.69, 0.71], [0, 1, 1, 0]),
+    
+    // Scene 9: Atom
+    atomOpacity: useTransform(scrollYProgress, [0.71, 0.72, 0.79, 0.81], [0, 1, 1, 0]),
+    atomTextOpacity: useTransform(scrollYProgress, [0.73, 0.75, 0.78, 0.8], [0, 1, 1, 0]),
+    
+    // Scene 10: Nucleus
+    nucleusOpacity: useTransform(scrollYProgress, [0.8, 0.81, 0.88, 0.9], [0, 1, 1, 0]),
+    nucleusTextOpacity: useTransform(scrollYProgress, [0.82, 0.84, 0.87, 0.89], [0, 1, 1, 0]),
+    
+    // Scene 11: Quarks / Gluons
+    quarksOpacity: useTransform(scrollYProgress, [0.89, 0.9, 0.97, 0.99], [0, 1, 1, 0.8]),
+    quarksTextOpacity: useTransform(scrollYProgress, [0.91, 0.93, 0.96, 0.98], [0, 1, 1, 0]),
+    
+    // Scene 12: Final Scene
+    finalOpacity: useTransform(scrollYProgress, [0.98, 0.99], [0, 1]),
+    finalTextOpacity: useTransform(scrollYProgress, [0.99, 1], [0, 1]),
+  };
   
   // Mouse interaction for final scene
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
@@ -281,36 +934,124 @@ const Home = () => {
     setScrollDebug(parseFloat(latest.toFixed(2)));
   });
 
+  // Vertical scroll progress indicator
+  const progressBar = useTransform(
+    scrollYProgress,
+    [0, 1],
+    ["0%", "100%"]
+  );
+
   return (
     <div 
       ref={containerRef} 
       className="relative bg-black text-white overflow-x-hidden"
       onMouseMove={handleMouseMove}
     >
-      {/* Multiple viewport-height sections for scrolling */}
-      <div className="h-[500vh]">
+      {/* Multiple viewport-height sections for scrolling - 12 sections */}
+      <div className="h-[1200vh]">
         {/* Fixed position container for all scenes */}
         <div className="fixed inset-0 w-full h-full overflow-hidden">
-          {/* Scene 1: Stars and Telescope */}
-          <motion.div style={{ opacity: starfieldOpacity }} className="absolute inset-0">
+          {/* Scene 1: Cosmic Web */}
+          <motion.div style={{ opacity: stageRanges.cosmicWebOpacity }} className="absolute inset-0">
+            <div className="absolute inset-0 bg-gradient-to-b from-purple-900 to-black opacity-80"></div>
+            <CosmicWebSVG />
+          </motion.div>
+          
+          <motion.div 
+            className="absolute inset-0 flex items-center justify-center pointer-events-none"
+            style={{ opacity: stageRanges.cosmicWebTextOpacity }}
+          >
+            <div className="bg-black bg-opacity-30 backdrop-blur-sm rounded-xl p-6 max-w-md text-center">
+              <h2 className="text-3xl font-bold gradient-text mb-2">It begins beyond what we can see...</h2>
+              <p className="text-gray-300">The cosmic tapestry of light, spanning across time and space.</p>
+            </div>
+          </motion.div>
+          
+          {/* Scene 2: Galaxy */}
+          <motion.div style={{ opacity: stageRanges.galaxyOpacity }} className="absolute inset-0">
+            <div className="absolute inset-0 bg-gradient-to-b from-blue-900 to-black opacity-80"></div>
+            <GalaxySVG />
+          </motion.div>
+          
+          <motion.div 
+            className="absolute inset-0 flex items-center justify-center pointer-events-none"
+            style={{ opacity: stageRanges.galaxyTextOpacity }}
+          >
+            <div className="bg-black bg-opacity-30 backdrop-blur-sm rounded-xl p-6 max-w-md text-center">
+              <h2 className="text-3xl font-bold gradient-text mb-2">The story of light stretches across galaxies.</h2>
+              <p className="text-gray-300">From countless stars, shining across unimaginable distances.</p>
+            </div>
+          </motion.div>
+          
+          {/* Scene 3: Oort Cloud */}
+          <motion.div style={{ opacity: stageRanges.oortCloudOpacity }} className="absolute inset-0">
+            <div className="absolute inset-0 bg-gradient-to-b from-slate-900 to-slate-950 opacity-80"></div>
+            <OortCloudSVG />
+          </motion.div>
+          
+          <motion.div 
+            className="absolute inset-0 flex items-center justify-center pointer-events-none"
+            style={{ opacity: stageRanges.oortCloudTextOpacity }}
+          >
+            <div className="bg-black bg-opacity-30 backdrop-blur-sm rounded-xl p-6 max-w-md text-center">
+              <h2 className="text-3xl font-bold gradient-text mb-2">Zoom in, past frozen dust and ancient comets.</h2>
+              <p className="text-gray-300">The outer edges of our solar system, where remnants of creation drift.</p>
+            </div>
+          </motion.div>
+          
+          {/* Scene 4: Solar System */}
+          <motion.div style={{ opacity: stageRanges.solarSystemOpacity }} className="absolute inset-0">
+            <div className="absolute inset-0 bg-gradient-to-b from-indigo-950 to-black opacity-80"></div>
+            <SolarSystemSVG />
+          </motion.div>
+          
+          <motion.div 
+            className="absolute inset-0 flex items-center justify-center pointer-events-none"
+            style={{ opacity: stageRanges.solarSystemTextOpacity }}
+          >
+            <div className="bg-black bg-opacity-30 backdrop-blur-sm rounded-xl p-6 max-w-md text-center">
+              <h2 className="text-3xl font-bold gradient-text mb-2">Into the solar system, a dance of motion and fire.</h2>
+              <p className="text-gray-300">Where planets follow eternal orbits around our central star.</p>
+            </div>
+          </motion.div>
+          
+          {/* Scene 5: Earth */}
+          <motion.div style={{ opacity: stageRanges.earthOpacity }} className="absolute inset-0">
+            <div className="absolute inset-0 bg-gradient-to-b from-blue-950 to-indigo-950 opacity-80"></div>
+            <EarthSVG />
+          </motion.div>
+          
+          <motion.div 
+            className="absolute inset-0 flex items-center justify-center pointer-events-none"
+            style={{ opacity: stageRanges.earthTextOpacity }}
+          >
+            <div className="bg-black bg-opacity-30 backdrop-blur-sm rounded-xl p-6 max-w-md text-center">
+              <h2 className="text-3xl font-bold gradient-text mb-2">Toward a pale blue dot...</h2>
+              <p className="text-gray-300">Our home among the stars, where all of human history has unfolded.</p>
+            </div>
+          </motion.div>
+          
+          {/* Scene 6: Telescope */}
+          <motion.div style={{ opacity: stageRanges.telescopeOpacity }} className="absolute inset-0">
             <StarField />
+            <div className="absolute inset-0 bg-gradient-to-b from-gray-900 to-indigo-950 opacity-80"></div>
+            <div className="relative w-full h-full flex items-center justify-center">
+              <TelescopeSVG />
+            </div>
           </motion.div>
           
           <motion.div 
-            className="absolute inset-0 flex items-center justify-center"
-            style={{ 
-              scale: telescopeScale,
-              opacity: telescopeOpacity
-            }}
+            className="absolute inset-0 flex items-center justify-center pointer-events-none"
+            style={{ opacity: stageRanges.telescopeTextOpacity }}
           >
-            <TelescopeSVG />
+            <div className="bg-black bg-opacity-30 backdrop-blur-sm rounded-xl p-6 max-w-md text-center">
+              <h2 className="text-3xl font-bold gradient-text mb-2">Where we watch the skies from the ground.</h2>
+              <p className="text-gray-300">Our tools of observation extend our vision into the cosmos.</p>
+            </div>
           </motion.div>
           
-          {/* Scene 2: Eye */}
-          <motion.div 
-            className="absolute inset-0"
-            style={{ opacity: eyeOpacity }}
-          >
+          {/* Scene 7: Eye */}
+          <motion.div style={{ opacity: stageRanges.eyeOpacity }} className="absolute inset-0">
             <div className="absolute inset-0 bg-gradient-to-b from-blue-900 to-indigo-900 opacity-80"></div>
             <div className="relative w-full h-full flex items-center justify-center">
               <EyeSVG />
@@ -319,40 +1060,16 @@ const Home = () => {
           
           <motion.div 
             className="absolute inset-0 flex items-center justify-center pointer-events-none"
-            style={{ opacity: eyeTextOpacity }}
+            style={{ opacity: stageRanges.eyeTextOpacity }}
           >
             <div className="bg-black bg-opacity-30 backdrop-blur-sm rounded-xl p-6 max-w-md text-center">
-              <h2 className="text-3xl font-bold gradient-text mb-2">Optics begins with the eye.</h2>
-              <p className="text-gray-300">The gateway to understanding how we perceive the world around us.</p>
+              <h2 className="text-3xl font-bold gradient-text mb-2">And see, not just through instruments...</h2>
+              <p className="text-gray-300">But through the remarkable optical system we were born with.</p>
             </div>
           </motion.div>
           
-          {/* Scene 3: Neurons */}
-          <motion.div 
-            className="absolute inset-0"
-            style={{ opacity: neuronsOpacity }}
-          >
-            <div className="absolute inset-0 bg-gradient-to-b from-purple-900 to-indigo-900 opacity-80"></div>
-            <div className="relative w-full h-full flex items-center justify-center">
-              <NeuronsSVG />
-            </div>
-          </motion.div>
-          
-          <motion.div 
-            className="absolute inset-0 flex items-center justify-center pointer-events-none"
-            style={{ opacity: neuronsTextOpacity }}
-          >
-            <div className="bg-black bg-opacity-30 backdrop-blur-sm rounded-xl p-6 max-w-md text-center">
-              <h2 className="text-3xl font-bold gradient-text mb-2">But light travels far deeper...</h2>
-              <p className="text-gray-300">Into the neural networks that process visual information.</p>
-            </div>
-          </motion.div>
-          
-          {/* Scene 4: DNA */}
-          <motion.div 
-            className="absolute inset-0"
-            style={{ opacity: dnaOpacity }}
-          >
+          {/* Scene 8: DNA / Cell */}
+          <motion.div style={{ opacity: stageRanges.dnaOpacity }} className="absolute inset-0">
             <div className="absolute inset-0 bg-gradient-to-b from-blue-800 to-cyan-900 opacity-80"></div>
             <div className="relative w-full h-full flex items-center justify-center">
               <DNASVG />
@@ -361,34 +1078,82 @@ const Home = () => {
           
           <motion.div 
             className="absolute inset-0 flex items-center justify-center pointer-events-none"
-            style={{ opacity: dnaTextOpacity }}
+            style={{ opacity: stageRanges.dnaTextOpacity }}
           >
             <div className="bg-black bg-opacity-30 backdrop-blur-sm rounded-xl p-6 max-w-md text-center">
-              <h2 className="text-3xl font-bold gradient-text mb-2">Understanding the smallest things helps us build the biggest.</h2>
-              <p className="text-gray-300">From molecular interactions to the engineering of optical systems.</p>
+              <h2 className="text-3xl font-bold gradient-text mb-2">...but through biology.</h2>
+              <p className="text-gray-300">The molecular structures that encode our ability to perceive light.</p>
             </div>
           </motion.div>
           
-          {/* Scene 5: Particles */}
+          {/* Scene 9: Atom */}
+          <motion.div style={{ opacity: stageRanges.atomOpacity }} className="absolute inset-0">
+            <div className="absolute inset-0 bg-gradient-to-b from-pink-900 to-purple-950 opacity-80"></div>
+            <AtomSVG />
+          </motion.div>
+          
+          <motion.div 
+            className="absolute inset-0 flex items-center justify-center pointer-events-none"
+            style={{ opacity: stageRanges.atomTextOpacity }}
+          >
+            <div className="bg-black bg-opacity-30 backdrop-blur-sm rounded-xl p-6 max-w-md text-center">
+              <h2 className="text-3xl font-bold gradient-text mb-2">Through the tiniest building blocks.</h2>
+              <p className="text-gray-300">Where electrons orbit nuclei, and light is both particle and wave.</p>
+            </div>
+          </motion.div>
+          
+          {/* Scene 10: Nucleus */}
+          <motion.div style={{ opacity: stageRanges.nucleusOpacity }} className="absolute inset-0">
+            <div className="absolute inset-0 bg-gradient-to-b from-red-950 to-gray-950 opacity-80"></div>
+            <NucleusSVG />
+          </motion.div>
+          
+          <motion.div 
+            className="absolute inset-0 flex items-center justify-center pointer-events-none"
+            style={{ opacity: stageRanges.nucleusTextOpacity }}
+          >
+            <div className="bg-black bg-opacity-30 backdrop-blur-sm rounded-xl p-6 max-w-md text-center">
+              <h2 className="text-3xl font-bold gradient-text mb-2">Deeper still, past protons and neutrons...</h2>
+              <p className="text-gray-300">Into the strong nuclear forces that bind matter together.</p>
+            </div>
+          </motion.div>
+          
+          {/* Scene 11: Quarks */}
+          <motion.div style={{ opacity: stageRanges.quarksOpacity }} className="absolute inset-0">
+            <div className="absolute inset-0 bg-gradient-to-b from-gray-900 to-black opacity-90"></div>
+            <QuarksSVG />
+          </motion.div>
+          
+          <motion.div 
+            className="absolute inset-0 flex items-center justify-center pointer-events-none"
+            style={{ opacity: stageRanges.quarksTextOpacity }}
+          >
+            <div className="bg-black bg-opacity-30 backdrop-blur-sm rounded-xl p-6 max-w-md text-center">
+              <h2 className="text-3xl font-bold gradient-text mb-2">...to the fabric of everything.</h2>
+              <p className="text-gray-300">Where quantum fields fluctuate and the fundamental forces arise.</p>
+            </div>
+          </motion.div>
+          
+          {/* Scene 12: Final Scene */}
           <motion.div 
             className="absolute inset-0"
             style={{ 
-              opacity: particlesOpacity,
+              opacity: stageRanges.finalOpacity,
               x: mousePosition.x * 20,
               y: mousePosition.y * 20
             }}
           >
             <div className="absolute inset-0 bg-gradient-to-b from-gray-900 to-black opacity-90"></div>
-            <ParticlesSVG />
+            <QuarksSVG />
           </motion.div>
           
           <motion.div 
-            className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none"
-            style={{ opacity: finalTextOpacity }}
+            className="absolute inset-0 flex flex-col items-center justify-center"
+            style={{ opacity: stageRanges.finalTextOpacity }}
           >
             <div className="bg-black bg-opacity-50 backdrop-blur-md rounded-xl p-8 max-w-lg text-center">
-              <h1 className="text-4xl md:text-5xl font-bold gradient-text mb-6">greygolus.com</h1>
-              <p className="text-xl text-gray-300 mb-8">A journey through light, knowledge, and engineering.</p>
+              <h1 className="text-4xl md:text-5xl font-bold gradient-text mb-6">This is the scale of optics.</h1>
+              <p className="text-xl text-gray-300 mb-8">Welcome to greygolus.com</p>
               
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-center">
                 <Link href="/directory#calculators" className="bg-dark-card hover:bg-dark-hover transition-colors duration-300 rounded-xl border border-dark-border p-4">
@@ -412,12 +1177,23 @@ const Home = () => {
         initial={{ opacity: 1 }}
         animate={{ opacity: [1, 0.3, 1] }}
         transition={{ duration: 2, repeat: Infinity }}
-        style={{ opacity: useTransform(scrollYProgress, [0, 0.1], [1, 0]) }}
+        style={{ opacity: useTransform(scrollYProgress, [0, 0.05], [1, 0]) }}
       >
         <p className="text-white mb-2">Scroll to explore</p>
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M12 5L12 19M12 19L19 12M12 19L5 12" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
         </svg>
+      </motion.div>
+      
+      {/* Vertical scroll progress indicator */}
+      <motion.div 
+        className="fixed right-4 top-1/2 transform -translate-y-1/2 h-1/3 w-1 bg-gray-800 rounded-full"
+        style={{ opacity: useTransform(scrollYProgress, [0, 0.05], [0, 1]) }}
+      >
+        <motion.div 
+          className="w-full bg-gradient-to-b from-glow-purple via-glow-blue to-glow-cyan rounded-full"
+          style={{ height: progressBar, originY: 0 }}
+        />
       </motion.div>
     </div>
   );

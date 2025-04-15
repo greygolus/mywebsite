@@ -1,0 +1,52 @@
+✅ Prompt for Replit AI — Cosmic Zoom Homepage Scroll (Greygolus.com)
+I want to create a custom homepage scroll animation for my Next.js + Tailwind CSS website, greygolus.com. This should be a cinematic, scroll-driven zoom experience that starts at the largest scale of the universe and ends at the subatomic scale, with key text reveals at each layer.
+
+🔭 Scene Progression — Scroll Triggers + Zoom Stages
+Each stage should fill the screen (min-h-screen), use position: sticky, and create a smooth zoom/transition effect between layers using transform: scale, opacity, or animated parallax layers. Backgrounds can use placeholder gradients/images for now, but must be easily swappable.
+
+
+Stage	Background Visual	Text Reveal
+1	Galaxy clusters / purple cosmic web	“It begins beyond what we can see...”
+2	Spiral galaxy	“The story of light stretches across galaxies.”
+3	Oort cloud	“Zoom in, past frozen dust and ancient comets.”
+4	Solar system	“Into the solar system, a dance of motion and fire.”
+5	Earth from orbit	“Toward a pale blue dot...”
+6	Telescope on Earth	“Where we watch the skies from the ground.”
+7	Human eyeball (close-up)	“And see, not just through instruments...”
+8	DNA / cell structures	“...but through biology.”
+9	Atom (orbitals)	“Through the tiniest building blocks.”
+10	Atomic nucleus	“Deeper still, past protons and neutrons...”
+11	Quarks / gluons	“...to the fabric of everything.”
+12	Final particle loop	“This is the scale of optics. Welcome.”
+🎨 Visual & Animation Requirements
+Use Tailwind CSS and framer-motion or react-scrollama for scroll-based sequencing
+
+Backgrounds must fade or transform smoothly
+
+Text must fade/slide in per section (animate-fade-in, translate-y)
+
+Keep the final background scene fixed after stage 12, with subtle particle motion
+
+Use bg-gradient-to-r, bg-cover, or custom animated layers (SVGs or divs)
+
+🧪 Dev Notes
+Each stage should be its own component or render block
+
+Use placeholder visuals for now (gradient divs, simple starfields, SVG blobs)
+
+I will later swap in custom images or canvas layers manually
+
+Must be mobile responsive, and optimized for smooth scrolling
+
+Scroll must follow a natural linear or ease-in-out progression — avoid abrupt jumps
+
+📍Important Follow-ups (for later fixes)
+Fade out “Scroll to Explore” after the first scroll section to make room for a vertical scroll progress bar
+
+Make the buttons at the end clickable (even with placeholder links for now)
+
+Remove the footer entirely on the homepage
+
+Ensure all sections have full-width layout and match dark mode styling from the rest of the site (bg-[#1e1e20], white text, gradient headers, etc.)
+
+This homepage is the core of greygolus.com — it should feel like a journey from the edge of the universe to the fundamental particles of reality, brought to life with modern scrolling animation and precision visuals.
