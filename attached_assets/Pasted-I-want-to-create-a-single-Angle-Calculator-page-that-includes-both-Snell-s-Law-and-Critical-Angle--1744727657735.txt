@@ -1,0 +1,54 @@
+I want to create a single “Angle Calculator” page that includes both Snell’s Law and Critical Angle calculators in one unified interface. This should be one page, not split into separate routes like /snells-law and /critical-angle.
+
+PAGE DETAILS:
+Route: /calculators/angle-calculator
+Title: “Snell’s Law & Critical Angle Calculator”
+Purpose: Help users calculate how light bends at an interface between two materials and determine the critical angle for total internal reflection.
+
+VISUAL LAYOUT (in Tailwind):
+	•	Two sections side-by-side on desktop, stacked on mobile.
+	•	Shared design style (rounded inputs, simple labels, dropdowns for unit selection).
+	•	Label each section clearly:
+	•	Section 1: Snell’s Law Calculator
+	•	Section 2: Critical Angle Calculator
+
+SECTION 1: SNELL’S LAW CALCULATOR
+Inputs:
+	•	Refractive Index 1 (n₁)
+	•	Refractive Index 2 (n₂)
+	•	Incident Angle (θ₁) in degrees
+	•	Leave one field blank (e.g., θ₂) to solve for it.
+Output:
+	•	Refraction angle (θ₂) in degrees
+	•	Auto-updates when enough info is provided
+	•	Formula reference:
+n₁ * sin(θ₁) = n₂ * sin(θ₂)
+Features:
+	•	Use Math.asin() and Math.sin() with degree↔radian conversions
+	•	Display warning if total internal reflection occurs (e.g., n₁ > n₂ and θ₁ > critical)
+
+SECTION 2: CRITICAL ANGLE CALCULATOR
+Inputs:
+	•	Refractive Index of incident medium (n₁)
+	•	Refractive Index of exit medium (n₂)
+Output:
+	•	Critical Angle (θ_critical) in degrees
+	•	Show message: “Total internal reflection occurs for angles greater than this.”
+Formula:
+θ_c = arcsin(n₂ / n₁), only if n₁ > n₂
+Validation:
+	•	If n₁ < n₂, show: “No critical angle exists — light always refracts.”
+
+TECHNICAL NOTES:
+	•	Use React functional components with useState for form logic.
+	•	Use parseFloat() to cleanly convert inputs.
+	•	Round outputs to 2 decimal places.
+	•	Add live input validation and display formula inline.
+	•	Support dark mode if possible (optional).
+
+OPTIONAL:
+	•	Add a visual ray diagram in the future using SVG or Canvas.
+	•	Include educational tooltip icons explaining each input.
+	•	Allow user to reset all fields with one button.
+
+This page should reflect a unified optical tool, not separate calculators. Keep all layout and logic modular so I can reuse components later.

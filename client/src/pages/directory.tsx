@@ -69,14 +69,9 @@ const Directory = () => {
                   <p className="text-sm text-gray-600">Convert between different properties of light</p>
                 </Link>
                 
-                <Link href="/calculators/snells-law" className="p-4 border border-gray-200 rounded-lg hover:bg-gray-50">
-                  <h3 className="font-medium">Snell's Law Calculator</h3>
-                  <p className="text-sm text-gray-600">Calculate refraction angles through different media</p>
-                </Link>
-                
-                <Link href="/calculators/critical-angle" className="p-4 border border-gray-200 rounded-lg hover:bg-gray-50">
-                  <h3 className="font-medium">Critical Angle Calculator</h3>
-                  <p className="text-sm text-gray-600">Determine the critical angle for total internal reflection</p>
+                <Link href="/calculators/angle-calculator" className="p-4 border border-gray-200 rounded-lg hover:bg-gray-50">
+                  <h3 className="font-medium">Snell's Law & Critical Angle</h3>
+                  <p className="text-sm text-gray-600">Calculate refraction angles and critical angles for total internal reflection</p>
                 </Link>
                 
                 <Link href="/calculators/lenses-mirrors" className="p-4 border border-gray-200 rounded-lg hover:bg-gray-50">

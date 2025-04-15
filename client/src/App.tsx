@@ -12,6 +12,7 @@ import Countdown from "@/pages/countdown";
 import WavelengthEnergyFrequency from "@/pages/calculators/wavelength-energy-frequency";
 import SnellsLaw from "@/pages/calculators/snells-law";
 import CriticalAngle from "@/pages/calculators/critical-angle";
+import AngleCalculator from "@/pages/calculators/angle-calculator";
 import LensesMirrors from "@/pages/calculators/lenses-mirrors";
 import Diffraction from "@/pages/calculators/diffraction";
 import Power from "@/pages/calculators/power";
@@ -27,6 +28,7 @@ function Router() {
       <Route path="/calculators/wavelength-energy-frequency" component={WavelengthEnergyFrequency} />
       <Route path="/calculators/snells-law" component={SnellsLaw} />
       <Route path="/calculators/critical-angle" component={CriticalAngle} />
+      <Route path="/calculators/angle-calculator" component={AngleCalculator} />
       <Route path="/calculators/lenses-mirrors" component={LensesMirrors} />
       <Route path="/calculators/diffraction" component={Diffraction} />
       <Route path="/calculators/power" component={Power} />
