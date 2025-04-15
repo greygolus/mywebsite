@@ -14,7 +14,7 @@ const Home = () => {
             <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">greygolus.com</h1>
             <div className="max-w-3xl mx-auto">
               <p className="text-gray-700 text-lg mb-8">
-                greygolus.com is a personal and academic site by Grey Golus, focused on optics education and tools. The Optics Unified section offers interactive calculators, visual references, and learning resources designed for optical engineering students and enthusiasts.
+                greygolus.com is a personal and academic site created by me, Grey Golus, focused on my personal projecs and my optics education. The Optics Unified section offers interactive calculators, visual references, and learning resources designed for optical engineering students and enthusiasts.
               </p>
             </div>
           </div>
@@ -66,7 +66,7 @@ const Home = () => {
               </div>
               <h3 className="text-xl font-semibold mb-2">Educational Tools</h3>
               <p className="text-gray-600">
-                Resources designed to help students understand complex optical concepts through interactive elements.
+                Tools and guides built to help students explore and understand challenging optical principles through hands-on interaction.
               </p>
               <div className="mt-4">
                 <Link href="/directory" className="text-blue-500 hover:text-blue-700 font-medium">Browse all tools →</Link>

@@ -1,0 +1,29 @@
+Symbol,Name,Description,Units,SI Base Units
+λ,Wavelength,Distance between wave peaks,m,m
+ν / f,Frequency,Number of wave cycles per second,Hz,s⁻¹
+E,Energy,Energy of a photon,J,kg·m²/s²
+h,Planck's Constant,Relates frequency to energy,J·s,kg·m²/s
+c,Speed of Light,Speed of light in vacuum,m/s,m·s⁻¹
+n,Refractive Index,Ratio of light speed in vacuum to medium,unitless,—
+θ,Angle,General optical angle,radians / degrees,rad (m/m)
+θ₁,Incident Angle,Angle of incoming light,radians / degrees,rad
+θ₂,Refracted Angle,Angle of transmitted light,radians / degrees,rad
+θ_c,Critical Angle,Angle for total internal reflection,radians / degrees,rad
+f,Focal Length,Distance to focus point,m,m
+d_o,Object Distance,Distance from object to lens/mirror,m,m
+d_i,Image Distance,Distance from image to lens/mirror,m,m
+M,Magnification,Image size divided by object size,unitless,—
+P,Optical Power,Converging strength of a lens,diopters (1/m),m⁻¹
+d,Slit/Grating Spacing,Spacing between slits,m,m
+m,Diffraction Order,Order of interference,unitless,—
+s,Object Distance (alt),Alternate symbol for object distance,m,m
+s',Image Distance (alt),Alternate symbol for image distance,m,m
+S,Spectral Irradiance,Power per area per wavelength,W/(m²·nm),kg·s⁻³
+I,Irradiance,Power per area,W/m²,kg·s⁻³
+Ω,Solid Angle,2D angle in 3D space,steradian,—
+η,Efficiency,Output/input ratio,unitless / %,—
+Φ,General Optical Power,Power of lenses/mirrors in diopters,1/m,m⁻¹
+t,Thickness,Thickness or separation of lens components,m,m
+R,Radius of Curvature / Reflectance,Mirror curvature or reflection ratio,m / unitless,m / —
+α,Absorption Coefficient,Rate of absorption in a medium,1/m,m⁻¹
+k,Wave Number,Spatial frequency of a wave,1/m,m⁻¹

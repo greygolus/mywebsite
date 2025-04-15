@@ -1,0 +1,79 @@
+
+I want to build a full /reference page in my Next.js + Tailwind CSS website called greygolus.com. This page contains three large, clean, categorized tables:
+	•	Symbols Table
+	•	Constants Table
+	•	Formulas Table
+
+PAGE STRUCTURE & DESIGN:
+	•	Use Tailwind CSS for all styling.
+	•	Each section should be visually separated (with headers like h2 or h3, padding, border, etc.).
+	•	Tables should be:
+	•	Fully responsive
+	•	Have clearly labeled columns
+	•	Styled with alternating row colors or hover effects for readability
+	•	Use semantic HTML tables for all three
+
+SECTION 1: Symbols Table
+This table shows variables commonly used in optics and photonics formulas.
+Column
+Description
+Symbol
+Can include multiple versions (e.g. ν / f)
+Name
+Full name of the symbol
+Description
+What it represents in optics
+Units
+Standard units used in calculators
+SI Base Units
+Breakdown of base SI units (e.g. kg·m²/s²)
+
+All symbols from my compiled data must be included (already reviewed and deduplicated). Examples include λ, n, θ₁, I, Φ, R, α, etc.
+
+SECTION 2: Constants Table
+This table includes all physics constants used in the calculators. It must contain the following columns:
+Column
+Description
+Name
+Constant name (e.g., Planck’s constant)
+Symbol
+Short symbol (e.g., h)
+Exact Value
+The CODATA value (or symbolic expression like 4π × 10⁻⁷)
+Approx. Value
+A rounded, more human-readable version
+Units
+Standard units (e.g., J·s, C, N/A²)
+SI Base Units
+Full SI breakdown (e.g., kg·m²/s)
+
+Add a toggle switch above the table labeled “Use Approximate Values” that toggles the “Value” column between Exact and Approximate values without refreshing the page (e.g. using state, useState, onClick, etc.).
+
+SECTION 3: Formulas Table
+This table contains all key formulas organized by topic. Display all formulas cleanly with math formatting or inline code if needed.
+Column
+Description
+Formula
+The actual equation (e.g. E = hν = hc/λ)
+What It Describes
+The purpose or application of the formula
+Variables
+List of all symbols involved in the equation
+
+Group formulas into clear subsections, like:
+	•	Wave / Energy / Frequency
+	•	Angles (Snell’s Law, Critical Angle, Brewster)
+	•	Lenses & Mirrors
+	•	Diffraction / Interference
+	•	Efficiency / Power / Visibility
+You can use collapsible sections, headers, or spacing to visually separate categories.
+
+BEHAVIOR & OTHER NOTES:
+	•	This page should be responsive and mobile-friendly.
+	•	Use proper HTML table tags (<table>, <thead>, <tbody>, etc.).
+	•	Make each table easy to edit or expand in future.
+	•	Don’t hardcode formula rendering with LaTeX (unless that’s already supported), just show equations in <code> or styled text for now.
+
+This /reference page is part of a broader “Optics Unified” project on my site, and will be linked via the “Directory” and/or “Personal Projects” sections of the navbar. It supports the backend logic for my calculators and learning tools.
+Make this clean, modular, and fully functional.
+

@@ -1,0 +1,7 @@
+Name,Symbol,Exact Value,Approx. Value,Units,SI Base Units
+Speed of Light,c,"299,792,458",~3.00 × 10⁸,m/s,m·s⁻¹
+Planck’s Constant,h,6.62607015 × 10⁻³⁴,~6.63 × 10⁻³⁴,J·s,kg·m²/s
+Elementary Charge,e,1.602176634 × 10⁻¹⁹,~1.60 × 10⁻¹⁹,C,A·s
+Vacuum Permittivity,ε₀,8.8541878128 × 10⁻¹²,~8.85 × 10⁻¹²,F/m,A²·s⁴·kg⁻¹·m⁻³
+Vacuum Permeability,μ₀,4π × 10⁻⁷,~1.26 × 10⁻⁶,N/A²,kg·m·s⁻²·A⁻²
+Refractive Index of Air,n_air,1.000293,~1.0003,unitless,—
