@@ -951,10 +951,14 @@ const Home = () => {
       <div className="h-[1200vh]">
         {/* Fixed position container for all scenes */}
         <div className="fixed inset-0 w-full h-full overflow-hidden">
-          {/* Scene 1: Cosmic Web */}
+          {/* Scene 1: Cosmic Web - Now using background image */}
           <motion.div style={{ opacity: stageRanges.cosmicWebOpacity }} className="absolute inset-0">
-            <div className="absolute inset-0 bg-gradient-to-b from-purple-900 to-black opacity-80"></div>
-            <CosmicWebSVG />
+            <div 
+              className="absolute inset-0 bg-cover bg-center bg-no-repeat" 
+              style={{ backgroundImage: "url('/assets/scroll/1-cosmic-web.webp')" }}
+            ></div>
+            {/* Add a subtle overlay to ensure text readability */}
+            <div className="absolute inset-0 bg-black bg-opacity-30"></div>
           </motion.div>
           
           <motion.div 
@@ -967,10 +971,20 @@ const Home = () => {
             </div>
           </motion.div>
           
-          {/* Scene 2: Galaxy */}
+          {/* Scene 2: Galaxy - Now using video background */}
           <motion.div style={{ opacity: stageRanges.galaxyOpacity }} className="absolute inset-0">
-            <div className="absolute inset-0 bg-gradient-to-b from-blue-900 to-black opacity-80"></div>
-            <GalaxySVG />
+            <div className="absolute inset-0 overflow-hidden">
+              <video
+                className="absolute top-0 left-0 w-full h-full object-cover"
+                src="/assets/scroll/2-milkyway-spin.mp4"
+                autoPlay
+                loop
+                muted
+                playsInline
+              ></video>
+              {/* Add a subtle overlay to ensure text readability */}
+              <div className="absolute inset-0 bg-black bg-opacity-30"></div>
+            </div>
           </motion.div>
           
           <motion.div 
