@@ -11,10 +11,10 @@ const Home = () => {
       <section className="bg-gradient-to-b from-white to-blue-50 py-16">
         <div className="container mx-auto px-4">
           <div className="flex flex-col items-center text-center">
-            <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">Greygolus.com</h1>
+            <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">greygolus.com</h1>
             <div className="max-w-3xl mx-auto">
               <p className="text-gray-700 text-lg mb-8">
-                Greygolus.com is a personal and academic site by Grey Golus, focused on optics education and tools. The Optics Unified section offers interactive calculators, visual references, and learning resources designed for optical engineering students and enthusiasts.
+                greygolus.com is a personal and academic site by Grey Golus, focused on optics education and tools. The Optics Unified section offers interactive calculators, visual references, and learning resources designed for optical engineering students and enthusiasts.
               </p>
             </div>
           </div>
