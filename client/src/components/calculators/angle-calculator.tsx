@@ -296,23 +296,23 @@ const AngleCalculator = () => {
                   </div>
                 </div>
                 
-                <div className="p-4 bg-blue-50 rounded-lg">
-                  <p className="font-mono text-center">n₁ * sin(θ₁) = n₂ * sin(θ₂)</p>
+                <div className="p-5 bg-black bg-opacity-40 rounded-xl border border-dark-border backdrop-blur-sm shadow-md">
+                  <p className="font-mono text-center text-white">n₁ * sin(θ₁) = n₂ * sin(θ₂)</p>
                 </div>
                 
                 {/* Result display */}
                 <div className="space-y-4">
                   {snellsLawResult !== null && (
-                    <div className="p-4 bg-green-50 rounded-lg">
-                      <p className="font-medium text-center">
+                    <div className="p-5 bg-blue-950 bg-opacity-40 rounded-xl border border-blue-800 shadow-md backdrop-blur-sm">
+                      <p className="font-medium text-center text-white">
                         {snellsLawState.calculationMode === 'theta2' ? 'Refraction Angle (θ₂)' : 'Incident Angle (θ₁)'}: {snellsLawResult}°
                       </p>
                     </div>
                   )}
                   
                   {isTotalInternalReflection && (
-                    <Alert className="bg-yellow-50 border-yellow-200">
-                      <AlertCircle className="h-4 w-4 text-yellow-600 mr-2" />
+                    <Alert variant="warning">
+                      <AlertCircle className="h-4 w-4 mr-2" />
                       <AlertDescription>
                         Total internal reflection occurs. The incident angle exceeds the critical angle, so the light is entirely reflected at the interface rather than refracting.
                       </AlertDescription>
@@ -355,7 +355,7 @@ const AngleCalculator = () => {
                       value={criticalAngleState.n1}
                       onChange={handleCriticalAngleInputChange}
                     />
-                    <p className="text-xs text-gray-500">This should be the higher refractive index</p>
+                    <p className="text-xs text-gray-300">This should be the higher refractive index</p>
                   </div>
                   <div className="space-y-2">
                     <Label htmlFor="ca-n2">Exit Medium Refractive Index (n₂)</Label>
@@ -367,28 +367,28 @@ const AngleCalculator = () => {
                       value={criticalAngleState.n2}
                       onChange={handleCriticalAngleInputChange}
                     />
-                    <p className="text-xs text-gray-500">This should be the lower refractive index</p>
+                    <p className="text-xs text-gray-300">This should be the lower refractive index</p>
                   </div>
                 </div>
                 
-                <div className="p-4 bg-blue-50 rounded-lg">
-                  <p className="font-mono text-center">θ_c = arcsin(n₂ / n₁)</p>
+                <div className="p-5 bg-black bg-opacity-40 rounded-xl border border-dark-border backdrop-blur-sm shadow-md">
+                  <p className="font-mono text-center text-white">θ_c = arcsin(n₂ / n₁)</p>
                 </div>
                 
                 {/* Result display */}
                 <div className="space-y-4">
                   {criticalAngleResult !== null && criticalAngleExists && (
-                    <div className="p-4 bg-green-50 rounded-lg">
-                      <p className="font-medium text-center">Critical Angle: {criticalAngleResult}°</p>
-                      <p className="text-sm text-center mt-2">
+                    <div className="p-5 bg-green-950 bg-opacity-40 rounded-xl border border-green-800 shadow-md backdrop-blur-sm">
+                      <p className="font-medium text-center text-white">Critical Angle: {criticalAngleResult}°</p>
+                      <p className="text-sm text-center mt-2 text-gray-300">
                         Total internal reflection occurs for angles greater than this.
                       </p>
                     </div>
                   )}
                   
                   {!criticalAngleExists && criticalAngleState.n1 !== '' && criticalAngleState.n2 !== '' && (
-                    <Alert className="bg-blue-50 border-blue-200">
-                      <AlertCircle className="h-4 w-4 text-blue-600 mr-2" />
+                    <Alert variant="info">
+                      <AlertCircle className="h-4 w-4 mr-2" />
                       <AlertDescription>
                         No critical angle exists — light always refracts. For a critical angle to exist, the incident medium (n₁) must have a higher refractive index than the exit medium (n₂).
                       </AlertDescription>
