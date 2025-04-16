@@ -2,6 +2,18 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Custom utilities */
+.pointer-events-opacity {
+  pointer-events: var(--pointer-events-state, none);
+}
+
+/* When opacity is higher than 0.1, enable pointer events */
+*[style*="opacity: 0"],
+*[style*="opacity:0"],
+*[style*="opacity: 0."] {
+  pointer-events: none !important;
+}
+
 @layer base {
   :root {
     --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
