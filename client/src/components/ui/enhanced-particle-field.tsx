@@ -26,10 +26,10 @@ interface EnhancedParticleFieldProps {
  */
 const EnhancedParticleField: React.FC<EnhancedParticleFieldProps> = ({
   color = "#FFFFFF",
-  density = 50,
-  speed = 20,
+  density = 30, // Reduced default density for better performance
+  speed = 15,   // Reduced default speed for smoother animations
   opacity = 0.5,
-  glowIntensity = 1,
+  glowIntensity = 0.8, // Reduced default glow for better performance
   direction = 'random',
   minSize = 1,
   maxSize = 3
@@ -149,10 +149,10 @@ const EnhancedParticleField: React.FC<EnhancedParticleFieldProps> = ({
               ]
             }}
             transition={{
-              duration: 30 / (particle.speed / 20), // Slower movement
+              duration: 40 / (particle.speed / 15), // Even slower movement for smoother animation
               repeat: Infinity,
               ease: "easeInOut",
-              delay: Math.random() * 5 // Random start time
+              delay: Math.random() * 3 // Reduced random delay
             }}
           />
         );

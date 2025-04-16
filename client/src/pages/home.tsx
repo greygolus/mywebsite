@@ -952,7 +952,8 @@ const Home = () => {
   // Use regular useEffect instead of layoutEffect to avoid Hook order warnings
   const { scrollYProgress } = useScroll({
     target: containerRef,
-    offset: ["start start", "end end"]
+    offset: ["start start", "end end"],
+    container: document.documentElement // Use viewport as container to avoid positioning issues
   });
   
   // Define progress ranges for each of the 12 stages
@@ -1118,6 +1119,7 @@ const Home = () => {
       id="homepage"
       ref={containerRef} 
       className="relative bg-black text-white overflow-x-hidden"
+      style={{ position: 'relative' }} /* Explicit positioning to ensure scroll offset works correctly */
       onMouseMove={handleMouseMove}
     >
       {/* Decorative floating particles */}
@@ -1160,9 +1162,9 @@ const Home = () => {
         ))}
       </div>
       {/* Multiple viewport-height sections for scrolling - 12 sections */}
-      <div className="h-[1200vh]">
+      <div className="h-[1200vh] relative">
         {/* Fixed position container for all scenes */}
-        <div className="fixed inset-0 w-full h-full overflow-hidden">
+        <div className="fixed inset-0 w-full h-full overflow-hidden relative">
           {/* Scene 1: Cosmic Web - Enhanced with particles and depth */}
           <motion.div 
             style={{ 
@@ -1537,9 +1539,9 @@ const Home = () => {
 
             <EarthSVG />
             
-            {/* Distant stars */}
+            {/* Distant stars - reduced for better performance */}
             <div className="absolute inset-0 -z-10">
-              {Array.from({ length: 100 }).map((_, i) => (
+              {Array.from({ length: 40 }).map((_, i) => (
                 <motion.div
                   key={`distant-earth-star-${i}`}
                   className="absolute rounded-full bg-white"
@@ -1559,7 +1561,7 @@ const Home = () => {
                     ]
                   }}
                   transition={{
-                    duration: 3 + Math.random() * 5,
+                    duration: 4 + Math.random() * 4,
                     repeat: Infinity,
                     ease: "easeInOut"
                   }}
