@@ -80,11 +80,15 @@ const Navbar = () => {
             
             <div className="relative group">
               <button 
-                className={`px-3 py-2 transition-all duration-300 focus:outline-none flex items-center space-x-1 ${
+                className={`relative px-3 py-2 transition-all duration-300 focus:outline-none flex items-center space-x-1 ${
                   location.startsWith('/directory') || location.startsWith('/reference')
                     ? 'gradient-text font-medium' 
                     : 'text-white hover:text-opacity-80'
-                }`}
+                } ${isDropdownOpen ? 'bg-black/5 backdrop-blur-xl border-t border-l border-r border-white/10 rounded-t-lg' : ''}`}
+                style={{
+                  zIndex: isDropdownOpen ? 50 : 'auto', 
+                  borderBottomColor: isDropdownOpen ? 'transparent' : undefined
+                }}
                 onMouseEnter={openDropdown}
                 onMouseLeave={closeDropdown}
               >
@@ -92,9 +96,15 @@ const Navbar = () => {
                 <ChevronDown className={`h-4 w-4 transition-transform duration-300 ${isDropdownOpen ? 'rotate-180' : ''}`} />
               </button>
               <div 
-                className={`absolute mt-2 bg-white/10 backdrop-blur-md border border-white/20 rounded-lg shadow-lg w-48 transition-all duration-300 ease-in-out overflow-hidden ${
+                className={`absolute -mt-0.5 bg-black/5 backdrop-blur-xl border border-white/10 rounded-b-lg shadow-lg w-48 transition-all duration-300 ease-in-out overflow-hidden ${
                   isDropdownOpen ? 'opacity-100 translate-y-0 block' : 'opacity-0 -translate-y-1 hidden'
                 }`}
+                style={{ 
+                  borderTopLeftRadius: '0',
+                  borderTopRightRadius: '0',
+                  left: '50%',
+                  transform: 'translateX(-50%)'
+                }}
                 onMouseEnter={openDropdown}
                 onMouseLeave={closeDropdown}
               >
@@ -127,7 +137,7 @@ const Navbar = () => {
       
       {/* Mobile Navigation Menu */}
       {isMobileMenuOpen && (
-        <div className="md:hidden bg-white/10 backdrop-blur-md border-t border-white/20 shadow-lg animate-fade-in">
+        <div className="md:hidden bg-black/5 backdrop-blur-xl border-t border-white/10 shadow-lg animate-fade-in">
           <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
             <Link 
               href="/" 
@@ -168,7 +178,7 @@ const Navbar = () => {
               </button>
               
               {isDropdownOpen && (
-                <div className="pl-4 mt-1 space-y-1 animate-fade-in bg-white/5 backdrop-blur-sm rounded-md mx-2 border border-white/10">
+                <div className="pl-4 mt-1 space-y-1 animate-fade-in bg-black/5 backdrop-blur-xl rounded-md mx-2 border border-white/10 shadow-inner">
                   <Link 
                     href="/directory" 
                     onClick={() => setIsMobileMenuOpen(false)}
