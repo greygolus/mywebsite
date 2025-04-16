@@ -3521,41 +3521,75 @@ const Home = () => {
           >
             <motion.div
               className="card-glass border-purple-500/10 p-8 max-w-lg text-center backdrop-blur-xl shadow-lg bg-black/5"
-              initial={{ y: 20, opacity: 0, scale: 0.95 }}
-              animate={{ y: 0, opacity: 1, scale: 1 }}
+              initial={{ y: 50, opacity: 0, scale: 0.8, rotateX: 15 }}
+              animate={{ 
+                y: 0, 
+                opacity: 1, 
+                scale: 1,
+                rotateX: 0
+              }}
               transition={{
-                duration: 1.2,
-                delay: 0.2,
-                ease: [0.19, 1, 0.22, 1], // cubic-bezier for smooth deceleration
-                opacity: { duration: 1.0 },
+                type: "spring",
+                stiffness: 100,
+                damping: 15,
+                mass: 1,
+                delay: 0.1,
               }}
             >
-              <h1 className="text-4xl md:text-5xl font-bold gradient-text mb-6">
+              <motion.h1 
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.4, duration: 0.7 }}
+                className="text-4xl md:text-5xl font-bold gradient-text mb-6"
+              >
                 This is the scale of optics.
-              </h1>
-              <p className="text-xl text-gray-300 mb-8">
+              </motion.h1>
+              <motion.p 
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.5, duration: 0.7 }}
+                className="text-xl text-gray-300 mb-8"
+              >
                 Welcome to greygolus.com
-              </p>
+              </motion.p>
 
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-center relative z-50">
-                <Link
-                  href="/directory#calculators"
-                  className="card-glass card-glass-hover transition-all duration-300 rounded-xl border border-white/10 p-4 hover:shadow-[0_0_15px_rgba(124,58,237,0.3)] hover:scale-105 ease-in-out bg-black/5 backdrop-blur-xl final-link-card"
+                <motion.div
+                  initial={{ y: 20, opacity: 0 }}
+                  animate={{ y: 0, opacity: 1 }}
+                  transition={{ delay: 0.6, duration: 0.5 }}
                 >
-                  <span className="gradient-text font-bold">Calculators</span>
-                </Link>
-                <Link
-                  href="/reference"
-                  className="card-glass card-glass-hover transition-all duration-300 rounded-xl border border-white/10 p-4 hover:shadow-[0_0_15px_rgba(56,189,248,0.3)] hover:scale-105 ease-in-out bg-black/5 backdrop-blur-xl final-link-card"
+                  <Link
+                    href="/directory#calculators"
+                    className="card-glass card-glass-hover transition-all duration-300 rounded-xl border border-white/10 p-4 hover:shadow-[0_0_15px_rgba(124,58,237,0.3)] hover:scale-105 ease-in-out bg-black/5 backdrop-blur-xl final-link-card"
+                  >
+                    <span className="gradient-text font-bold">Calculators</span>
+                  </Link>
+                </motion.div>
+                <motion.div
+                  initial={{ y: 20, opacity: 0 }}
+                  animate={{ y: 0, opacity: 1 }}
+                  transition={{ delay: 0.8, duration: 0.5 }}
                 >
-                  <span className="gradient-text font-bold">References</span>
-                </Link>
-                <Link
-                  href="/directory"
-                  className="card-glass card-glass-hover transition-all duration-300 rounded-xl border border-white/10 p-4 hover:shadow-[0_0_15px_rgba(94,234,212,0.3)] hover:scale-105 ease-in-out bg-black/5 backdrop-blur-xl final-link-card"
+                  <Link
+                    href="/reference"
+                    className="card-glass card-glass-hover transition-all duration-300 rounded-xl border border-white/10 p-4 hover:shadow-[0_0_15px_rgba(56,189,248,0.3)] hover:scale-105 ease-in-out bg-black/5 backdrop-blur-xl final-link-card"
+                  >
+                    <span className="gradient-text font-bold">References</span>
+                  </Link>
+                </motion.div>
+                <motion.div
+                  initial={{ y: 20, opacity: 0 }}
+                  animate={{ y: 0, opacity: 1 }}
+                  transition={{ delay: 1.0, duration: 0.5 }}
                 >
-                  <span className="gradient-text font-bold">All Tools</span>
-                </Link>
+                  <Link
+                    href="/directory"
+                    className="card-glass card-glass-hover transition-all duration-300 rounded-xl border border-white/10 p-4 hover:shadow-[0_0_15px_rgba(94,234,212,0.3)] hover:scale-105 ease-in-out bg-black/5 backdrop-blur-xl final-link-card"
+                  >
+                    <span className="gradient-text font-bold">All Tools</span>
+                  </Link>
+                </motion.div>
               </div>
             </motion.div>
           </motion.div>
