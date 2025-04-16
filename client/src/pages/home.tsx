@@ -1334,22 +1334,36 @@ const Home = () => {
             style={{ opacity: stageRanges.finalTextOpacity }}
           >
             <motion.div 
-              className="card-glass border-purple-500/20 p-8 max-w-lg text-center"
+              className="card-glass border-purple-500/20 p-8 max-w-lg text-center backdrop-blur-md shadow-lg"
               initial={{ y: 20, opacity: 0, scale: 0.95 }}
               animate={{ y: 0, opacity: 1, scale: 1 }}
-              transition={{ duration: 0.9, delay: 0.2 }}
+              transition={{ 
+                duration: 1.2, 
+                delay: 0.2, 
+                ease: [0.19, 1, 0.22, 1], // cubic-bezier for smooth deceleration
+                opacity: { duration: 1.0 }
+              }}
             >
               <h1 className="text-4xl md:text-5xl font-bold gradient-text mb-6">This is the scale of optics.</h1>
               <p className="text-xl text-gray-300 mb-8">Welcome to greygolus.com</p>
               
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-center">
-                <Link href="/directory#calculators" className="card-glass card-glass-hover transition-all duration-300 rounded-xl border border-dark-border p-4">
+                <Link 
+                  href="/directory#calculators" 
+                  className="card-glass card-glass-hover transition-all duration-300 rounded-xl border border-white/20 p-4 hover:shadow-[0_0_15px_rgba(124,58,237,0.3)] hover:scale-105 ease-in-out"
+                >
                   <span className="gradient-text font-bold">Calculators</span>
                 </Link>
-                <Link href="/reference" className="card-glass card-glass-hover transition-all duration-300 rounded-xl border border-dark-border p-4">
+                <Link 
+                  href="/reference" 
+                  className="card-glass card-glass-hover transition-all duration-300 rounded-xl border border-white/20 p-4 hover:shadow-[0_0_15px_rgba(56,189,248,0.3)] hover:scale-105 ease-in-out"
+                >
                   <span className="gradient-text font-bold">References</span>
                 </Link>
-                <Link href="/directory" className="card-glass card-glass-hover transition-all duration-300 rounded-xl border border-dark-border p-4">
+                <Link 
+                  href="/directory" 
+                  className="card-glass card-glass-hover transition-all duration-300 rounded-xl border border-white/20 p-4 hover:shadow-[0_0_15px_rgba(94,234,212,0.3)] hover:scale-105 ease-in-out"
+                >
                   <span className="gradient-text font-bold">All Tools</span>
                 </Link>
               </div>
@@ -1362,23 +1376,42 @@ const Home = () => {
       <motion.div 
         className="fixed bottom-8 left-1/2 transform -translate-x-1/2 flex flex-col items-center"
         initial={{ opacity: 1 }}
-        animate={{ opacity: [1, 0.3, 1] }}
-        transition={{ duration: 2, repeat: Infinity }}
+        animate={{ opacity: [1, 0.5, 1] }}
+        transition={{ 
+          duration: 2.5, 
+          repeat: Infinity, 
+          ease: "easeInOut" 
+        }}
         style={{ opacity: useTransform(scrollYProgress, [0, 0.05], [1, 0]) }}
       >
-        <p className="text-white mb-2">Scroll to explore</p>
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M12 5L12 19M12 19L19 12M12 19L5 12" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-        </svg>
+        <p className="text-white mb-2 text-sm font-medium tracking-wide">Scroll to explore</p>
+        <motion.div
+          animate={{ 
+            y: [0, 5, 0],
+            scale: [1, 1.05, 1] 
+          }}
+          transition={{ 
+            duration: 1.8, 
+            repeat: Infinity, 
+            ease: "easeInOut" 
+          }}
+        >
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="drop-shadow-glow">
+            <path d="M12 5L12 19M12 19L19 12M12 19L5 12" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+          </svg>
+        </motion.div>
       </motion.div>
       
       {/* Vertical scroll progress indicator */}
       <motion.div 
-        className="fixed right-4 top-1/2 transform -translate-y-1/2 h-1/3 w-1 bg-gray-800 rounded-full"
+        className="fixed right-6 top-1/2 transform -translate-y-1/2 h-1/3 w-1.5 bg-gray-800/60 rounded-full backdrop-blur-sm shadow-inner"
+        initial={{ opacity: 0, x: 10 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ duration: 0.6, ease: "easeOut" }}
         style={{ opacity: useTransform(scrollYProgress, [0, 0.05], [0, 1]) }}
       >
         <motion.div 
-          className="w-full bg-gradient-to-b from-glow-purple via-glow-blue to-glow-cyan rounded-full"
+          className="w-full bg-gradient-to-b from-glow-purple via-glow-blue to-glow-cyan rounded-full shadow-[0_0_10px_rgba(139,92,246,0.5)]"
           style={{ height: progressBar, originY: 0 }}
         />
       </motion.div>

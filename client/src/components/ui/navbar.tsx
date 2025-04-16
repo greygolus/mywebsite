@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Link, useLocation } from 'wouter';
 import { Menu, X, ChevronDown } from 'lucide-react';
 
@@ -7,6 +7,7 @@ const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const closeDropdownTimer = useRef<NodeJS.Timeout | null>(null);
 
   // Add scroll listener to make navbar more transparent at the top
   useEffect(() => {
@@ -22,6 +23,21 @@ const Navbar = () => {
       window.removeEventListener('scroll', handleScroll);
     };
   }, [scrolled]);
+
+  const openDropdown = () => {
+    if (closeDropdownTimer.current) {
+      clearTimeout(closeDropdownTimer.current);
+      closeDropdownTimer.current = null;
+    }
+    setIsDropdownOpen(true);
+  };
+
+  const closeDropdown = () => {
+    // Delay closing to prevent accidental closure when moving diagonally
+    closeDropdownTimer.current = setTimeout(() => {
+      setIsDropdownOpen(false);
+    }, 150);
+  };
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
@@ -69,15 +85,26 @@ const Navbar = () => {
                     ? 'gradient-text font-medium' 
                     : 'text-white hover:text-opacity-80'
                 }`}
+                onMouseEnter={openDropdown}
+                onMouseLeave={closeDropdown}
               >
                 <span>Personal Projects</span>
-                <ChevronDown className="h-4 w-4" />
+                <ChevronDown className={`h-4 w-4 transition-transform duration-300 ${isDropdownOpen ? 'rotate-180' : ''}`} />
               </button>
-              <div className="absolute hidden mt-2 bg-dark-card shadow-lg rounded-md w-48 group-hover:block border border-dark-border overflow-hidden">
-                <Link href="/directory" className="block px-4 py-2 text-white hover:bg-dark-hover transition-colors">
+              <div 
+                className={`absolute mt-2 bg-white/10 backdrop-blur-md border border-white/20 rounded-lg shadow-lg w-48 transition-all duration-300 ease-in-out overflow-hidden ${
+                  isDropdownOpen ? 'opacity-100 translate-y-0 block' : 'opacity-0 -translate-y-1 hidden'
+                }`}
+                onMouseEnter={openDropdown}
+                onMouseLeave={closeDropdown}
+              >
+                <Link 
+                  href="/directory" 
+                  className="block px-4 py-2 text-white hover:bg-white/20 transition-all duration-300 ease-in-out rounded-md m-1"
+                >
                   Optics Unified
                 </Link>
-                <span className="block px-4 py-2 text-gray-400 cursor-default">Coming soon...</span>
+                <span className="block px-4 py-2 text-gray-300 cursor-default m-1">Coming soon...</span>
               </div>
             </div>
           </div>
@@ -100,15 +127,15 @@ const Navbar = () => {
       
       {/* Mobile Navigation Menu */}
       {isMobileMenuOpen && (
-        <div className="md:hidden bg-dark-card border-t border-dark-border animate-fade-in">
+        <div className="md:hidden bg-white/10 backdrop-blur-md border-t border-white/20 shadow-lg animate-fade-in">
           <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
             <Link 
               href="/" 
               onClick={() => setIsMobileMenuOpen(false)} 
-              className={`block px-3 py-2 rounded-md ${
+              className={`block px-3 py-2 rounded-md transition-all duration-300 ease-in-out ${
                 location === '/' 
                   ? 'gradient-text font-medium' 
-                  : 'text-white hover:bg-dark-hover'
+                  : 'text-white hover:bg-white/20'
               }`}
             >
               Home
@@ -117,10 +144,10 @@ const Navbar = () => {
             <Link 
               href="/countdown" 
               onClick={() => setIsMobileMenuOpen(false)} 
-              className={`block px-3 py-2 rounded-md ${
+              className={`block px-3 py-2 rounded-md transition-all duration-300 ease-in-out ${
                 location === '/countdown' 
                   ? 'gradient-text font-medium' 
-                  : 'text-white hover:bg-dark-hover'
+                  : 'text-white hover:bg-white/20'
               }`}
             >
               Countdown
@@ -130,26 +157,26 @@ const Navbar = () => {
             <div>
               <button 
                 onClick={toggleDropdown}
-                className={`flex justify-between items-center w-full px-3 py-2 rounded-md ${
+                className={`flex justify-between items-center w-full px-3 py-2 rounded-md transition-all duration-300 ease-in-out ${
                   location.startsWith('/directory') || location.startsWith('/reference')
                     ? 'gradient-text font-medium' 
-                    : 'text-white hover:bg-dark-hover'
+                    : 'text-white hover:bg-white/20'
                 }`}
               >
                 <span>Personal Projects</span>
-                <ChevronDown className={`h-4 w-4 transition-transform ${isDropdownOpen ? 'rotate-180' : ''}`} />
+                <ChevronDown className={`h-4 w-4 transition-transform duration-300 ${isDropdownOpen ? 'rotate-180' : ''}`} />
               </button>
               
               {isDropdownOpen && (
-                <div className="pl-4 mt-1 space-y-1 animate-fade-in">
+                <div className="pl-4 mt-1 space-y-1 animate-fade-in bg-white/5 backdrop-blur-sm rounded-md mx-2 border border-white/10">
                   <Link 
                     href="/directory" 
                     onClick={() => setIsMobileMenuOpen(false)}
-                    className="block px-3 py-2 text-white hover:bg-dark-hover rounded-md"
+                    className="block px-3 py-2 text-white hover:bg-white/20 rounded-md transition-all duration-300 ease-in-out"
                   >
                     Optics Unified
                   </Link>
-                  <span className="block px-3 py-2 text-gray-400">Coming soon...</span>
+                  <span className="block px-3 py-2 text-gray-300">Coming soon...</span>
                 </div>
               )}
             </div>

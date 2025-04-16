@@ -1,0 +1,59 @@
+Please make the following visual and functional improvements to the current homepage of my website. These changes should match the site’s existing translucent, zoom-based design direction and emphasize smooth, modern interactivity. Keep the current scroll structure and layout fully intact.
+
+✅ 1. Navigation Bar — Personal Projects Dropdown
+Visual Style:
+
+Update the dropdown menu for “Personal Projects” to match the site's translucent/glass UI theme
+
+Use Tailwind classes like:
+
+tailwind
+Copy
+Edit
+bg-white/10 backdrop-blur-md border border-white/20 rounded-lg shadow-lg text-white
+Apply subtle hover:backdrop-blur-lg and light border glow for a futuristic look
+
+Behavioral Fixes:
+
+Ensure the dropdown menu does not close when the user hovers over the title and moves their cursor diagonally down to select a submenu item
+
+This may require adjusting the mouseleave timing or hitbox detection
+
+Functionality should be consistent across desktop and touchpad users
+
+Interaction Improvements:
+
+Add hover:bg-white/20 or similar feedback when hovering over individual items
+
+Ensure each item in the dropdown is fully clickable and keyboard accessible
+
+✅ 2. Improve Animation Quality Throughout Homepage
+Smooth out all current animations on the homepage — especially transitions between scroll stages and UI elements — by applying:
+
+ease-in-out or ease-[cubic-bezier] curves for more natural easing
+
+Replace choppy or abrupt motion with interpolated transitions using framer-motion or Tailwind’s transition-all duration-500
+
+Focus areas:
+
+Zoom transitions for background elements
+
+Scaling + fading animations for text blocks or content containers
+
+Smooth hover effects on buttons or links (hover:scale-105, transition duration-300)
+
+Avoid lag or “snapping” by:
+
+Throttling excessive scroll events (if applicable)
+
+Using requestAnimationFrame-based smoothing where necessary
+
+Preventing layout shifts by locking element dimensions
+
+⚠️ Additional Notes:
+Do not introduce new scroll sections, layout changes, or delays in animation triggers
+
+Ensure these upgrades are lightweight enough to keep performance smooth on mid-range devices
+
+Test interactions in both light and dark backgrounds to confirm readability and interaction consistency
+
