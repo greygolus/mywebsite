@@ -1,7 +1,6 @@
 import { Link } from 'wouter';
 import { motion, useScroll, useTransform, useMotionValueEvent } from 'framer-motion';
 import { useRef, useState, useEffect } from 'react';
-import { useAppleGlassStyles } from '../lib/applyTextBoxStyles';
 
 // SVG Components for animation scenes
 const CosmicWebSVG = () => (
@@ -861,15 +860,28 @@ const StarField = () => {
 
 const Home = () => {
   const containerRef = useRef(null);
-  const { applyStyles } = useAppleGlassStyles();
   
   // Apply apple glass styling to all text boxes
   useEffect(() => {
-    // Apply styles after component mounts
-    applyStyles();
-    
     // Add class to body for homepage-specific styling
     document.body.classList.add('home-page');
+    
+    // Apply apple glass styling to all text boxes
+    setTimeout(() => {
+      const textBoxes = document.querySelectorAll('.bg-black.bg-opacity-20.backdrop-blur-md');
+      
+      textBoxes.forEach(box => {
+        // Apply the apple-glass styling 
+        box.style.backgroundColor = 'rgba(42, 42, 45, 0.9)';
+        box.style.backdropFilter = 'blur(12px)';
+        box.style.borderRadius = '0.75rem';
+        box.style.boxShadow = '0 10px 25px -5px rgba(0, 0, 0, 0.3)';
+        
+        // Improve border visibility
+        box.style.borderWidth = '1px';
+        box.style.borderColor = 'rgba(255, 255, 255, 0.15)';
+      });
+    }, 500);
     
     return () => {
       // Clean up on unmount
