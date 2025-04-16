@@ -981,7 +981,7 @@ const Home = () => {
             style={{ opacity: stageRanges.cosmicWebTextOpacity }}
           >
             <motion.div 
-              className="bg-dark-card bg-opacity-90 backdrop-blur-md border border-purple-500/20 rounded-xl p-8 max-w-md text-center shadow-lg"
+              className="text-box border-purple-500/20"
               initial={{ y: 20, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               transition={{ duration: 0.7 }}
@@ -1287,7 +1287,7 @@ const Home = () => {
             style={{ opacity: stageRanges.finalTextOpacity }}
           >
             <motion.div 
-              className="bg-black bg-opacity-20 backdrop-blur-md border border-purple-500/10 rounded-xl p-8 max-w-lg text-center shadow-lg"
+              className="card-glass border-purple-500/20 p-8 max-w-lg text-center"
               initial={{ y: 20, opacity: 0, scale: 0.95 }}
               animate={{ y: 0, opacity: 1, scale: 1 }}
               transition={{ duration: 0.9, delay: 0.2 }}
@@ -1296,13 +1296,13 @@ const Home = () => {
               <p className="text-xl text-gray-300 mb-8">Welcome to greygolus.com</p>
               
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-center">
-                <Link href="/directory#calculators" className="bg-dark-card hover:bg-dark-hover transition-colors duration-300 rounded-xl border border-dark-border p-4">
+                <Link href="/directory#calculators" className="card-glass card-glass-hover transition-all duration-300 rounded-xl border border-dark-border p-4">
                   <span className="gradient-text font-bold">Calculators</span>
                 </Link>
-                <Link href="/reference" className="bg-dark-card hover:bg-dark-hover transition-colors duration-300 rounded-xl border border-dark-border p-4">
+                <Link href="/reference" className="card-glass card-glass-hover transition-all duration-300 rounded-xl border border-dark-border p-4">
                   <span className="gradient-text font-bold">References</span>
                 </Link>
-                <Link href="/directory" className="bg-dark-card hover:bg-dark-hover transition-colors duration-300 rounded-xl border border-dark-border p-4">
+                <Link href="/directory" className="card-glass card-glass-hover transition-all duration-300 rounded-xl border border-dark-border p-4">
                   <span className="gradient-text font-bold">All Tools</span>
                 </Link>
               </div>

@@ -28,7 +28,7 @@
   
   /* Text box styling for homepage */
   .text-box {
-    @apply bg-dark-card bg-opacity-90 backdrop-blur-md border border-dark-border/30 rounded-xl p-8 max-w-md text-center shadow-xl;
+    @apply bg-[#2a2a2d] bg-opacity-90 backdrop-blur-md border border-[#40404a]/30 rounded-xl p-8 max-w-md text-center shadow-xl;
   }
   
   /* Animation utilities for scroll effects */
@@ -86,12 +86,12 @@
   }
   
   /* Dark theme card and hover states for homepage */
-  .bg-dark-card {
-    @apply bg-[#2a2a2d] bg-opacity-90 backdrop-blur-md;
+  .card-glass {
+    @apply bg-[#2a2a2d] bg-opacity-90 backdrop-blur-md rounded-xl border border-[#40404a]/30 shadow-lg;
   }
   
-  .bg-dark-hover {
-    @apply bg-[#36363d] bg-opacity-100;
+  .card-glass-hover:hover {
+    @apply bg-[#36363d] transform scale-105 transition-all duration-300;
   }
   
   /* For zoom animation */
