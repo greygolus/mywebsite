@@ -3,6 +3,67 @@ import { motion, useScroll, useTransform, useMotionValueEvent } from 'framer-mot
 import { useRef, useState, useEffect } from 'react';
 import { useAppleGlassStyles, DepthAwareTextBox } from '../lib/applyTextBoxStyles';
 
+// Enhanced particle effect component for layering over scenes
+const EnhancedParticleField = ({ 
+  color="#ffffff", 
+  density=40, 
+  speed=50, 
+  opacity=0.3, 
+  glowIntensity=1,
+  minSize=0.3,
+  maxSize=1.5,
+  direction="random"
+}) => {
+  const getRandomDirection = () => {
+    if (direction === "up") return Math.random() * 180 + 90;
+    if (direction === "down") return Math.random() * 180 - 90;
+    if (direction === "random") return Math.random() * 360;
+    return 0;
+  };
+  
+  return (
+    <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
+      {Array.from({ length: density }).map((_, i) => (
+        <motion.div
+          key={`particle-${i}`}
+          className="absolute rounded-full"
+          style={{
+            width: `${minSize + Math.random() * (maxSize - minSize)}px`,
+            height: `${minSize + Math.random() * (maxSize - minSize)}px`,
+            backgroundColor: color,
+            left: `${Math.random() * 100}%`,
+            top: `${Math.random() * 100}%`,
+            boxShadow: glowIntensity > 0 ? `0 0 ${glowIntensity * 5}px ${color}` : 'none',
+            opacity: Math.random() * opacity + 0.1
+          }}
+          animate={{
+            x: [
+              0,
+              Math.sin(getRandomDirection() * Math.PI / 180) * speed,
+              0
+            ],
+            y: [
+              0,
+              Math.cos(getRandomDirection() * Math.PI / 180) * speed,
+              0
+            ],
+            opacity: [
+              Math.random() * opacity + 0.1,
+              Math.random() * (opacity/2) + 0.1,
+              Math.random() * opacity + 0.1
+            ]
+          }}
+          transition={{
+            duration: 15 + Math.random() * 20,
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
+        />
+      ))}
+    </div>
+  );
+};
+
 // SVG Components for animation scenes
 const CosmicWebSVG = () => (
   <svg className="w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid slice">
