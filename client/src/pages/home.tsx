@@ -1592,7 +1592,7 @@ const Home = () => {
       [30, 0, 0, -20],
     ),
 
-    // Scene 6: Telescope - EXTENDED TEXT DISPLAY
+    // Scene 6: Telescope - EXTENDED TEXT DISPLAY WITH LONGER FADE OUT
     telescopeOpacity: useTransform(
       scrollYProgress,
       [0.44, 0.45, 0.52, 0.54],
@@ -1600,22 +1600,22 @@ const Home = () => {
     ),
     telescopeTextOpacity: useTransform(
       scrollYProgress,
-      [0.46, 0.48, 0.515, 0.53],
+      [0.46, 0.48, 0.515, 0.54],
       [0, 1, 1, 0],
     ),
     telescopeScale: useTransform(scrollYProgress, [0.45, 0.54], [1, 2.5]),
     telescopeTextScale: useTransform(
       scrollYProgress,
-      [0.46, 0.48, 0.515, 0.53],
+      [0.46, 0.48, 0.515, 0.54],
       [0.8, 1.1, 1.1, 0.8],
     ),
     telescopeTextY: useTransform(
       scrollYProgress,
-      [0.46, 0.48, 0.515, 0.53],
+      [0.46, 0.48, 0.515, 0.54],
       [30, 0, 0, -20],
     ),
 
-    // Scene 7: Eye - EXTENDED TEXT DISPLAY
+    // Scene 7: Eye - EXTENDED TEXT DISPLAY WITH LONGER FADE OUT
     eyeOpacity: useTransform(
       scrollYProgress,
       [0.53, 0.54, 0.61, 0.63],
@@ -1623,22 +1623,22 @@ const Home = () => {
     ),
     eyeTextOpacity: useTransform(
       scrollYProgress,
-      [0.55, 0.57, 0.605, 0.62],
+      [0.55, 0.57, 0.605, 0.63],
       [0, 1, 1, 0],
     ),
     eyeScale: useTransform(scrollYProgress, [0.54, 0.63], [1, 2.5]),
     eyeTextScale: useTransform(
       scrollYProgress,
-      [0.55, 0.57, 0.605, 0.62],
+      [0.55, 0.57, 0.605, 0.63],
       [0.8, 1.1, 1.1, 0.8],
     ),
     eyeTextY: useTransform(
       scrollYProgress,
-      [0.55, 0.57, 0.605, 0.62],
+      [0.55, 0.57, 0.605, 0.63],
       [30, 0, 0, -20],
     ),
 
-    // Scene 8: DNA / Cell - EXTENDED TEXT DISPLAY
+    // Scene 8: DNA / Cell - EXTENDED TEXT DISPLAY WITH LONGER FADE OUT
     dnaOpacity: useTransform(
       scrollYProgress,
       [0.62, 0.63, 0.7, 0.72],
@@ -1646,22 +1646,22 @@ const Home = () => {
     ),
     dnaTextOpacity: useTransform(
       scrollYProgress,
-      [0.64, 0.66, 0.695, 0.71],
+      [0.64, 0.66, 0.695, 0.72],
       [0, 1, 1, 0],
     ),
     dnaScale: useTransform(scrollYProgress, [0.63, 0.72], [1, 2.5]),
     dnaTextScale: useTransform(
       scrollYProgress,
-      [0.64, 0.66, 0.695, 0.71],
+      [0.64, 0.66, 0.695, 0.72],
       [0.8, 1.1, 1.1, 0.8],
     ),
     dnaTextY: useTransform(
       scrollYProgress,
-      [0.64, 0.66, 0.695, 0.71],
+      [0.64, 0.66, 0.695, 0.72],
       [30, 0, 0, -20],
     ),
 
-    // Scene 9: Atom - EXTENDED TEXT DISPLAY
+    // Scene 9: Atom - EXTENDED TEXT DISPLAY WITH LONGER FADE OUT
     atomOpacity: useTransform(
       scrollYProgress,
       [0.71, 0.72, 0.79, 0.81],
@@ -1669,22 +1669,22 @@ const Home = () => {
     ),
     atomTextOpacity: useTransform(
       scrollYProgress,
-      [0.73, 0.75, 0.785, 0.8],
+      [0.73, 0.75, 0.785, 0.81],
       [0, 1, 1, 0],
     ),
     atomScale: useTransform(scrollYProgress, [0.72, 0.81], [1, 2.5]),
     atomTextScale: useTransform(
       scrollYProgress,
-      [0.73, 0.75, 0.785, 0.8],
+      [0.73, 0.75, 0.785, 0.81],
       [0.8, 1.1, 1.1, 0.8],
     ),
     atomTextY: useTransform(
       scrollYProgress,
-      [0.73, 0.75, 0.785, 0.8],
+      [0.73, 0.75, 0.785, 0.81],
       [30, 0, 0, -20],
     ),
 
-    // Scene 10: Nucleus - EXTENDED TEXT DISPLAY
+    // Scene 10: Nucleus - EXTENDED TEXT DISPLAY WITH LONGER FADE OUT
     nucleusOpacity: useTransform(
       scrollYProgress,
       [0.8, 0.81, 0.88, 0.9],
@@ -1692,22 +1692,22 @@ const Home = () => {
     ),
     nucleusTextOpacity: useTransform(
       scrollYProgress,
-      [0.82, 0.84, 0.875, 0.89],
+      [0.82, 0.84, 0.875, 0.9],
       [0, 1, 1, 0],
     ),
     nucleusScale: useTransform(scrollYProgress, [0.81, 0.9], [1, 2.5]),
     nucleusTextScale: useTransform(
       scrollYProgress,
-      [0.82, 0.84, 0.875, 0.89],
+      [0.82, 0.84, 0.875, 0.9],
       [0.8, 1.1, 1.1, 0.8],
     ),
     nucleusTextY: useTransform(
       scrollYProgress,
-      [0.82, 0.84, 0.875, 0.89],
+      [0.82, 0.84, 0.875, 0.9],
       [30, 0, 0, -20],
     ),
 
-    // Scene 11: Quarks / Gluons - EXTENDED TEXT DISPLAY
+    // Scene 11: Quarks / Gluons - EXTENDED TEXT DISPLAY WITH LONGER FADE OUT
     quarksOpacity: useTransform(
       scrollYProgress,
       [0.89, 0.9, 0.97, 0.99],
@@ -1715,18 +1715,18 @@ const Home = () => {
     ),
     quarksTextOpacity: useTransform(
       scrollYProgress,
-      [0.91, 0.93, 0.965, 0.98],
+      [0.91, 0.93, 0.965, 0.99],
       [0, 1, 1, 0],
     ),
     quarksScale: useTransform(scrollYProgress, [0.9, 0.99], [1, 2.5]),
     quarksTextScale: useTransform(
       scrollYProgress,
-      [0.91, 0.93, 0.965, 0.98],
+      [0.91, 0.93, 0.965, 0.99],
       [0.8, 1.1, 1.1, 0.8],
     ),
     quarksTextY: useTransform(
       scrollYProgress,
-      [0.91, 0.93, 0.965, 0.98],
+      [0.91, 0.93, 0.965, 0.99],
       [30, 0, 0, -20],
     ),
 
