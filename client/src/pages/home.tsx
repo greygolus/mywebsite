@@ -1162,7 +1162,7 @@ const Home = () => {
       <div className="h-[1200vh]">
         {/* Fixed position container for all scenes */}
         <div className="fixed inset-0 w-full h-full overflow-hidden">
-          {/* Scene 1: Cosmic Web */}
+          {/* Scene 1: Cosmic Web - Enhanced with particles and depth */}
           <motion.div 
             style={{ 
               opacity: stageRanges.cosmicWebOpacity,
@@ -1170,8 +1170,19 @@ const Home = () => {
             }} 
             className="absolute inset-0"
           >
-            <div className="absolute inset-0 bg-gradient-to-b from-purple-900 to-black opacity-95"></div>
+            <div className="absolute inset-0 bg-gradient-to-b from-purple-900 via-violet-950 to-black opacity-95"></div>
+            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(167,139,250,0.15),transparent_70%)]"></div>
             <CosmicWebSVG />
+            <EnhancedParticleField 
+              color="#C4B5FD" 
+              density={30} 
+              speed={30} 
+              opacity={0.4} 
+              glowIntensity={2} 
+              direction="random"
+              minSize={0.3}
+              maxSize={1.2}
+            />
           </motion.div>
           
           <motion.div 
@@ -1188,7 +1199,7 @@ const Home = () => {
             </DepthAwareTextBox>
           </motion.div>
           
-          {/* Scene 2: Galaxy */}
+          {/* Scene 2: Galaxy - Enhanced with nebula effect and starfield */}
           <motion.div 
             style={{ 
               opacity: stageRanges.galaxyOpacity,
@@ -1196,8 +1207,37 @@ const Home = () => {
             }} 
             className="absolute inset-0"
           >
-            <div className="absolute inset-0 bg-gradient-to-b from-blue-900 to-black opacity-95"></div>
+            <div className="absolute inset-0 bg-gradient-to-b from-blue-900 via-indigo-900 to-black opacity-95"></div>
+            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(59,130,246,0.15),transparent_70%)]"></div>
+            <div className="absolute inset-0 overflow-hidden">
+              {/* Nebula clouds */}
+              <motion.div 
+                className="absolute w-full h-full opacity-20"
+                animate={{
+                  rotate: 360
+                }}
+                transition={{
+                  duration: 120,
+                  repeat: Infinity,
+                  ease: "linear"
+                }}
+                style={{
+                  backgroundImage: "url('data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"100%\" height=\"100%\"><filter id=\"filter\"><feTurbulence type=\"fractalNoise\" baseFrequency=\"0.01\" numOctaves=\"3\" /><feColorMatrix values=\"0 0 0 0 0.3 0 0 0 0 0.5 0 0 0 0 0.8 0 0 0 0.5 0\" /></filter><rect width=\"100%\" height=\"100%\" filter=\"url(%23filter)\" /></svg>')",
+                  backgroundSize: "cover"
+                }}
+              />
+            </div>
             <GalaxySVG />
+            <EnhancedParticleField 
+              color="#93C5FD" 
+              density={60} 
+              speed={10} 
+              opacity={0.5} 
+              glowIntensity={1.5} 
+              direction="random"
+              minSize={0.2}
+              maxSize={1}
+            />
           </motion.div>
           
           <motion.div 
@@ -1214,7 +1254,7 @@ const Home = () => {
             </DepthAwareTextBox>
           </motion.div>
           
-          {/* Scene 3: Oort Cloud */}
+          {/* Scene 3: Oort Cloud - Enhanced with dust and depth effects */}
           <motion.div 
             style={{ 
               opacity: stageRanges.oortCloudOpacity,
@@ -1222,8 +1262,47 @@ const Home = () => {
             }} 
             className="absolute inset-0"
           >
-            <div className="absolute inset-0 bg-gradient-to-b from-slate-900 to-slate-950 opacity-90"></div>
+            <div className="absolute inset-0 bg-gradient-to-b from-slate-900 via-indigo-950 to-slate-950 opacity-90"></div>
+            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(148,163,184,0.05),transparent_70%)]"></div>
             <OortCloudSVG />
+            {/* Distant stars effect */}
+            <div className="absolute inset-0">
+              {Array.from({ length: 100 }).map((_, i) => (
+                <motion.div
+                  key={`distant-star-${i}`}
+                  className="absolute rounded-full bg-white"
+                  style={{
+                    width: Math.random() * 1 + 0.5 + 'px',
+                    height: Math.random() * 1 + 0.5 + 'px',
+                    left: `${Math.random() * 100}%`,
+                    top: `${Math.random() * 100}%`,
+                    boxShadow: `0 0 ${Math.random() * 3}px rgba(255,255,255,0.8)`,
+                    opacity: Math.random() * 0.5 + 0.1
+                  }}
+                  animate={{
+                    opacity: [
+                      Math.random() * 0.5 + 0.1,
+                      Math.random() * 0.3 + 0.05,
+                      Math.random() * 0.5 + 0.1
+                    ]
+                  }}
+                  transition={{
+                    duration: 3 + Math.random() * 5,
+                    repeat: Infinity,
+                    ease: "easeInOut"
+                  }}
+                />
+              ))}
+            </div>
+            <EnhancedParticleField 
+              color="#E2E8F0" 
+              density={25} 
+              speed={5} 
+              opacity={0.2} 
+              glowIntensity={0.5} 
+              minSize={0.2}
+              maxSize={0.8}
+            />
           </motion.div>
           
           <motion.div 
@@ -1240,7 +1319,7 @@ const Home = () => {
             </DepthAwareTextBox>
           </motion.div>
           
-          {/* Scene 4: Solar System */}
+          {/* Scene 4: Solar System - Enhanced with space depth and solar flares */}
           <motion.div 
             style={{ 
               opacity: stageRanges.solarSystemOpacity,
@@ -1248,8 +1327,88 @@ const Home = () => {
             }} 
             className="absolute inset-0"
           >
-            <div className="absolute inset-0 bg-gradient-to-b from-indigo-950 to-black opacity-90"></div>
+            <div className="absolute inset-0 bg-gradient-to-b from-indigo-950 via-blue-950 to-black opacity-90"></div>
+            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(251,146,60,0.08),transparent_70%)]"></div>
+            
+            {/* Solar prominences and flares */}
+            <div className="absolute inset-0 flex items-center justify-center">
+              <div className="relative" style={{ width: '10rem', height: '10rem' }}>
+                <motion.div
+                  className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-gradient-to-r from-orange-500 to-yellow-300 opacity-20 rounded-full"
+                  style={{ width: '12rem', height: '12rem' }}
+                  animate={{ 
+                    scale: [1, 1.1, 1],
+                    opacity: [0.2, 0.3, 0.2]
+                  }}
+                  transition={{ 
+                    duration: 8, 
+                    repeat: Infinity,
+                    ease: "easeInOut"
+                  }}
+                />
+                
+                {/* Solar flares */}
+                {[0, 45, 90, 135, 180, 225, 270, 315].map((angle, i) => (
+                  <motion.div 
+                    key={`flare-${i}`}
+                    className="absolute bg-gradient-to-r from-orange-500 to-yellow-300 opacity-40"
+                    style={{
+                      width: `${Math.random() * 3 + 4}rem`,
+                      height: '0.3rem',
+                      top: '50%',
+                      left: '50%',
+                      originX: 0,
+                      originY: 0.5,
+                      rotate: angle,
+                      borderRadius: '0.5rem',
+                      filter: 'blur(2px)'
+                    }}
+                    animate={{ 
+                      scaleX: [0.8, 1.2, 0.8],
+                      opacity: [0.3, 0.5, 0.3]
+                    }}
+                    transition={{ 
+                      duration: 4 + Math.random() * 4, 
+                      repeat: Infinity,
+                      ease: "easeInOut",
+                      delay: Math.random() * 2
+                    }}
+                  />
+                ))}
+              </div>
+            </div>
+            
             <SolarSystemSVG />
+            
+            {/* Background stars */}
+            <div className="absolute inset-0">
+              {Array.from({ length: 150 }).map((_, i) => (
+                <motion.div
+                  key={`bg-star-${i}`}
+                  className="absolute rounded-full bg-white"
+                  style={{
+                    width: Math.random() * 1.5 + 0.5 + 'px',
+                    height: Math.random() * 1.5 + 0.5 + 'px',
+                    left: `${Math.random() * 100}%`,
+                    top: `${Math.random() * 100}%`,
+                    boxShadow: `0 0 ${Math.random() * 2}px rgba(255,255,255,0.8)`,
+                    opacity: Math.random() * 0.7 + 0.2
+                  }}
+                  animate={{
+                    opacity: [
+                      Math.random() * 0.7 + 0.2,
+                      Math.random() * 0.4 + 0.1,
+                      Math.random() * 0.7 + 0.2
+                    ]
+                  }}
+                  transition={{
+                    duration: 2 + Math.random() * 3,
+                    repeat: Infinity,
+                    ease: "easeInOut"
+                  }}
+                />
+              ))}
+            </div>
           </motion.div>
           
           <motion.div 
@@ -1266,7 +1425,7 @@ const Home = () => {
             </DepthAwareTextBox>
           </motion.div>
           
-          {/* Scene 5: Earth */}
+          {/* Scene 5: Earth - Enhanced with atmospheric glow and aurora effects */}
           <motion.div 
             style={{ 
               opacity: stageRanges.earthOpacity,
@@ -1274,8 +1433,138 @@ const Home = () => {
             }} 
             className="absolute inset-0"
           >
-            <div className="absolute inset-0 bg-gradient-to-b from-blue-950 to-indigo-950 opacity-90"></div>
+            <div className="absolute inset-0 bg-gradient-radial from-blue-900 via-blue-950 to-indigo-950 opacity-90"></div>
+            
+            {/* Atmospheric glow */}
+            <div className="absolute inset-0 flex items-center justify-center">
+              <motion.div
+                className="absolute rounded-full bg-blue-400/5"
+                style={{ width: '55rem', height: '55rem' }}
+                animate={{ 
+                  scale: [1, 1.05, 1],
+                  opacity: [0.05, 0.08, 0.05]
+                }}
+                transition={{ 
+                  duration: 10,
+                  repeat: Infinity,
+                  ease: "easeInOut"
+                }}
+              />
+              <motion.div
+                className="absolute rounded-full bg-blue-300/10"
+                style={{ width: '52rem', height: '52rem' }}
+                animate={{ 
+                  scale: [1, 1.03, 1],
+                  opacity: [0.1, 0.15, 0.1]
+                }}
+                transition={{ 
+                  duration: 8,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                  delay: 0.5
+                }}
+              />
+            </div>
+            
+            {/* Northern lights / Aurora effect */}
+            <motion.div 
+              className="absolute inset-0" 
+              style={{ 
+                overflow: 'hidden', 
+                opacity: 0.15,
+                mixBlendMode: 'screen' 
+              }}
+            >
+              <svg width="100%" height="100%" viewBox="0 0 100 100" preserveAspectRatio="none">
+                <defs>
+                  <linearGradient id="aurora1" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stopColor="#60A5FA" />
+                    <stop offset="50%" stopColor="#34D399" />
+                    <stop offset="100%" stopColor="#3B82F6" />
+                  </linearGradient>
+                  <linearGradient id="aurora2" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stopColor="#8B5CF6" />
+                    <stop offset="50%" stopColor="#3B82F6" />
+                    <stop offset="100%" stopColor="#A78BFA" />
+                  </linearGradient>
+                  <filter id="auroraBlur" x="-50%" y="-50%" width="200%" height="200%">
+                    <feGaussianBlur in="SourceGraphic" stdDeviation="2" />
+                  </filter>
+                </defs>
+                
+                <motion.path 
+                  d="M20,40 Q30,35 40,38 T60,40 T80,38"
+                  stroke="url(#aurora1)"
+                  strokeWidth="2"
+                  fill="none"
+                  filter="url(#auroraBlur)"
+                  animate={{
+                    d: [
+                      "M20,40 Q30,35 40,38 T60,40 T80,38",
+                      "M20,38 Q30,42 40,39 T60,43 T80,40",
+                      "M20,40 Q30,35 40,38 T60,40 T80,38"
+                    ]
+                  }}
+                  transition={{
+                    duration: 15,
+                    repeat: Infinity,
+                    ease: "easeInOut"
+                  }}
+                />
+                
+                <motion.path 
+                  d="M10,44 Q25,46 35,43 T60,45 T90,42"
+                  stroke="url(#aurora2)"
+                  strokeWidth="1.5"
+                  fill="none"
+                  filter="url(#auroraBlur)"
+                  animate={{
+                    d: [
+                      "M10,44 Q25,46 35,43 T60,45 T90,42",
+                      "M10,42 Q25,40 35,45 T60,42 T90,44",
+                      "M10,44 Q25,46 35,43 T60,45 T90,42"
+                    ]
+                  }}
+                  transition={{
+                    duration: 20,
+                    repeat: Infinity,
+                    ease: "easeInOut"
+                  }}
+                />
+              </svg>
+            </motion.div>
+
             <EarthSVG />
+            
+            {/* Distant stars */}
+            <div className="absolute inset-0 -z-10">
+              {Array.from({ length: 100 }).map((_, i) => (
+                <motion.div
+                  key={`distant-earth-star-${i}`}
+                  className="absolute rounded-full bg-white"
+                  style={{
+                    width: Math.random() * 1 + 0.5 + 'px',
+                    height: Math.random() * 1 + 0.5 + 'px',
+                    left: `${Math.random() * 100}%`,
+                    top: `${Math.random() * 100}%`,
+                    boxShadow: `0 0 ${Math.random() * 2}px rgba(255,255,255,0.7)`,
+                    opacity: Math.random() * 0.4 + 0.1
+                  }}
+                  animate={{
+                    opacity: [
+                      Math.random() * 0.4 + 0.1,
+                      Math.random() * 0.2 + 0.05,
+                      Math.random() * 0.4 + 0.1
+                    ]
+                  }}
+                  transition={{
+                    duration: 3 + Math.random() * 5,
+                    repeat: Infinity,
+                    ease: "easeInOut"
+                  }}
+                />
+              ))}
+            </div>
           </motion.div>
           
           <motion.div 
