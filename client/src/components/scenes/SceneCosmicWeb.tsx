@@ -11,6 +11,8 @@ interface SceneCosmicWebProps {
 interface PathData {
   path: string;
   duration: number;
+  delay: number;
+  color: string;
 }
 
 interface NodeData {
@@ -21,12 +23,48 @@ interface NodeData {
   driftX: number;
   driftY: number;
   driftDuration: number;
+  color: string;
+  glow: boolean;
+}
+
+interface StarData {
+  cx: number;
+  cy: number;
+  r: number;
+  opacity: number;
+  twinkleSpeed: number;
 }
 
 const SceneCosmicWeb: React.FC<SceneCosmicWebProps> = ({ opacity, scale }) => {
-  // Precompute all random values for paths (cosmic web structure)
+  // Create a dynamic cosmic nebula effect 
+  const nebulaClouds = useMemo(() => {
+    return Array.from({ length: 5 }).map((_, i) => {
+      const size = 40 + Math.random() * 60;
+      const posX = Math.random() * 100;
+      const posY = Math.random() * 100;
+      const rotation = Math.random() * 360;
+      const duration = 80 + Math.random() * 40;
+      
+      return { size, posX, posY, rotation, duration }
+    });
+  }, []);
+  
+  // Create distant stars in the background
+  const stars = useMemo<StarData[]>(() => {
+    return Array.from({ length: 100 }).map(() => {
+      return {
+        cx: Math.random() * 100,
+        cy: Math.random() * 100,
+        r: Math.random() * 0.2 + 0.1,
+        opacity: Math.random() * 0.5 + 0.2,
+        twinkleSpeed: 1 + Math.random() * 2
+      };
+    });
+  }, []);
+
+  // Create dynamic cosmic web paths with enhanced variation
   const webPaths = useMemo<PathData[]>(() => {
-    return Array.from({ length: 20 }).map(() => {
+    return Array.from({ length: 25 }).map(() => {
       const startX = Math.random() * 100;
       const startY = Math.random() * 100;
       const cp1X = Math.random() * 100;
@@ -35,28 +73,43 @@ const SceneCosmicWeb: React.FC<SceneCosmicWebProps> = ({ opacity, scale }) => {
       const cp2Y = Math.random() * 100;
       const endX = Math.random() * 100;
       const endY = Math.random() * 100;
-      const duration = 3.5 + Math.random() * 2; // Random duration between 3.5-5.5s
+      const duration = 5 + Math.random() * 10; // Longer durations for more fluid motion
+      const delay = Math.random() * 5; // Random delay for more natural appearance
+      
+      // Variation in colors for visual interest
+      const colors = ["#A78BFA", "#8B5CF6", "#C4B5FD", "#7C3AED"];
+      const color = colors[Math.floor(Math.random() * colors.length)];
       
       return {
         path: `M${startX},${startY} C${cp1X},${cp1Y} ${cp2X},${cp2Y} ${endX},${endY}`,
-        duration
+        duration,
+        delay,
+        color
       };
     });
   }, []);
 
-  // Precompute all random values for nodes (circles)
+  // Create enhanced nodes with better glow and animation
   const nodes = useMemo<NodeData[]>(() => {
-    return Array.from({ length: 50 }).map(() => {
+    return Array.from({ length: 60 }).map(() => {
       const cx = Math.random() * 100;
       const cy = Math.random() * 100;
-      const r = Math.random() * 0.7 + 0.3; // Random radius between 0.3-1.0
-      const duration = 2 + Math.random() * 3; // Random duration between 2-5s
-      // Add slight drift for cosmic motion effect
-      const driftX = (Math.random() * 2 - 1) * 3; // Random value between -3 and 3
-      const driftY = (Math.random() * 2 - 1) * 3;
-      const driftDuration = 15 + Math.random() * 10; // Slow drift between 15-25s
+      const r = Math.random() * 0.8 + 0.3; // Increased size range
+      const duration = 2 + Math.random() * 4; // Varied animation duration
+      
+      // More dramatic motion for some nodes
+      const driftX = (Math.random() * 2 - 1) * (Math.random() < 0.3 ? 6 : 3); 
+      const driftY = (Math.random() * 2 - 1) * (Math.random() < 0.3 ? 6 : 3);
+      const driftDuration = 15 + Math.random() * 25; // More varied drift speeds
+      
+      // Color variations
+      const colors = ["#C4B5FD", "#A78BFA", "#DDD6FE", "#8B5CF6", "#EDE9FE"];
+      const color = colors[Math.floor(Math.random() * colors.length)];
+      
+      // Only larger nodes have glow effect for performance
+      const glow = r > 0.6 && Math.random() < 0.5;
 
-      return { cx, cy, r, duration, driftX, driftY, driftDuration };
+      return { cx, cy, r, duration, driftX, driftY, driftDuration, color, glow };
     });
   }, []);
 
@@ -67,9 +120,39 @@ const SceneCosmicWeb: React.FC<SceneCosmicWebProps> = ({ opacity, scale }) => {
         opacity,
         scale,
         willChange: "transform, opacity",
+        background: "linear-gradient(to bottom, rgba(15, 23, 42, 1), rgba(88, 28, 135, 0.8), rgba(15, 23, 42, 1))"
       }}
       layout={false}
     >
+      {/* Dynamic background glow */}
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(139,92,246,0.15),transparent_80%)]"></div>
+      
+      {/* Nebula effect */}
+      {nebulaClouds.map((cloud, i) => (
+        <motion.div
+          key={`nebula-${i}`}
+          className="absolute blur-3xl rounded-full opacity-10"
+          style={{
+            width: `${cloud.size}%`,
+            height: `${cloud.size}%`,
+            left: `${cloud.posX}%`,
+            top: `${cloud.posY}%`,
+            background: i % 2 === 0 
+              ? "radial-gradient(circle, rgba(139,92,246,0.3), rgba(124,58,237,0.1), transparent)" 
+              : "radial-gradient(circle, rgba(167,139,250,0.2), rgba(196,181,253,0.1), transparent)",
+            transform: `rotate(${cloud.rotation}deg)`
+          }}
+          animate={{
+            rotate: cloud.rotation + 360
+          }}
+          transition={{
+            duration: cloud.duration,
+            repeat: Infinity,
+            ease: "linear"
+          }}
+        />
+      ))}
+      
       <svg
         className="w-full h-full"
         viewBox="0 0 100 100"
@@ -85,51 +168,86 @@ const SceneCosmicWeb: React.FC<SceneCosmicWebProps> = ({ opacity, scale }) => {
             fx="50%"
             fy="50%"
           >
-            <stop offset="0%" stopColor="#8B5CF6" stopOpacity="0.2" />
-            <stop offset="50%" stopColor="#6D28D9" stopOpacity="0.1" />
+            <stop offset="0%" stopColor="#8B5CF6" stopOpacity="0.3" />
+            <stop offset="50%" stopColor="#6D28D9" stopOpacity="0.15" />
             <stop offset="100%" stopColor="#4C1D95" stopOpacity="0" />
           </radialGradient>
+          
+          {/* Glow filter for nodes */}
+          <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+            <feGaussianBlur stdDeviation="1.5" result="blur" />
+            <feComposite in="SourceGraphic" in2="blur" operator="over" />
+          </filter>
         </defs>
-        <rect width="100" height="100" fill="url(#cosmicGradient)" />
         
-        {/* Cosmic web-like structure with precomputed paths */}
+        {/* Background stars */}
+        {stars.map((star, i) => (
+          <motion.circle
+            key={`star-${i}`}
+            cx={star.cx}
+            cy={star.cy}
+            r={star.r}
+            fill="#FFFFFF"
+            initial={{ opacity: star.opacity }}
+            animate={{
+              opacity: [star.opacity, star.opacity * 0.5, star.opacity]
+            }}
+            transition={{
+              duration: star.twinkleSpeed,
+              repeat: Infinity,
+              ease: "easeInOut"
+            }}
+          />
+        ))}
+        
+        {/* Cosmic web-like structure with enhanced paths */}
         {webPaths.map((pathData, i) => (
           <motion.path
             key={`cosmic-web-${i}`}
             d={pathData.path}
-            stroke="#A78BFA"
-            strokeWidth="0.2"
+            stroke={pathData.color}
+            strokeWidth={0.15 + Math.random() * 0.15}
             strokeOpacity="0.6"
             fill="none"
-            initial={{ pathLength: 0 }}
-            animate={{ pathLength: 1 }}
+            initial={{ pathLength: 0, opacity: 0 }}
+            animate={{ 
+              pathLength: [0, 1, 0],
+              opacity: [0, 0.6, 0]
+            }}
             transition={{
               duration: pathData.duration,
+              delay: pathData.delay,
               repeat: Infinity,
-              repeatType: "reverse",
               ease: "easeInOut"
             }}
             style={{ willChange: "opacity, pathLength" }}
           />
         ))}
         
-        {/* Cosmic nodes (connection points) with precomputed values */}
+        {/* Enhanced cosmic nodes with glow effects */}
         {nodes.map((node, i) => (
           <motion.circle
             key={`cosmic-node-${i}`}
             cx={node.cx}
             cy={node.cy}
             r={node.r}
-            fill="#C4B5FD"
+            fill={node.color}
+            filter={node.glow ? "url(#glow)" : undefined}
             initial={{ opacity: 0.2 }}
             animate={{ 
               opacity: [0.2, 0.8, 0.2],
               cx: [node.cx, node.cx + node.driftX, node.cx],
-              cy: [node.cy, node.cy + node.driftY, node.cy]
+              cy: [node.cy, node.cy + node.driftY, node.cy],
+              scale: node.glow ? [1, 1.2, 1] : [1, 1.05, 1]
             }}
             transition={{ 
               opacity: {
                 duration: node.duration,
+                repeat: Infinity,
+                ease: "easeInOut"
+              },
+              scale: {
+                duration: node.duration * 1.5,
                 repeat: Infinity,
                 ease: "easeInOut"
               },
@@ -150,6 +268,15 @@ const SceneCosmicWeb: React.FC<SceneCosmicWebProps> = ({ opacity, scale }) => {
           />
         ))}
       </svg>
+      
+      {/* Subtle energy field overlay */}
+      <div 
+        className="absolute inset-0 opacity-30"
+        style={{
+          backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Cfilter id='noise' x='0%25' y='0%25' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch' result='noise'/%3E%3CfeColorMatrix type='matrix' values='1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 0.1 0' result='coloredNoise'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E")`,
+          mixBlendMode: "overlay"
+        }}
+      />
     </motion.div>
   );
 };

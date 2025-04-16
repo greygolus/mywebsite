@@ -1849,29 +1849,20 @@ const Home = () => {
         {/* Fixed position container for all scenes */}
         <div className="fixed inset-0 w-full h-full overflow-hidden">
           {/* Scene 1: Cosmic Web - Enhanced with particles and depth */}
-          <motion.div
-            style={{
-              opacity: stageRanges.cosmicWebOpacity,
-              scale: stageRanges.cosmicWebScale,
-              willChange: "transform, opacity",
-            }}
-            layout={false}
-            className="absolute inset-0"
-          >
-            <div className="absolute inset-0 bg-gradient-to-b from-purple-900 via-violet-950 to-black opacity-95"></div>
-            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(167,139,250,0.15),transparent_70%)]"></div>
-            <CosmicWebSVG />
-            <LegacyParticleField
-              color="#C4B5FD"
-              density={15}
-              speed={20}
-              opacity={0.4}
-              glowIntensity={1.5}
-              direction="random"
-              minSize={0.3}
-              maxSize={1.2}
-            />
-          </motion.div>
+          <SceneCosmicWeb 
+            opacity={stageRanges.cosmicWebOpacity}
+            scale={stageRanges.cosmicWebScale}
+          />
+          <OptimizedParticleField
+            color="#C4B5FD"
+            density={20}
+            speed={10}
+            opacity={0.35}
+            glowIntensity={1.2}
+            direction="random"
+            minSize={0.4}
+            maxSize={1.5}
+          />
 
           <motion.div
             className="absolute inset-0 flex items-center justify-center pointer-events-none"
