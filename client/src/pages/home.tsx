@@ -2001,25 +2001,12 @@ const Home = () => {
             className="absolute inset-0"
           >
 
-            {/* Solar prominences and flares */}
+            {/* Solar prominences and flares - removed the large background glow */}
             <div className="absolute inset-0 flex items-center justify-center">
               <div
                 className="relative"
                 style={{ width: "10rem", height: "10rem" }}
               >
-                <motion.div
-                  className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-gradient-to-r from-orange-500 to-yellow-300 opacity-20 rounded-full"
-                  style={{ width: "12rem", height: "12rem" }}
-                  animate={{
-                    scale: [1, 1.1, 1],
-                    opacity: [0.2, 0.3, 0.2],
-                  }}
-                  transition={{
-                    duration: 8,
-                    repeat: Infinity,
-                    ease: "easeInOut",
-                  }}
-                />
 
                 {/* Solar flares */}
                 {[0, 45, 90, 135, 180, 225, 270, 315].map((angle, i) => (
