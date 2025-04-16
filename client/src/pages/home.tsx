@@ -11,6 +11,7 @@ import {
   DepthAwareTextBox,
 } from "../lib/applyTextBoxStyles";
 import OptimizedParticleField from "@/components/ui/enhanced-particle-field";
+import useMediaQuery from "@/hooks/useMediaQuery";
 
 // Import optimized scene components
 import SceneCosmicWeb from "@/components/scenes/SceneCosmicWeb";
@@ -37,6 +38,14 @@ const LegacyParticleField = ({
   maxSize = 1.5,
   direction = "random",
 }) => {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const offscreenCanvasRef = useRef<HTMLCanvasElement>(document.createElement('canvas'));
+  const glowCanvasRef = useRef<HTMLCanvasElement>(document.createElement('canvas'));
+  const particlesRef = useRef<Particle[]>([]);
+  const animationFrameRef = useRef<number>();
+  const lastTimeRef = useRef<number>(0);
+  const isMobile = useMediaQuery("(max-width: 768px)");
+
   const getRandomDirection = () => {
     if (direction === "up") return Math.random() * 180 + 90;
     if (direction === "down") return Math.random() * 180 - 90;
@@ -44,263 +53,436 @@ const LegacyParticleField = ({
     return 0;
   };
 
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    const offscreenCanvas = offscreenCanvasRef.current;
+    const glowCanvas = glowCanvasRef.current;
+    if (!canvas || !offscreenCanvas || !glowCanvas) return;
+
+    const ctx = canvas.getContext("2d", { alpha: false });
+    const offscreenCtx = offscreenCanvas.getContext("2d", { alpha: false });
+    const glowCtx = glowCanvas.getContext("2d", { alpha: false });
+    if (!ctx || !offscreenCtx || !glowCtx) return;
+
+    // Initialize canvases
+    const updateCanvasSize = () => {
+      const dpr = window.devicePixelRatio || 1;
+      const rect = canvas.getBoundingClientRect();
+      canvas.width = rect.width * dpr;
+      canvas.height = rect.height * dpr;
+      offscreenCanvas.width = canvas.width;
+      offscreenCanvas.height = canvas.height;
+      glowCanvas.width = canvas.width;
+      glowCanvas.height = canvas.height;
+      ctx.scale(dpr, dpr);
+      offscreenCtx.scale(dpr, dpr);
+      glowCtx.scale(dpr, dpr);
+    };
+
+    updateCanvasSize();
+    window.addEventListener("resize", updateCanvasSize);
+
+    // Initialize particles with reduced count for mobile
+    const particleCount = isMobile ? Math.floor(density * 0.5) : density;
+    particlesRef.current = Array.from({ length: particleCount }, () => ({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height,
+      size: Math.random() * (maxSize - minSize) + minSize,
+      color,
+      initialX: Math.random() * canvas.width,
+      initialY: Math.random() * canvas.height,
+      speed: Math.random() * speed * 0.5 + speed * 0.5,
+      direction: getRandomDirection(),
+      opacity: Math.random() * opacity + 0.1,
+    }));
+
+    // Simplified render function for mobile
+    const renderParticles = () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      
+      if (isMobile) {
+        // Mobile-optimized rendering
+        particlesRef.current.forEach((particle) => {
+          ctx.beginPath();
+          ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
+          ctx.fillStyle = color;
+          ctx.globalAlpha = particle.opacity;
+          ctx.fill();
+        });
+      } else {
+        // Desktop rendering with effects
+        renderGlow();
+        renderParticlesWithTrails();
+      }
+    };
+
+    // Render glow effect (desktop only)
+    const renderGlow = () => {
+      glowCtx.clearRect(0, 0, glowCanvas.width, glowCanvas.height);
+      particlesRef.current.forEach((particle) => {
+        const gradient = glowCtx.createRadialGradient(
+          particle.x,
+          particle.y,
+          0,
+          particle.x,
+          particle.y,
+          particle.size * 3
+        );
+        gradient.addColorStop(0, color);
+        gradient.addColorStop(1, 'transparent');
+        
+        glowCtx.beginPath();
+        glowCtx.arc(particle.x, particle.y, particle.size * 3, 0, Math.PI * 2);
+        glowCtx.fillStyle = gradient;
+        glowCtx.globalAlpha = particle.opacity * 0.5;
+        glowCtx.fill();
+      });
+    };
+
+    // Render particles with trails (desktop only)
+    const renderParticlesWithTrails = () => {
+      offscreenCtx.clearRect(0, 0, offscreenCanvas.width, offscreenCanvas.height);
+      particlesRef.current.forEach((particle) => {
+        const gradient = offscreenCtx.createRadialGradient(
+          particle.x,
+          particle.y,
+          0,
+          particle.x,
+          particle.y,
+          particle.size * 2
+        );
+        gradient.addColorStop(0, color);
+        gradient.addColorStop(1, 'transparent');
+        
+        offscreenCtx.beginPath();
+        offscreenCtx.arc(particle.x, particle.y, particle.size * 2, 0, Math.PI * 2);
+        offscreenCtx.fillStyle = gradient;
+        offscreenCtx.globalAlpha = particle.opacity * 0.3;
+        offscreenCtx.fill();
+
+        offscreenCtx.beginPath();
+        offscreenCtx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
+        offscreenCtx.fillStyle = color;
+        offscreenCtx.globalAlpha = particle.opacity;
+        offscreenCtx.fill();
+      });
+    };
+
+    const animate = (time: number) => {
+      if (!lastTimeRef.current) lastTimeRef.current = time;
+      const deltaTime = Math.min(time - lastTimeRef.current, 16);
+      lastTimeRef.current = time;
+
+      // Update particles with smooth motion
+      particlesRef.current.forEach((particle) => {
+        const targetX = particle.x + Math.cos(particle.direction) * particle.speed * (deltaTime / 16);
+        const targetY = particle.y + Math.sin(particle.direction) * particle.speed * (deltaTime / 16);
+        
+        // Smooth interpolation
+        particle.x += (targetX - particle.x) * 0.1;
+        particle.y += (targetY - particle.y) * 0.1;
+
+        // Wrap around edges with smooth transition
+        if (particle.x < 0) particle.x = canvas.width;
+        if (particle.x > canvas.width) particle.x = 0;
+        if (particle.y < 0) particle.y = canvas.height;
+        if (particle.y > canvas.height) particle.y = 0;
+
+        // Animate opacity
+        particle.opacity = Math.sin(time * 0.001 + particle.initialX) * 0.2 + opacity;
+      });
+
+      // Render based on device type
+      if (isMobile) {
+        renderParticles();
+      } else {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        renderGlow();
+        renderParticlesWithTrails();
+        ctx.globalCompositeOperation = 'lighter';
+        ctx.drawImage(glowCanvas, 0, 0);
+        ctx.drawImage(offscreenCanvas, 0, 0);
+        ctx.globalCompositeOperation = 'source-over';
+      }
+
+      animationFrameRef.current = requestAnimationFrame(animate);
+    };
+
+    animationFrameRef.current = requestAnimationFrame(animate);
+
+    return () => {
+      window.removeEventListener("resize", updateCanvasSize);
+      if (animationFrameRef.current) {
+        cancelAnimationFrame(animationFrameRef.current);
+      }
+    };
+  }, [color, density, speed, opacity, glowIntensity, minSize, maxSize, direction, isMobile]);
+
   return (
-    <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
-      {Array.from({ length: density }).map((_, i) => (
-        <motion.div
-          key={`particle-${i}`}
-          className="absolute rounded-full"
-          style={{
-            width: `${minSize + Math.random() * (maxSize - minSize)}px`,
-            height: `${minSize + Math.random() * (maxSize - minSize)}px`,
-            backgroundColor: color,
-            left: `${Math.random() * 100}%`,
-            top: `${Math.random() * 100}%`,
-            boxShadow:
-              glowIntensity > 0
-                ? `0 0 ${glowIntensity * 5}px ${color}`
-                : "none",
-            opacity: Math.random() * opacity + 0.1,
-          }}
-          animate={{
-            x: [0, Math.sin((getRandomDirection() * Math.PI) / 180) * speed, 0],
-            y: [0, Math.cos((getRandomDirection() * Math.PI) / 180) * speed, 0],
-            opacity: [
-              Math.random() * opacity + 0.1,
-              Math.random() * (opacity / 2) + 0.1,
-              Math.random() * opacity + 0.1,
-            ],
-          }}
-          transition={{
-            duration: 15 + Math.random() * 20,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
-        />
-      ))}
-    </div>
+    <canvas
+      ref={canvasRef}
+      className="absolute inset-0 w-full h-full"
+      style={{ opacity }}
+    />
   );
 };
 
 // SVG Components for animation scenes
+interface PathData {
+  path: string;
+  duration: number;
+}
+
+interface NodeData {
+  cx: number;
+  cy: number;
+  r: number;
+  duration: number;
+  driftX: number;
+  driftY: number;
+  driftDuration: number;
+}
+
 const CosmicWebSVG = () => {
-  // Precompute all random values for paths (cosmic web structure)
-  interface PathData {
-    path: string;
-    duration: number;
-  }
+  const isMobile = useMediaQuery("(max-width: 768px)");
+  const [isVisible, setIsVisible] = useState(false);
+  const pathsRef = useRef<PathData[]>([]);
+  const nodesRef = useRef<NodeData[]>([]);
 
-  interface NodeData {
-    cx: number;
-    cy: number;
-    r: number;
-    duration: number;
-    driftX: number;
-    driftY: number;
-    driftDuration: number;
-  }
+  useEffect(() => {
+    // Initialize paths and nodes with increased counts
+    const nodeCount = isMobile ? 8 : 15; // Increased from 6/12
+    const pathCount = isMobile ? 15 : 30; // Increased from 10/25
 
-  const webPaths = useMemo<PathData[]>(() => {
-    return Array.from({ length: 20 }).map(() => {
-      const startX = Math.random() * 100;
-      const startY = Math.random() * 100;
-      const cp1X = Math.random() * 100;
-      const cp1Y = Math.random() * 100;
-      const cp2X = Math.random() * 100;
-      const cp2Y = Math.random() * 100;
-      const endX = Math.random() * 100;
-      const endY = Math.random() * 100;
-      const duration = 3.5 + Math.random() * 2; // Random duration between 3.5-5.5s
+    // Create nodes with enhanced properties
+    nodesRef.current = Array.from({ length: nodeCount }, () => ({
+      cx: Math.random() * 100,
+      cy: Math.random() * 100,
+      r: Math.random() * 3 + 1, // Increased size range
+      duration: Math.random() * 15 + 15, // Longer duration
+      driftX: (Math.random() - 0.5) * 0.8, // Increased drift
+      driftY: (Math.random() - 0.5) * 0.8,
+      driftDuration: Math.random() * 8 + 8, // Longer drift duration
+    }));
 
+    // Create paths with enhanced properties
+    pathsRef.current = Array.from({ length: pathCount }, () => {
+      const startNode = nodesRef.current[Math.floor(Math.random() * nodeCount)];
+      const endNode = nodesRef.current[Math.floor(Math.random() * nodeCount)];
+      const controlX1 = (startNode.cx + endNode.cx) / 2 + (Math.random() - 0.5) * 20;
+      const controlY1 = (startNode.cy + endNode.cy) / 2 + (Math.random() - 0.5) * 20;
+      const controlX2 = (startNode.cx + endNode.cx) / 2 + (Math.random() - 0.5) * 20;
+      const controlY2 = (startNode.cy + endNode.cy) / 2 + (Math.random() - 0.5) * 20;
+      
       return {
-        path: `M${startX},${startY} C${cp1X},${cp1Y} ${cp2X},${cp2Y} ${endX},${endY}`,
-        duration,
+        path: `M ${startNode.cx} ${startNode.cy} C ${controlX1} ${controlY1}, ${controlX2} ${controlY2}, ${endNode.cx} ${endNode.cy}`,
+        duration: Math.random() * 20 + 20, // Longer duration
       };
     });
-  }, []);
 
-  // Precompute all random values for nodes (circles)
-  const nodes = useMemo<NodeData[]>(() => {
-    return Array.from({ length: 50 }).map(() => {
-      const cx = Math.random() * 100;
-      const cy = Math.random() * 100;
-      const r = Math.random() * 0.7 + 0.3; // Random radius between 0.3-1.0
-      const duration = 2 + Math.random() * 3; // Random duration between 2-5s
-      // Add slight drift for cosmic motion effect
-      const driftX = (Math.random() * 2 - 1) * 3; // Random value between -3 and 3
-      const driftY = (Math.random() * 2 - 1) * 3;
-      const driftDuration = 15 + Math.random() * 10; // Slow drift between 15-25s
-
-      return { cx, cy, r, duration, driftX, driftY, driftDuration };
-    });
-  }, []);
+    setIsVisible(true);
+  }, [isMobile]);
 
   return (
     <svg
-      className="w-full h-full"
+      className="absolute inset-0 w-full h-full"
       viewBox="0 0 100 100"
       preserveAspectRatio="xMidYMid slice"
-      style={{ transform: "translateZ(0)" }} // Force GPU acceleration
     >
       <defs>
-        <radialGradient
-          id="cosmicGradient"
-          cx="50%"
-          cy="50%"
-          r="100%"
-          fx="50%"
-          fy="50%"
-        >
-          <stop offset="0%" stopColor="#8B5CF6" stopOpacity="0.2" />
-          <stop offset="50%" stopColor="#6D28D9" stopOpacity="0.1" />
-          <stop offset="100%" stopColor="#4C1D95" stopOpacity="0" />
-        </radialGradient>
+        <linearGradient id="cosmicGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stopColor="#4F46E5" stopOpacity="0.4" />
+          <stop offset="50%" stopColor="#818CF8" stopOpacity="0.4" />
+          <stop offset="100%" stopColor="#4F46E5" stopOpacity="0.4" />
+        </linearGradient>
+        <filter id="glow">
+          <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+          <feMerge>
+            <feMergeNode in="coloredBlur"/>
+            <feMergeNode in="SourceGraphic"/>
+          </feMerge>
+        </filter>
       </defs>
-      <rect width="100" height="100" fill="url(#cosmicGradient)" />
 
-      {/* Cosmic web-like structure with precomputed paths */}
-      {webPaths.map((pathData, i) => (
+      {/* Background glow */}
+      <rect
+        x="0"
+        y="0"
+        width="100"
+        height="100"
+        fill="url(#cosmicGradient)"
+        opacity="0.1"
+      />
+
+      {/* Animated paths with enhanced effects */}
+      {pathsRef.current.map((path, i) => (
         <motion.path
-          key={`cosmic-web-${i}`}
-          d={pathData.path}
-          stroke="#A78BFA"
-          strokeWidth="0.2"
-          strokeOpacity="0.6"
+          key={`path-${i}`}
+          d={path.path}
           fill="none"
-          initial={{ pathLength: 0 }}
-          animate={{ pathLength: 1 }}
-          transition={{
-            duration: pathData.duration,
-            repeat: Infinity,
-            repeatType: "reverse",
-            ease: "easeInOut",
+          stroke="url(#cosmicGradient)"
+          strokeWidth="0.4" // Increased stroke width
+          filter="url(#glow)"
+          initial={{ pathLength: 0, opacity: 0 }}
+          animate={{
+            pathLength: [0, 1, 0],
+            opacity: [0, 0.7, 0], // Increased opacity
           }}
-          style={{ willChange: "opacity, pathLength" }}
+          transition={{
+            duration: path.duration,
+            repeat: Infinity,
+            ease: "linear",
+            delay: i * 0.3,
+          }}
         />
       ))}
 
-      {/* Cosmic nodes (connection points) with precomputed values */}
-      {nodes.map((node, i) => (
+      {/* Animated nodes with enhanced effects */}
+      {nodesRef.current.map((node, i) => (
         <motion.circle
-          key={`cosmic-node-${i}`}
+          key={`node-${i}`}
           cx={node.cx}
           cy={node.cy}
           r={node.r}
-          fill="#C4B5FD"
-          initial={{ opacity: 0.2 }}
+          fill="url(#cosmicGradient)"
+          filter="url(#glow)"
+          initial={{ opacity: 0 }}
           animate={{
-            opacity: [0.2, 0.8, 0.2],
-            cx: [node.cx, node.cx + node.driftX, node.cx],
-            cy: [node.cy, node.cy + node.driftY, node.cy],
+            opacity: [0.4, 0.8, 0.4], // Increased opacity range
+            x: [0, node.driftX, 0],
+            y: [0, node.driftY, 0],
+            scale: [1, 1.2, 1], // Added scale animation
           }}
           transition={{
-            opacity: {
-              duration: node.duration,
-              repeat: Infinity,
-              ease: "easeInOut",
-            },
-            cx: {
-              duration: node.driftDuration,
-              repeat: Infinity,
-              repeatType: "reverse",
-              ease: "easeInOut",
-            },
-            cy: {
-              duration: node.driftDuration,
-              repeat: Infinity,
-              repeatType: "reverse",
-              ease: "easeInOut",
-            },
+            duration: node.duration,
+            repeat: Infinity,
+            ease: "easeInOut",
+            delay: i * 0.2,
           }}
-          style={{ willChange: "opacity, transform" }}
         />
       ))}
+
+      {/* Additional glow effects */}
+      <motion.circle
+        cx="50"
+        cy="50"
+        r="30"
+        fill="url(#cosmicGradient)"
+        opacity="0.1"
+        animate={{
+          scale: [1, 1.2, 1],
+          opacity: [0.1, 0.2, 0.1],
+        }}
+        transition={{
+          duration: 10,
+          repeat: Infinity,
+          ease: "easeInOut",
+        }}
+      />
     </svg>
   );
 };
 
-const GalaxySVG = () => (
-  <svg
-    className="w-full h-full"
-    viewBox="0 0 100 100"
-    preserveAspectRatio="xMidYMid slice"
-  >
-    <defs>
-      <radialGradient
-        id="galaxyGradient"
-        cx="50%"
-        cy="50%"
-        r="100%"
-        fx="50%"
-        fy="50%"
-      >
-        <stop offset="0%" stopColor="#93C5FD" stopOpacity="0.8" />
-        <stop offset="30%" stopColor="#60A5FA" stopOpacity="0.6" />
-        <stop offset="70%" stopColor="#2563EB" stopOpacity="0.3" />
-        <stop offset="100%" stopColor="#1E40AF" stopOpacity="0" />
-      </radialGradient>
-      <filter id="galaxyGlow" x="-50%" y="-50%" width="200%" height="200%">
-        <feGaussianBlur stdDeviation="2" result="blur" />
-        <feComposite in="SourceGraphic" in2="blur" operator="over" />
-      </filter>
-    </defs>
-    <circle
-      cx="50"
-      cy="50"
-      r="25"
-      fill="url(#galaxyGradient)"
-      filter="url(#galaxyGlow)"
-    />
+const GalaxySVG = () => {
+  const isMobile = useMediaQuery("(max-width: 768px)");
+  const [isVisible, setIsVisible] = useState(false);
 
-    {/* Spiral arms */}
-    <motion.path
-      d="M50,50 Q60,30 80,20 T50,10 T20,20 T40,30 T50,50"
-      fill="none"
-      stroke="#93C5FD"
-      strokeWidth="0.5"
-      strokeOpacity="0.6"
-      initial={{ pathLength: 0, rotate: 0 }}
-      animate={{ pathLength: 1, rotate: 360 }}
-      transition={{
-        pathLength: { duration: 3 },
-        rotate: { duration: 60, repeat: Infinity, ease: "linear" },
-      }}
-    />
-    <motion.path
-      d="M50,50 Q60,70 80,80 T50,90 T20,80 T40,70 T50,50"
-      fill="none"
-      stroke="#93C5FD"
-      strokeWidth="0.5"
-      strokeOpacity="0.6"
-      initial={{ pathLength: 0, rotate: 0 }}
-      animate={{ pathLength: 1, rotate: 360 }}
-      transition={{
-        pathLength: { duration: 3 },
-        rotate: { duration: 60, repeat: Infinity, ease: "linear" },
-      }}
-    />
+  useEffect(() => {
+    setIsVisible(true);
+  }, []);
 
-    {/* Stars */}
-    {Array.from({ length: 80 }).map((_, i) => {
-      const distance = 20 + Math.random() * 30;
-      const angle = Math.random() * Math.PI * 2;
-      const x = 50 + Math.cos(angle) * distance;
-      const y = 50 + Math.sin(angle) * distance;
-      return (
-        <motion.circle
-          key={`galaxy-star-${i}`}
-          cx={x}
-          cy={y}
-          r={Math.random() * 0.4 + 0.1}
-          fill="white"
-          initial={{ opacity: 0.1 }}
-          animate={{ opacity: [0.2, 0.8, 0.2] }}
-          transition={{ duration: 1 + Math.random() * 3, repeat: Infinity }}
+  // Reduced number of stars for mobile
+  const starCount = isMobile ? 50 : 100;
+  const armCount = isMobile ? 2 : 4;
+
+  if (!isVisible) return null;
+
+  return (
+    <svg
+      className="absolute inset-0 w-full h-full"
+      viewBox="0 0 100 100"
+      preserveAspectRatio="xMidYMid slice"
+    >
+      <defs>
+        <filter id="starGlow" x="-50%" y="-50%" width="200%" height="200%">
+          <feGaussianBlur stdDeviation="0.3" result="blur" />
+          <feComposite in="SourceGraphic" in2="blur" operator="over" />
+        </filter>
+      </defs>
+
+      {/* Galaxy core */}
+      <motion.circle
+        cx="50"
+        cy="50"
+        r="5"
+        fill="url(#galaxyGradient)"
+        initial={{ scale: 0, opacity: 0 }}
+        animate={{ scale: 1, opacity: 1 }}
+        transition={{ duration: 2, ease: "easeOut" }}
+      />
+
+      {/* Spiral arms */}
+      {Array.from({ length: armCount }).map((_, armIndex) => (
+        <motion.path
+          key={`arm-${armIndex}`}
+          d={generateSpiralPath(armIndex * (360 / armCount))}
+          fill="none"
+          stroke="rgba(147, 197, 253, 0.1)"
+          strokeWidth="0.1"
+          initial={{ pathLength: 0, opacity: 0 }}
+          animate={{ pathLength: 1, opacity: 0.3 }}
+          transition={{
+            duration: 20,
+            repeat: Infinity,
+            ease: "linear",
+          }}
         />
-      );
-    })}
-  </svg>
-);
+      ))}
+
+      {/* Stars */}
+      {Array.from({ length: starCount }).map((_, i) => {
+        const angle = (i / starCount) * Math.PI * 2;
+        const distance = 5 + Math.random() * 40;
+        const x = 50 + Math.cos(angle) * distance;
+        const y = 50 + Math.sin(angle) * distance;
+        const size = 0.1 + Math.random() * 0.3;
+
+        return (
+          <motion.circle
+            key={`star-${i}`}
+            cx={x}
+            cy={y}
+            r={size}
+            fill="white"
+            filter="url(#starGlow)"
+            initial={{ scale: 0, opacity: 0 }}
+            animate={{
+              scale: [1, 1.2, 1],
+              opacity: [0.5, 0.8, 0.5],
+            }}
+            transition={{
+              duration: 2 + Math.random() * 3,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
+          />
+        );
+      })}
+    </svg>
+  );
+};
+
+const generateSpiralPath = (startAngle: number) => {
+  const points: [number, number][] = [];
+  for (let i = 0; i <= 100; i++) {
+    const angle = startAngle + (i / 100) * 720;
+    const distance = 5 + (i / 100) * 40;
+    const x = 50 + Math.cos((angle * Math.PI) / 180) * distance;
+    const y = 50 + Math.sin((angle * Math.PI) / 180) * distance;
+    points.push([x, y]);
+  }
+  return `M${points.map(([x, y]) => `${x},${y}`).join(" L")}`;
+};
 
 const OortCloudSVG = () => (
   <svg
@@ -1127,6 +1309,7 @@ interface Particle {
   initialY: number;
   speed: number;
   direction: number;
+  opacity: number;
 }
 
 interface Star {
@@ -1153,6 +1336,7 @@ const QuarksSVG = () => {
         initialY: Math.random() * 100,
         speed: Math.random() * 2 + 0.5,
         direction: Math.random() * Math.PI * 2,
+        opacity: Math.random() * 0.7 + 0.3,
       });
     }
     setParticles(newParticles);
@@ -1607,6 +1791,7 @@ const Home = () => {
         initialY: Math.random() * window.innerHeight,
         speed: Math.random() * 0.02 + 0.01, // Even slower movement for better performance
         direction: Math.random() * 360,
+        opacity: Math.random() * 0.7 + 0.3,
       });
     }
     setParticles(newParticles);
@@ -1676,7 +1861,7 @@ const Home = () => {
             <div className="absolute inset-0 bg-gradient-to-b from-purple-900 via-violet-950 to-black opacity-95"></div>
             <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(167,139,250,0.15),transparent_70%)]"></div>
             <CosmicWebSVG />
-            <OptimizedParticleField
+            <LegacyParticleField
               color="#C4B5FD"
               density={15}
               speed={20}
@@ -1738,7 +1923,7 @@ const Home = () => {
               />
             </div>
             <GalaxySVG />
-            <OptimizedParticleField
+            <LegacyParticleField
               color="#93C5FD"
               density={30}
               speed={8}
@@ -1810,7 +1995,7 @@ const Home = () => {
                 />
               ))}
             </div>
-            <OptimizedParticleField
+            <LegacyParticleField
               color="#E2E8F0"
               density={25}
               speed={5}
@@ -2538,7 +2723,7 @@ const Home = () => {
             </div>
 
             {/* Bio-luminescent particles */}
-            <OptimizedParticleField
+            <LegacyParticleField
               color="#22D3EE"
               density={30}
               speed={15}
