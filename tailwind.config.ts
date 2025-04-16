@@ -13,17 +13,17 @@ export default {
       colors: {
         // Custom colors for greygolus.com
         dark: {
-          background: "#1e1e20", // ChatGPT-like dark background
-          card: "#252529",       // Slightly lighter for cards
-          hover: "#2a2a2e",      // Hover state color
-          border: "#34343a",     // Border color
-          muted: "#4a4a52",      // Muted elements
+          background: "#1e1e20", // Dark background
+          card: "#2a2a2d",       // Card background
+          hover: "#36363d",      // Hover state color
+          border: "#40404a",     // Border color
+          muted: "#52525a",      // Muted elements
         },
         // Gradient colors
         glow: {
-          purple: "#a78bfa",     // Purple component of gradient 
-          blue: "#60a5fa",       // Blue component of gradient
-          cyan: "#67e8f9",       // Cyan component of gradient
+          purple: "#a855f7",     // Purple component of gradient 
+          blue: "#3b82f6",       // Blue component of gradient
+          cyan: "#22d3ee",       // Cyan component of gradient
         },
         // Original theme colors
         background: "hsl(var(--background))",

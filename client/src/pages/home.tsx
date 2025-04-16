@@ -981,7 +981,7 @@ const Home = () => {
             style={{ opacity: stageRanges.cosmicWebTextOpacity }}
           >
             <motion.div 
-              className="bg-black bg-opacity-20 backdrop-blur-md border border-purple-500/10 rounded-xl p-6 max-w-md text-center shadow-lg"
+              className="bg-dark-card bg-opacity-90 backdrop-blur-md border border-purple-500/20 rounded-xl p-8 max-w-md text-center shadow-lg"
               initial={{ y: 20, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               transition={{ duration: 0.7 }}

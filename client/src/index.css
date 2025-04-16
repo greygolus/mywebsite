@@ -26,6 +26,11 @@
     @apply bg-gradient-to-r from-glow-purple via-glow-blue to-glow-cyan text-transparent bg-clip-text;
   }
   
+  /* Text box styling for homepage */
+  .text-box {
+    @apply bg-dark-card bg-opacity-90 backdrop-blur-md border border-dark-border/30 rounded-xl p-8 max-w-md text-center shadow-xl;
+  }
+  
   /* Animation utilities for scroll effects */
   @keyframes fade-in {
     from { opacity: 0; }
@@ -82,11 +87,11 @@
   
   /* Dark theme card and hover states for homepage */
   .bg-dark-card {
-    @apply bg-gray-900 bg-opacity-40 backdrop-blur-sm;
+    @apply bg-[#2a2a2d] bg-opacity-90 backdrop-blur-md;
   }
   
   .bg-dark-hover {
-    @apply bg-gray-800 bg-opacity-50;
+    @apply bg-[#36363d] bg-opacity-100;
   }
   
   /* For zoom animation */
