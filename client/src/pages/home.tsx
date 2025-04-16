@@ -949,10 +949,10 @@ const Home = () => {
   }, []);
   
   // Track scroll progress
+  // Use regular useEffect instead of layoutEffect to avoid Hook order warnings
   const { scrollYProgress } = useScroll({
     target: containerRef,
-    offset: ["start start", "end end"],
-    layoutEffect: false
+    offset: ["start start", "end end"]
   });
   
   // Define progress ranges for each of the 12 stages
@@ -1092,21 +1092,21 @@ const Home = () => {
     ["0%", "100%"]
   );
 
-  // Decorative particle animation effect
+  // Decorative particle animation effect - reduced for better performance
   const [particles, setParticles] = useState<Particle[]>([]);
   
   useEffect(() => {
-    // Create particles with much slower movement
+    // Create particles with much slower movement - reduced count to improve performance
     const newParticles: Particle[] = [];
-    for (let i = 0; i < 30; i++) {
+    for (let i = 0; i < 15; i++) { // Reduced from 30 to 15 particles
       newParticles.push({
         x: Math.random() * window.innerWidth,
         y: Math.random() * window.innerHeight,
-        size: Math.random() * 3 + 1,
+        size: Math.random() * 2.5 + 1, // Slightly smaller particles
         color: `rgba(255, 255, 255, ${Math.random() * 0.5 + 0.1})`,
         initialX: Math.random() * window.innerWidth,
         initialY: Math.random() * window.innerHeight,
-        speed: (Math.random() * 0.03 + 0.01), // Reduced speed by factor of 10
+        speed: (Math.random() * 0.02 + 0.01), // Even slower movement for better performance
         direction: Math.random() * 360
       });
     }
@@ -1176,10 +1176,10 @@ const Home = () => {
             <CosmicWebSVG />
             <EnhancedParticleField 
               color="#C4B5FD" 
-              density={30} 
-              speed={30} 
+              density={15} 
+              speed={20} 
               opacity={0.4} 
-              glowIntensity={2} 
+              glowIntensity={1.5} 
               direction="random"
               minSize={0.3}
               maxSize={1.2}
@@ -1231,10 +1231,10 @@ const Home = () => {
             <GalaxySVG />
             <EnhancedParticleField 
               color="#93C5FD" 
-              density={60} 
-              speed={10} 
+              density={30} 
+              speed={8} 
               opacity={0.5} 
-              glowIntensity={1.5} 
+              glowIntensity={1.2} 
               direction="random"
               minSize={0.2}
               maxSize={1}
@@ -1266,9 +1266,9 @@ const Home = () => {
             <div className="absolute inset-0 bg-gradient-to-b from-slate-900 via-indigo-950 to-slate-950 opacity-90"></div>
             <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(148,163,184,0.05),transparent_70%)]"></div>
             <OortCloudSVG />
-            {/* Distant stars effect */}
+            {/* Distant stars effect - reduced for better performance */}
             <div className="absolute inset-0">
-              {Array.from({ length: 100 }).map((_, i) => (
+              {Array.from({ length: 50 }).map((_, i) => (
                 <motion.div
                   key={`distant-star-${i}`}
                   className="absolute rounded-full bg-white"
@@ -1277,7 +1277,7 @@ const Home = () => {
                     height: Math.random() * 1 + 0.5 + 'px',
                     left: `${Math.random() * 100}%`,
                     top: `${Math.random() * 100}%`,
-                    boxShadow: `0 0 ${Math.random() * 3}px rgba(255,255,255,0.8)`,
+                    boxShadow: `0 0 ${Math.random() * 2}px rgba(255,255,255,0.8)`,
                     opacity: Math.random() * 0.5 + 0.1
                   }}
                   animate={{
@@ -1288,7 +1288,7 @@ const Home = () => {
                     ]
                   }}
                   transition={{
-                    duration: 3 + Math.random() * 5,
+                    duration: 4 + Math.random() * 4,
                     repeat: Infinity,
                     ease: "easeInOut"
                   }}
@@ -1381,9 +1381,9 @@ const Home = () => {
             
             <SolarSystemSVG />
             
-            {/* Background stars */}
+            {/* Background stars - reduced for better performance */}
             <div className="absolute inset-0">
-              {Array.from({ length: 150 }).map((_, i) => (
+              {Array.from({ length: 60 }).map((_, i) => (
                 <motion.div
                   key={`bg-star-${i}`}
                   className="absolute rounded-full bg-white"
@@ -1403,7 +1403,7 @@ const Home = () => {
                     ]
                   }}
                   transition={{
-                    duration: 2 + Math.random() * 3,
+                    duration: 3 + Math.random() * 3,
                     repeat: Infinity,
                     ease: "easeInOut"
                   }}
@@ -2823,9 +2823,9 @@ const Home = () => {
         </motion.div>
       </motion.div>
       
-      {/* Vertical scroll progress indicator */}
+      {/* Vertical scroll progress indicator - aligned with text boxes */}
       <motion.div 
-        className="fixed right-6 top-[45%] transform -translate-y-1/2 h-1/3 w-2 bg-gray-800/60 rounded-full backdrop-blur-md shadow-inner border border-white/5"
+        className="fixed right-6 top-1/2 transform -translate-y-1/2 h-1/3 w-2 bg-gray-800/60 rounded-full backdrop-blur-md shadow-inner border border-white/5"
         initial={{ opacity: 0, x: 10 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ 
