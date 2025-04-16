@@ -1915,7 +1915,8 @@ const Home = () => {
             layout={false}
             className="absolute inset-0"
           >
-            <div className="absolute inset-0 bg-gradient-radial from-cyan-900 via-blue-900 to-blue-950 opacity-90"></div>
+            <div className="absolute inset-0 bg-gradient-radial from-cyan-800 via-blue-900 to-blue-950 opacity-95"></div>
+            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(6,182,212,0.15),transparent_70%)]"></div>
             
             {/* Watery/fluid environment effect */}
             <motion.div 
@@ -1977,10 +1978,10 @@ const Home = () => {
             {/* Bio-luminescent particles */}
             <EnhancedParticleField 
               color="#22D3EE" 
-              density={20} 
+              density={30} 
               speed={15} 
-              opacity={0.3} 
-              glowIntensity={1.5} 
+              opacity={0.4} 
+              glowIntensity={2} 
               direction="random"
               minSize={0.5}
               maxSize={2}
@@ -1991,13 +1992,13 @@ const Home = () => {
               <motion.div 
                 className="absolute" 
                 style={{
-                  filter: "drop-shadow(0 0 20px rgba(14, 165, 233, 0.3))"
+                  filter: "drop-shadow(0 0 30px rgba(14, 165, 233, 0.5))"
                 }}
                 animate={{
                   filter: [
-                    "drop-shadow(0 0 15px rgba(14, 165, 233, 0.2))",
-                    "drop-shadow(0 0 25px rgba(14, 165, 233, 0.3))",
-                    "drop-shadow(0 0 15px rgba(14, 165, 233, 0.2))"
+                    "drop-shadow(0 0 25px rgba(14, 165, 233, 0.4))",
+                    "drop-shadow(0 0 40px rgba(14, 165, 233, 0.6))",
+                    "drop-shadow(0 0 25px rgba(14, 165, 233, 0.4))"
                   ]
                 }}
                 transition={{
