@@ -1,44 +1,94 @@
 // This script applies Apple-inspired styling to all text boxes in the homepage
-// @ts-nocheck
+import { useEffect, useState } from 'react';
+import { motion } from 'framer-motion';
 
-// We need to use useEffect for React components rather than DOM event listeners
+// Updated style application for more transparent bubble glass effect
 export function useAppleGlassStyles() {
   // This hook can be used in the Home component
+  const [isApplied, setIsApplied] = useState(false);
+  
   function applyStyles() {
     // Small delay to ensure DOM is fully rendered
     setTimeout(() => {
-      const textBoxes = document.querySelectorAll('.bg-black.bg-opacity-20.backdrop-blur-md');
+      const textBoxes = document.querySelectorAll('.text-box');
       
       textBoxes.forEach(box => {
-        // Apply the apple-glass styling from our CSS
-        box.style.backgroundColor = 'rgba(42, 42, 45, 0.9)';
-        box.style.backdropFilter = 'blur(12px)';
-        box.style.borderRadius = '0.75rem';
-        box.style.boxShadow = '0 10px 25px -5px rgba(0, 0, 0, 0.3)';
+        // Apply the transparent bubble glass styling
+        box.classList.add('bg-white/10', 'backdrop-blur-md', 'border', 'border-white/20', 'rounded-xl', 'shadow-inner');
         
-        // Improve border visibility
-        box.style.borderWidth = '1px';
-        box.style.borderColor = 'rgba(255, 255, 255, 0.15)';
+        // Add text shadows for better readability
+        const textElements = box.querySelectorAll('h1, h2, h3, h4, h5, h6, p');
+        textElements.forEach(text => {
+          if (text.classList.contains('gradient-text')) return; // Skip gradient text
+          (text as HTMLElement).style.textShadow = '0 1px 2px rgba(0, 0, 0, 0.4)';
+        });
       });
-    }, 500);
+      
+      setIsApplied(true);
+    }, 300);
   }
+  
+  useEffect(() => {
+    if (!isApplied) {
+      // Apply on initial load
+      applyStyles();
+      
+      // Set up mutation observer to catch dynamically added elements
+      const observer = new MutationObserver((mutations) => {
+        const newNodes = mutations
+          .flatMap(mutation => Array.from(mutation.addedNodes))
+          .filter(node => node.nodeType === Node.ELEMENT_NODE);
+        
+        if (newNodes.length > 0) {
+          applyStyles();
+        }
+      });
+      
+      observer.observe(document.body, { childList: true, subtree: true });
+      
+      return () => observer.disconnect();
+    }
+  }, [isApplied]);
   
   return { applyStyles };
 }
 
-// Legacy DOM version for direct script inclusion
-document.addEventListener('DOMContentLoaded', () => {
-  const textBoxes = document.querySelectorAll('.bg-black.bg-opacity-20.backdrop-blur-md');
+// Depth-aware text box component that scales and translates with scroll
+export function DepthAwareTextBox({ 
+  children, 
+  scaleMotionValue, 
+  yMotionValue, 
+  opacityMotionValue,
+  className = "",
+  borderColor = "border-white/20" 
+}: { 
+  children: React.ReactNode, 
+  scaleMotionValue?: any, 
+  yMotionValue?: any, 
+  opacityMotionValue?: any,
+  className?: string,
+  borderColor?: string
+}) {
+  const style: any = {};
   
-  textBoxes.forEach(box => {
-    // Apply the apple-glass styling directly
-    box.style.backgroundColor = 'rgba(42, 42, 45, 0.9)';
-    box.style.backdropFilter = 'blur(12px)';
-    box.style.borderRadius = '0.75rem';
-    box.style.boxShadow = '0 10px 25px -5px rgba(0, 0, 0, 0.3)';
-    
-    // Improve border visibility
-    box.style.borderWidth = '1px';
-    box.style.borderColor = 'rgba(255, 255, 255, 0.15)';
-  });
-});
+  if (scaleMotionValue) {
+    style.scale = scaleMotionValue;
+  }
+  
+  if (yMotionValue) {
+    style.y = yMotionValue;
+  }
+  
+  if (opacityMotionValue) {
+    style.opacity = opacityMotionValue;
+  }
+  
+  return (
+    <motion.div 
+      className={`text-box ${borderColor} ${className}`}
+      style={style}
+    >
+      {children}
+    </motion.div>
+  );
+}

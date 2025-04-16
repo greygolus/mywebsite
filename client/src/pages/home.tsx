@@ -1,6 +1,7 @@
 import { Link } from 'wouter';
 import { motion, useScroll, useTransform, useMotionValueEvent } from 'framer-motion';
 import { useRef, useState, useEffect } from 'react';
+import { useAppleGlassStyles, DepthAwareTextBox } from '../lib/applyTextBoxStyles';
 
 // SVG Components for animation scenes
 const CosmicWebSVG = () => (
@@ -893,6 +894,14 @@ const Home = () => {
   });
   
   // Define progress ranges for each of the 12 stages
+  // Create a hook to apply the glass styles to text containers
+  const { applyStyles } = useAppleGlassStyles();
+  
+  // Apply styles on component mount
+  useEffect(() => {
+    applyStyles();
+  }, []);
+  
   const stageRanges = {
     // Scene 1: Cosmic Web - ORIGINAL TIMING
     cosmicWebOpacity: useTransform(scrollYProgress, [0, 0.07, 0.09], [1, 0.5, 0]),
@@ -913,26 +922,36 @@ const Home = () => {
     oortCloudOpacity: useTransform(scrollYProgress, [0.17, 0.18, 0.25, 0.27], [0, 1, 1, 0]),
     oortCloudTextOpacity: useTransform(scrollYProgress, [0.19, 0.21, 0.24, 0.26], [0, 1, 1, 0]),
     oortCloudScale: useTransform(scrollYProgress, [0.18, 0.27], [1, 2.5]), // Original scale
+    oortCloudTextScale: useTransform(scrollYProgress, [0.19, 0.21, 0.24, 0.26], [0.8, 1.1, 1.1, 0.8]),
+    oortCloudTextY: useTransform(scrollYProgress, [0.19, 0.21, 0.24, 0.26], [30, 0, 0, -20]),
     
     // Scene 4: Solar System - ORIGINAL TIMING
     solarSystemOpacity: useTransform(scrollYProgress, [0.26, 0.27, 0.34, 0.36], [0, 1, 1, 0]),
     solarSystemTextOpacity: useTransform(scrollYProgress, [0.28, 0.3, 0.33, 0.35], [0, 1, 1, 0]),
     solarSystemScale: useTransform(scrollYProgress, [0.27, 0.36], [1, 2.5]), // Original scale
+    solarSystemTextScale: useTransform(scrollYProgress, [0.28, 0.3, 0.33, 0.35], [0.8, 1.1, 1.1, 0.8]),
+    solarSystemTextY: useTransform(scrollYProgress, [0.28, 0.3, 0.33, 0.35], [30, 0, 0, -20]),
     
     // Scene 5: Earth - ORIGINAL TIMING
     earthOpacity: useTransform(scrollYProgress, [0.35, 0.36, 0.43, 0.45], [0, 1, 1, 0]),
     earthTextOpacity: useTransform(scrollYProgress, [0.37, 0.39, 0.42, 0.44], [0, 1, 1, 0]),
     earthScale: useTransform(scrollYProgress, [0.36, 0.45], [1, 2.5]), // Original scale
+    earthTextScale: useTransform(scrollYProgress, [0.37, 0.39, 0.42, 0.44], [0.8, 1.1, 1.1, 0.8]),
+    earthTextY: useTransform(scrollYProgress, [0.37, 0.39, 0.42, 0.44], [30, 0, 0, -20]),
     
     // Scene 6: Telescope - ORIGINAL TIMING
     telescopeOpacity: useTransform(scrollYProgress, [0.44, 0.45, 0.52, 0.54], [0, 1, 1, 0]),
     telescopeTextOpacity: useTransform(scrollYProgress, [0.46, 0.48, 0.51, 0.53], [0, 1, 1, 0]),
     telescopeScale: useTransform(scrollYProgress, [0.45, 0.54], [1, 2.5]), // Original scale
+    telescopeTextScale: useTransform(scrollYProgress, [0.46, 0.48, 0.51, 0.53], [0.8, 1.1, 1.1, 0.8]),
+    telescopeTextY: useTransform(scrollYProgress, [0.46, 0.48, 0.51, 0.53], [30, 0, 0, -20]),
     
     // Scene 7: Eye - ORIGINAL TIMING
     eyeOpacity: useTransform(scrollYProgress, [0.53, 0.54, 0.61, 0.63], [0, 1, 1, 0]),
     eyeTextOpacity: useTransform(scrollYProgress, [0.55, 0.57, 0.6, 0.62], [0, 1, 1, 0]),
     eyeScale: useTransform(scrollYProgress, [0.54, 0.63], [1, 2.5]), // Original scale
+    eyeTextScale: useTransform(scrollYProgress, [0.55, 0.57, 0.6, 0.62], [0.8, 1.1, 1.1, 0.8]),
+    eyeTextY: useTransform(scrollYProgress, [0.55, 0.57, 0.6, 0.62], [30, 0, 0, -20]),
     
     // Scene 8: DNA / Cell - ORIGINAL TIMING
     dnaOpacity: useTransform(scrollYProgress, [0.62, 0.63, 0.7, 0.72], [0, 1, 1, 0]),
@@ -1011,15 +1030,14 @@ const Home = () => {
             className="absolute inset-0 flex items-center justify-center pointer-events-none"
             style={{ opacity: stageRanges.cosmicWebTextOpacity }}
           >
-            <motion.div 
-              className="text-box border-purple-500/20"
-              initial={{ y: 20, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              transition={{ duration: 0.7 }}
+            <DepthAwareTextBox
+              scaleMotionValue={stageRanges.cosmicWebTextScale}
+              yMotionValue={stageRanges.cosmicWebTextY}
+              borderColor="border-purple-500/20"
             >
               <h2 className="text-3xl font-bold gradient-text mb-2">It begins beyond what we can see...</h2>
               <p className="text-gray-300">The cosmic tapestry of light, spanning across time and space.</p>
-            </motion.div>
+            </DepthAwareTextBox>
           </motion.div>
           
           {/* Scene 2: Galaxy */}
@@ -1038,15 +1056,14 @@ const Home = () => {
             className="absolute inset-0 flex items-center justify-center pointer-events-none"
             style={{ opacity: stageRanges.galaxyTextOpacity }}
           >
-            <motion.div 
-              className="text-box"
-              initial={{ y: 20, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              transition={{ duration: 0.7 }}
+            <DepthAwareTextBox
+              scaleMotionValue={stageRanges.galaxyTextScale}
+              yMotionValue={stageRanges.galaxyTextY}
+              borderColor="border-blue-500/20"
             >
               <h2 className="text-3xl font-bold gradient-text mb-2">The story of light stretches across galaxies.</h2>
               <p className="text-gray-300">From countless stars, shining across unimaginable distances.</p>
-            </motion.div>
+            </DepthAwareTextBox>
           </motion.div>
           
           {/* Scene 3: Oort Cloud */}
@@ -1065,15 +1082,14 @@ const Home = () => {
             className="absolute inset-0 flex items-center justify-center pointer-events-none"
             style={{ opacity: stageRanges.oortCloudTextOpacity }}
           >
-            <motion.div 
-              className="text-box"
-              initial={{ y: 20, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              transition={{ duration: 0.7 }}
+            <DepthAwareTextBox
+              scaleMotionValue={stageRanges.oortCloudTextScale}
+              yMotionValue={stageRanges.oortCloudTextY}
+              borderColor="border-slate-500/20"
             >
               <h2 className="text-3xl font-bold gradient-text mb-2">Zoom in, past frozen dust and ancient comets.</h2>
               <p className="text-gray-300">The outer edges of our solar system, where remnants of creation drift.</p>
-            </motion.div>
+            </DepthAwareTextBox>
           </motion.div>
           
           {/* Scene 4: Solar System */}
@@ -1092,15 +1108,14 @@ const Home = () => {
             className="absolute inset-0 flex items-center justify-center pointer-events-none"
             style={{ opacity: stageRanges.solarSystemTextOpacity }}
           >
-            <motion.div 
-              className="text-box"
-              initial={{ y: 20, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              transition={{ duration: 0.7 }}
+            <DepthAwareTextBox
+              scaleMotionValue={stageRanges.solarSystemTextScale}
+              yMotionValue={stageRanges.solarSystemTextY}
+              borderColor="border-indigo-500/20"
             >
               <h2 className="text-3xl font-bold gradient-text mb-2">Into the solar system, a dance of motion and fire.</h2>
               <p className="text-gray-300">Where planets follow eternal orbits around our central star.</p>
-            </motion.div>
+            </DepthAwareTextBox>
           </motion.div>
           
           {/* Scene 5: Earth */}
@@ -1119,15 +1134,14 @@ const Home = () => {
             className="absolute inset-0 flex items-center justify-center pointer-events-none"
             style={{ opacity: stageRanges.earthTextOpacity }}
           >
-            <motion.div 
-              className="text-box"
-              initial={{ y: 20, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              transition={{ duration: 0.7 }}
+            <DepthAwareTextBox
+              scaleMotionValue={stageRanges.earthTextScale}
+              yMotionValue={stageRanges.earthTextY}
+              borderColor="border-blue-500/20"
             >
               <h2 className="text-3xl font-bold gradient-text mb-2">Toward a pale blue dot...</h2>
               <p className="text-gray-300">Our home among the stars, where all of human history has unfolded.</p>
-            </motion.div>
+            </DepthAwareTextBox>
           </motion.div>
           
           {/* Scene 6: Telescope */}
@@ -1149,15 +1163,14 @@ const Home = () => {
             className="absolute inset-0 flex items-center justify-center pointer-events-none"
             style={{ opacity: stageRanges.telescopeTextOpacity }}
           >
-            <motion.div 
-              className="text-box"
-              initial={{ y: 20, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              transition={{ duration: 0.7 }}
+            <DepthAwareTextBox
+              scaleMotionValue={stageRanges.telescopeTextScale}
+              yMotionValue={stageRanges.telescopeTextY}
+              borderColor="border-gray-500/20"
             >
               <h2 className="text-3xl font-bold gradient-text mb-2">Where we watch the skies from the ground.</h2>
               <p className="text-gray-300">Our tools of observation extend our vision into the cosmos.</p>
-            </motion.div>
+            </DepthAwareTextBox>
           </motion.div>
           
           {/* Scene 7: Eye */}
