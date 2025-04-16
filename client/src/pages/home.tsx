@@ -1476,7 +1476,7 @@ const Home = () => {
   }, []);
 
   const stageRanges = {
-    // Scene 1: Cosmic Web - EXTENDED TEXT DISPLAY
+    // Scene 1: Cosmic Web - EXTENDED TEXT DISPLAY WITH LONGER FADE OUT
     cosmicWebOpacity: useTransform(
       scrollYProgress,
       [0, 0.07, 0.09],
@@ -1484,23 +1484,23 @@ const Home = () => {
     ),
     cosmicWebTextOpacity: useTransform(
       scrollYProgress,
-      [0.01, 0.03, 0.065, 0.08],
+      [0.01, 0.03, 0.065, 0.095],
       [0, 1, 1, 0],
     ),
     cosmicWebScale: useTransform(scrollYProgress, [0, 0.09], [1, 4]),
     // Text depth effect with extended full-size duration
     cosmicWebTextScale: useTransform(
       scrollYProgress,
-      [0.01, 0.03, 0.065, 0.08],
+      [0.01, 0.03, 0.065, 0.095],
       [0.8, 1.1, 1.1, 0.8],
     ),
     cosmicWebTextY: useTransform(
       scrollYProgress,
-      [0.01, 0.03, 0.065, 0.08],
+      [0.01, 0.03, 0.065, 0.095],
       [30, 0, 0, -20],
     ),
 
-    // Scene 2: Galaxy - EXTENDED TEXT DISPLAY
+    // Scene 2: Galaxy - EXTENDED TEXT DISPLAY WITH LONGER FADE OUT
     galaxyOpacity: useTransform(
       scrollYProgress,
       [0.08, 0.09, 0.16, 0.18],
@@ -1508,22 +1508,22 @@ const Home = () => {
     ),
     galaxyTextOpacity: useTransform(
       scrollYProgress,
-      [0.1, 0.12, 0.155, 0.17],
+      [0.1, 0.12, 0.155, 0.185],
       [0, 1, 1, 0],
     ),
     galaxyScale: useTransform(scrollYProgress, [0.09, 0.18], [1, 2.5]),
     galaxyTextScale: useTransform(
       scrollYProgress,
-      [0.1, 0.12, 0.155, 0.17],
+      [0.1, 0.12, 0.155, 0.185],
       [0.8, 1.1, 1.1, 0.8],
     ),
     galaxyTextY: useTransform(
       scrollYProgress,
-      [0.1, 0.12, 0.155, 0.17],
+      [0.1, 0.12, 0.155, 0.185],
       [30, 0, 0, -20],
     ),
 
-    // Scene 3: Oort Cloud - EXTENDED TEXT DISPLAY
+    // Scene 3: Oort Cloud - EXTENDED TEXT DISPLAY WITH LONGER FADE OUT
     oortCloudOpacity: useTransform(
       scrollYProgress,
       [0.17, 0.18, 0.25, 0.27],
@@ -1531,22 +1531,22 @@ const Home = () => {
     ),
     oortCloudTextOpacity: useTransform(
       scrollYProgress,
-      [0.19, 0.21, 0.245, 0.26],
+      [0.19, 0.21, 0.245, 0.27],
       [0, 1, 1, 0],
     ),
     oortCloudScale: useTransform(scrollYProgress, [0.18, 0.27], [1, 2.5]),
     oortCloudTextScale: useTransform(
       scrollYProgress,
-      [0.19, 0.21, 0.245, 0.26],
+      [0.19, 0.21, 0.245, 0.27],
       [0.8, 1.1, 1.1, 0.8],
     ),
     oortCloudTextY: useTransform(
       scrollYProgress,
-      [0.19, 0.21, 0.245, 0.26],
+      [0.19, 0.21, 0.245, 0.27],
       [30, 0, 0, -20],
     ),
 
-    // Scene 4: Solar System - EXTENDED TEXT DISPLAY
+    // Scene 4: Solar System - EXTENDED TEXT DISPLAY WITH LONGER FADE OUT
     solarSystemOpacity: useTransform(
       scrollYProgress,
       [0.26, 0.27, 0.34, 0.36],
@@ -1554,22 +1554,22 @@ const Home = () => {
     ),
     solarSystemTextOpacity: useTransform(
       scrollYProgress,
-      [0.28, 0.3, 0.335, 0.35],
+      [0.28, 0.3, 0.335, 0.36],
       [0, 1, 1, 0],
     ),
     solarSystemScale: useTransform(scrollYProgress, [0.27, 0.36], [1, 2.5]),
     solarSystemTextScale: useTransform(
       scrollYProgress,
-      [0.28, 0.3, 0.335, 0.35],
+      [0.28, 0.3, 0.335, 0.36],
       [0.8, 1.1, 1.1, 0.8],
     ),
     solarSystemTextY: useTransform(
       scrollYProgress,
-      [0.28, 0.3, 0.335, 0.35],
+      [0.28, 0.3, 0.335, 0.36],
       [30, 0, 0, -20],
     ),
 
-    // Scene 5: Earth - EXTENDED TEXT DISPLAY
+    // Scene 5: Earth - EXTENDED TEXT DISPLAY WITH LONGER FADE OUT
     earthOpacity: useTransform(
       scrollYProgress,
       [0.35, 0.36, 0.43, 0.45],
@@ -1577,18 +1577,18 @@ const Home = () => {
     ),
     earthTextOpacity: useTransform(
       scrollYProgress,
-      [0.37, 0.39, 0.425, 0.44],
+      [0.37, 0.39, 0.425, 0.45],
       [0, 1, 1, 0],
     ),
     earthScale: useTransform(scrollYProgress, [0.36, 0.45], [1, 2.5]),
     earthTextScale: useTransform(
       scrollYProgress,
-      [0.37, 0.39, 0.425, 0.44],
+      [0.37, 0.39, 0.425, 0.45],
       [0.8, 1.1, 1.1, 0.8],
     ),
     earthTextY: useTransform(
       scrollYProgress,
-      [0.37, 0.39, 0.425, 0.44],
+      [0.37, 0.39, 0.425, 0.45],
       [30, 0, 0, -20],
     ),
 
