@@ -1049,8 +1049,8 @@ const Home = () => {
               className="absolute inset-0 bg-cover bg-center bg-no-repeat" 
               style={{ 
                 backgroundImage: "url('/assets/scroll/1-cosmic-web.webp')",
-                scale: useTransform(scrollYProgress, [0, 0.08], [1, 4]),
-                rotate: useTransform(scrollYProgress, [0, 0.08], [0, -30]),
+                scale: useTransform(scrollYProgress, [0, 0.08], [1, 100]),
+                rotate: useTransform(scrollYProgress, [0, 0.08], [0, 180]),
                 transformOrigin: "center center"
               }}
             ></motion.div>
@@ -1068,20 +1068,55 @@ const Home = () => {
             </div>
           </motion.div>
           
-          {/* Scene 2: Galaxy - With scroll-based video scrubbing */}
+          {/* Scene 2: Galaxy - Scroll-controlled playback (smooth chunked scroll) */}
           <motion.div style={{ opacity: stageRanges.galaxyOpacity }} className="absolute inset-0">
             <div className="absolute inset-0 overflow-hidden">
-              <VideoScrubber 
-                videoSrc="/assets/scroll/2-milkyway-spin.mp4"
-                scrollProgress={scrollYProgress}
-                scrollRange={[0.09, 0.16]} // Adjust these values to match your scroll phases
-                videoDuration={48} // 48 seconds duration to scrub through
+              <video
+                ref={(el) => {
+                  if (!el || typeof window === 'undefined') return;
+
+                  const chunk = 0.15; // seconds of video played per scroll "tick"
+                  let lastScroll = 0;
+                  let direction = 'forward';
+                  let targetTime = 0;
+
+                  const animateTo = () => {
+                    if (!el) return;
+                    const diff = targetTime - el.currentTime;
+                    if (Math.abs(diff) < 0.01) return;
+                    el.currentTime += diff * 0.2;
+                    requestAnimationFrame(animateTo);
+                  };
+
+                  const unsubscribe = scrollYProgress.on("change", (v) => {
+                    const [start, end] = [0.09, 0.16];
+                    if (v < start || v > end) return;
+
+                    const delta = v - lastScroll;
+                    if (Math.abs(delta) < 0.001) return;
+                    direction = delta > 0 ? "forward" : "backward";
+                    lastScroll = v;
+
+                    const localProgress = (v - start) / (end - start);
+                    const baseTime = localProgress * 48;
+                    targetTime = Math.max(0, Math.min(48, baseTime + (direction === "forward" ? chunk : -chunk)));
+
+                    animateTo();
+                  });
+
+                  // Cleanup
+                  return () => unsubscribe();
+                }}
+                src="/assets/scroll/2-milkyway-spin.mp4"
+                muted
+                playsInline
+                className="absolute top-0 left-0 w-full h-full object-cover"
               />
-              {/* Add a subtle overlay to ensure text readability */}
+              {/* Overlay to improve contrast */}
               <div className="absolute inset-0 bg-black bg-opacity-30"></div>
             </div>
           </motion.div>
-          
+
           <motion.div 
             className="absolute inset-0 flex items-center justify-center pointer-events-none"
             style={{ opacity: stageRanges.galaxyTextOpacity }}
@@ -1091,7 +1126,7 @@ const Home = () => {
               <p className="text-gray-300">From countless stars, shining across unimaginable distances.</p>
             </div>
           </motion.div>
-          
+
           {/* Scene 3: Oort Cloud */}
           <motion.div style={{ opacity: stageRanges.oortCloudOpacity }} className="absolute inset-0">
             <div className="absolute inset-0 bg-gradient-to-b from-slate-900 to-slate-950 opacity-80"></div>
