@@ -1954,46 +1954,19 @@ const Home = () => {
             layout={false}
             className="absolute inset-0"
           >
-            <div className="absolute inset-0 bg-gradient-to-b from-slate-900 via-indigo-950 to-slate-950 opacity-90"></div>
-            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(148,163,184,0.05),transparent_70%)]"></div>
-            <OortCloudSVG />
-            {/* Distant stars effect - reduced for better performance */}
-            <div className="absolute inset-0">
-              {Array.from({ length: 50 }).map((_, i) => (
-                <motion.div
-                  key={`distant-star-${i}`}
-                  className="absolute rounded-full bg-white"
-                  style={{
-                    width: Math.random() * 1 + 0.5 + "px",
-                    height: Math.random() * 1 + 0.5 + "px",
-                    left: `${Math.random() * 100}%`,
-                    top: `${Math.random() * 100}%`,
-                    boxShadow: `0 0 ${Math.random() * 2}px rgba(255,255,255,0.8)`,
-                    opacity: Math.random() * 0.5 + 0.1,
-                  }}
-                  animate={{
-                    opacity: [
-                      Math.random() * 0.5 + 0.1,
-                      Math.random() * 0.3 + 0.05,
-                      Math.random() * 0.5 + 0.1,
-                    ],
-                  }}
-                  transition={{
-                    duration: 4 + Math.random() * 4,
-                    repeat: Infinity,
-                    ease: "easeInOut",
-                  }}
-                />
-              ))}
-            </div>
-            <LegacyParticleField
+            <SceneOortCloud 
+              opacity={1} 
+              scale={1} 
+            />
+            <OptimizedParticleField
               color="#E2E8F0"
-              density={25}
-              speed={5}
-              opacity={0.2}
-              glowIntensity={0.5}
-              minSize={0.2}
-              maxSize={0.8}
+              density={20}
+              speed={4}
+              opacity={0.15}
+              glowIntensity={0.4}
+              direction="random"
+              minSize={0.15}
+              maxSize={0.6}
             />
           </motion.div>
 
@@ -2022,12 +1995,11 @@ const Home = () => {
               opacity: stageRanges.solarSystemOpacity,
               scale: stageRanges.solarSystemScale,
               willChange: "transform, opacity",
+              background: "linear-gradient(to bottom, #1E1B4B, #172554, #000000)"
             }}
             layout={false}
             className="absolute inset-0"
           >
-            <div className="absolute inset-0 bg-gradient-to-b from-indigo-950 via-blue-950 to-black opacity-90"></div>
-            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(251,146,60,0.08),transparent_70%)]"></div>
 
             {/* Solar prominences and flares */}
             <div className="absolute inset-0 flex items-center justify-center">
