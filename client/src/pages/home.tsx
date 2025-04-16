@@ -10,7 +10,6 @@ import {
   useAppleGlassStyles,
   DepthAwareTextBox,
 } from "../lib/applyTextBoxStyles";
-import { useIsMobile } from "../hooks/use-mobile";
 
 // Enhanced particle effect component for layering over scenes
 const EnhancedParticleField = ({
@@ -70,8 +69,6 @@ const EnhancedParticleField = ({
 
 // SVG Components for animation scenes
 const CosmicWebSVG = () => {
-  const isMobile = useIsMobile();
-  
   // Precompute all random values for paths (cosmic web structure)
   interface PathData {
     path: string;
@@ -88,12 +85,8 @@ const CosmicWebSVG = () => {
     driftDuration: number;
   }
 
-  // Reduce number of paths and complexity on mobile
   const webPaths = useMemo<PathData[]>(() => {
-    // Significantly reduce number of paths on mobile
-    const pathCount = isMobile ? 5 : 20;
-    
-    return Array.from({ length: pathCount }).map(() => {
+    return Array.from({ length: 20 }).map(() => {
       const startX = Math.random() * 100;
       const startY = Math.random() * 100;
       const cp1X = Math.random() * 100;
@@ -102,37 +95,32 @@ const CosmicWebSVG = () => {
       const cp2Y = Math.random() * 100;
       const endX = Math.random() * 100;
       const endY = Math.random() * 100;
-      // Increase animation durations on mobile for less CPU intensity
-      const duration = (isMobile ? 8 : 3.5) + Math.random() * 2;
+      const duration = 3.5 + Math.random() * 2; // Random duration between 3.5-5.5s
       
       return {
         path: `M${startX},${startY} C${cp1X},${cp1Y} ${cp2X},${cp2Y} ${endX},${endY}`,
         duration
       };
     });
-  }, [isMobile]);
+  }, []);
 
-  // Reduce number of nodes on mobile
+
+
+  // Precompute all random values for nodes (circles)
   const nodes = useMemo<NodeData[]>(() => {
-    // Fewer nodes on mobile
-    const nodeCount = isMobile ? 12 : 50;
-    
-    return Array.from({ length: nodeCount }).map(() => {
+    return Array.from({ length: 50 }).map(() => {
       const cx = Math.random() * 100;
       const cy = Math.random() * 100;
       const r = Math.random() * 0.7 + 0.3; // Random radius between 0.3-1.0
-      // Longer animation durations on mobile for better performance
-      const duration = (isMobile ? 4 : 2) + Math.random() * 3;
-      
-      // Smaller and slower drift on mobile
-      const driftScale = isMobile ? 0.5 : 3;
-      const driftX = (Math.random() * 2 - 1) * driftScale;
-      const driftY = (Math.random() * 2 - 1) * driftScale;
-      const driftDuration = (isMobile ? 30 : 15) + Math.random() * 10;
+      const duration = 2 + Math.random() * 3; // Random duration between 2-5s
+      // Add slight drift for cosmic motion effect
+      const driftX = (Math.random() * 2 - 1) * 3; // Random value between -3 and 3
+      const driftY = (Math.random() * 2 - 1) * 3;
+      const driftDuration = 15 + Math.random() * 10; // Slow drift between 15-25s
 
       return { cx, cy, r, duration, driftX, driftY, driftDuration };
     });
-  }, [isMobile]);
+  }, []);
 
   return (
     <svg
@@ -189,11 +177,8 @@ const CosmicWebSVG = () => {
           initial={{ opacity: 0.2 }}
           animate={{ 
             opacity: [0.2, 0.8, 0.2],
-            // On mobile, eliminate position animations completely or make them extremely minimal
-            ...(isMobile ? {} : {
-              cx: [node.cx, node.cx + node.driftX, node.cx],
-              cy: [node.cy, node.cy + node.driftY, node.cy]
-            })
+            cx: [node.cx, node.cx + node.driftX, node.cx],
+            cy: [node.cy, node.cy + node.driftY, node.cy]
           }}
           transition={{ 
             opacity: {
@@ -201,36 +186,27 @@ const CosmicWebSVG = () => {
               repeat: Infinity,
               ease: "easeInOut"
             },
-            // Only include position animations for desktop
-            ...(!isMobile ? {
-              cx: {
-                duration: node.driftDuration,
-                repeat: Infinity,
-                repeatType: "reverse",
-                ease: "easeInOut"
-              },
-              cy: {
-                duration: node.driftDuration,
-                repeat: Infinity,
-                repeatType: "reverse",
-                ease: "easeInOut"
-              }
-            } : {})
+            cx: {
+              duration: node.driftDuration,
+              repeat: Infinity,
+              repeatType: "reverse",
+              ease: "easeInOut"
+            },
+            cy: {
+              duration: node.driftDuration,
+              repeat: Infinity,
+              repeatType: "reverse",
+              ease: "easeInOut"
+            }
           }}
-          style={{ willChange: isMobile ? "opacity" : "opacity, transform" }}
+          style={{ willChange: "opacity, transform" }}
         />
       ))}
     </svg>
   );
 };
 
-const GalaxySVG = () => {
-  const isMobile = useIsMobile();
-  
-  // Fewer stars on mobile to reduce animation load
-  const starCount = isMobile ? 25 : 80;
-  
-  return (
+const GalaxySVG = () => (
   <svg
     className="w-full h-full"
     viewBox="0 0 100 100"
@@ -291,8 +267,8 @@ const GalaxySVG = () => {
       }}
     />
 
-    {/* Stars - reduced for mobile */}
-    {Array.from({ length: starCount }).map((_, i) => {
+    {/* Stars */}
+    {Array.from({ length: 80 }).map((_, i) => {
       const distance = 20 + Math.random() * 30;
       const angle = Math.random() * Math.PI * 2;
       const x = 50 + Math.cos(angle) * distance;
@@ -311,15 +287,9 @@ const GalaxySVG = () => {
       );
     })}
   </svg>
-  );
-};
+);
 
-const OortCloudSVG = () => {
-  const isMobile = useIsMobile();
-  // Reduce particle count for mobile devices
-  const particleCount = isMobile ? 60 : 200;
-  
-  return (
+const OortCloudSVG = () => (
   <svg
     className="w-full h-full"
     viewBox="0 0 100 100"
@@ -354,8 +324,8 @@ const OortCloudSVG = () => {
       transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
     />
 
-    {/* Dust and comet particles - reduced for mobile */}
-    {Array.from({ length: particleCount }).map((_, i) => {
+    {/* Dust and comet particles */}
+    {Array.from({ length: 200 }).map((_, i) => {
       const distance = 10 + Math.random() * 40;
       const angle = Math.random() * Math.PI * 2;
       const x = 50 + Math.cos(angle) * distance;
@@ -430,15 +400,9 @@ const OortCloudSVG = () => {
       );
     })}
   </svg>
-  );
-};
+);
 
-const SolarSystemSVG = () => {
-  const isMobile = useIsMobile();
-  // Reduce asteroid count for mobile devices
-  const asteroidCount = isMobile ? 30 : 100;
-  
-  return (
+const SolarSystemSVG = () => (
   <svg
     className="w-full h-full"
     viewBox="0 0 100 100"
@@ -513,8 +477,8 @@ const SolarSystemSVG = () => {
       </g>
     ))}
 
-    {/* Asteroid belt - reduced for mobile */}
-    {Array.from({ length: asteroidCount }).map((_, i) => {
+    {/* Asteroid belt */}
+    {Array.from({ length: 100 }).map((_, i) => {
       const distance = 27 + Math.random() * 3;
       const angle = Math.random() * Math.PI * 2;
       const x = 50 + Math.cos(angle) * distance;
@@ -542,8 +506,7 @@ const SolarSystemSVG = () => {
       );
     })}
   </svg>
-  );
-};
+);
 
 const EarthSVG = () => (
   <svg
@@ -1163,15 +1126,11 @@ interface Star {
 
 const QuarksSVG = () => {
   const [particles, setParticles] = useState<Particle[]>([]);
-  const isMobile = useIsMobile();
-  
-  // Reduce particle count for mobile devices
-  const particleCount = isMobile ? 20 : 50;
 
   useEffect(() => {
-    // Generate random particles with fewer on mobile
+    // Generate random particles
     const newParticles: Particle[] = [];
-    for (let i = 0; i < particleCount; i++) {
+    for (let i = 0; i < 50; i++) {
       newParticles.push({
         x: Math.random() * 100,
         y: Math.random() * 100,
@@ -1184,7 +1143,7 @@ const QuarksSVG = () => {
       });
     }
     setParticles(newParticles);
-  }, [particleCount]);
+  }, []);
 
   return (
     <svg
@@ -1226,15 +1185,11 @@ const QuarksSVG = () => {
 // Star field background component
 const StarField = () => {
   const [stars, setStars] = useState<Star[]>([]);
-  const isMobile = useIsMobile();
-  
-  // Reduce star count for mobile devices
-  const starCount = isMobile ? 75 : 200;
 
   useEffect(() => {
-    // Generate random stars - fewer for mobile
+    // Generate random stars
     const newStars: Star[] = [];
-    for (let i = 0; i < starCount; i++) {
+    for (let i = 0; i < 200; i++) {
       newStars.push({
         x: Math.random() * 100,
         y: Math.random() * 100,
@@ -1244,7 +1199,7 @@ const StarField = () => {
       });
     }
     setStars(newStars);
-  }, [starCount]);
+  }, []);
 
   return (
     <div className="absolute inset-0 overflow-hidden">
@@ -1321,9 +1276,8 @@ const Home = () => {
   // Apply styles on component mount
   useEffect(() => {
     applyStyles();
-  }, [applyStyles]);
+  }, []);
 
-  // Define stage ranges for scroll-based animations
   const stageRanges = {
     // Scene 1: Cosmic Web - EXTENDED TEXT DISPLAY
     cosmicWebOpacity: useTransform(
@@ -1650,10 +1604,7 @@ const Home = () => {
       id="homepage"
       ref={containerRef}
       className="relative bg-black text-white overflow-x-hidden"
-      style={{ 
-        position: "relative",
-        willChange: "transform" 
-      }}
+      style={{ position: "relative" }}
       onMouseMove={handleMouseMove}
     >
       {/* Decorative floating particles - Optimized for GPU rendering */}
@@ -1696,9 +1647,9 @@ const Home = () => {
         ))}
       </div>
       {/* Multiple viewport-height sections for scrolling - 12 sections */}
-      <div className="h-[1200vh] relative">
+      <div className="h-[1200vh]">
         {/* Fixed position container for all scenes */}
-        <div className="fixed inset-0 w-full h-full overflow-hidden" style={{ position: "fixed" }}>
+        <div className="fixed inset-0 w-full h-full overflow-hidden">
           {/* Scene 1: Cosmic Web - Enhanced with particles and depth */}
           <motion.div
             style={{
