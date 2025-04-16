@@ -26,21 +26,28 @@
     @apply bg-gradient-to-r from-glow-purple via-glow-blue to-glow-cyan text-transparent bg-clip-text;
   }
   
-  /* Text box styling for homepage */
+  /* Text box styling for homepage - bubble glass effect */
   .text-box {
-    @apply bg-black bg-opacity-40 backdrop-blur-sm border border-white/10 rounded-xl p-6 max-w-md text-center shadow-md;
+    @apply bg-white/10 backdrop-blur-md border border-white/20 rounded-xl p-6 max-w-md text-center shadow-inner;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
   }
   
-  /* Apple-inspired glass card styling */
-  .apple-glass {
-    background-color: rgba(0, 0, 0, 0.4);
+  /* Button hover effect */
+  .text-box button {
+    @apply transition-transform duration-200 hover:scale-105;
+  }
+  
+  /* Bubble glass styling */
+  .bubble-glass {
+    background-color: rgba(255, 255, 255, 0.1);
     backdrop-filter: blur(8px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 0.75rem;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 1rem;
     padding: 1.5rem;
     max-width: 28rem;
     text-align: center;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.1), 
+                0 4px 8px rgba(0, 0, 0, 0.2);
   }
   
   /* Animation utilities for scroll effects */
