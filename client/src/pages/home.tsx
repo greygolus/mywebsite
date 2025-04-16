@@ -1085,12 +1085,7 @@ const Home = () => {
     setScrollDebug(parseFloat(latest.toFixed(2)));
   });
 
-  // Vertical scroll progress indicator
-  const progressBar = useTransform(
-    scrollYProgress,
-    [0, 1],
-    ["0%", "100%"]
-  );
+  // Progress bar removed
 
   // Decorative particle animation effect - reduced for better performance
   const [particles, setParticles] = useState<Particle[]>([]);
@@ -2823,50 +2818,7 @@ const Home = () => {
         </motion.div>
       </motion.div>
       
-      {/* Horizontal spectrum progress indicator (UV to IR) */}
-      <motion.div 
-        className="fixed bottom-6 left-1/2 transform -translate-x-1/2 w-1/3 h-2 bg-black/40 rounded-full backdrop-blur-md shadow-inner border border-white/10 overflow-hidden"
-        initial={{ opacity: 0, y: 10 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ 
-          duration: 0.6, 
-          ease: [0.22, 1, 0.36, 1]
-        }}
-        style={{ opacity: useTransform(scrollYProgress, [0, 0.05], [0, 1]) }}
-        whileHover={{ height: "0.7rem", y: -2, transition: { duration: 0.3 } }}
-      >
-        {/* UV to IR light spectrum background */}
-        <div className="absolute inset-0 bg-gradient-to-r from-violet-600 via-blue-500 via-green-500 via-yellow-500 via-orange-500 to-red-700 opacity-30"></div>
-        
-        {/* Active progress bar */}
-        <motion.div 
-          className="absolute top-0 left-0 h-full bg-gradient-to-r from-violet-600 via-blue-500 via-green-500 via-yellow-500 via-orange-500 to-red-700 rounded-full"
-          style={{ 
-            width: progressBar,
-            filter: "blur(0px)"
-          }}
-          whileHover={{ 
-            filter: "blur(1px)",
-            transition: { duration: 0.3 }
-          }}
-        />
-        
-        {/* Animated indicator dot */}
-        <motion.div 
-          className="absolute top-1/2 transform -translate-y-1/2 w-3 h-3 rounded-full bg-white shadow-[0_0_15px_rgba(255,255,255,0.9)]"
-          style={{ 
-            left: progressBar,
-            translateX: "-50%"
-          }}
-          initial={{ scale: 0.7 }}
-          animate={{ scale: [0.7, 1, 0.7], opacity: [0.7, 1, 0.7] }}
-          transition={{ 
-            duration: 2,
-            repeat: Infinity,
-            ease: "easeInOut"
-          }}
-        />
-      </motion.div>
+      {/* Progress bar removed */}
     </div>
   );
 };
