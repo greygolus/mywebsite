@@ -2823,9 +2823,9 @@ const Home = () => {
         </motion.div>
       </motion.div>
       
-      {/* Vertical scroll progress indicator - aligned with text boxes */}
+      {/* Vertical scroll progress indicator - positioned alongside text boxes */}
       <motion.div 
-        className="fixed right-6 top-1/2 transform -translate-y-1/2 h-1/3 w-2 bg-gray-800/60 rounded-full backdrop-blur-md shadow-inner border border-white/5"
+        className="fixed right-6 top-1/2 transform -translate-y-1/2 h-1/3 w-2 bg-gray-800/60 rounded-full backdrop-blur-md shadow-inner border border-white/5 overflow-hidden"
         initial={{ opacity: 0, x: 10 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ 
@@ -2836,7 +2836,7 @@ const Home = () => {
         whileHover={{ width: "0.7rem", x: -2, transition: { duration: 0.3 } }}
       >
         <motion.div 
-          className="absolute top-0 left-0 w-full bg-gradient-to-b from-glow-purple via-glow-blue to-glow-cyan rounded-full shadow-[0_0_15px_rgba(139,92,246,0.6)]"
+          className="absolute top-0 left-0 right-0 bg-gradient-to-b from-glow-purple via-glow-blue to-glow-cyan rounded-full shadow-[0_0_15px_rgba(139,92,246,0.6)]"
           style={{ 
             height: progressBar, 
             originY: 0,
