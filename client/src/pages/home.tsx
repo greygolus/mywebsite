@@ -877,57 +877,57 @@ const Home = () => {
     // Scene 2: Galaxy
     galaxyOpacity: useTransform(scrollYProgress, [0.08, 0.09, 0.16, 0.18], [0, 1, 1, 0]),
     galaxyTextOpacity: useTransform(scrollYProgress, [0.1, 0.12, 0.15, 0.17], [0, 1, 1, 0]),
-    galaxyScale: useTransform(scrollYProgress, [0.09, 0.18], [0.5, 3]), // Zoom effect
+    galaxyScale: useTransform(scrollYProgress, [0.09, 0.18], [1.5, 3]), // Increased starting size
     
     // Scene 3: Oort Cloud
     oortCloudOpacity: useTransform(scrollYProgress, [0.17, 0.18, 0.25, 0.27], [0, 1, 1, 0]),
     oortCloudTextOpacity: useTransform(scrollYProgress, [0.19, 0.21, 0.24, 0.26], [0, 1, 1, 0]),
-    oortCloudScale: useTransform(scrollYProgress, [0.18, 0.27], [0.5, 3]), // Zoom effect
+    oortCloudScale: useTransform(scrollYProgress, [0.18, 0.27], [1.5, 3]), // Increased starting size
     
     // Scene 4: Solar System
     solarSystemOpacity: useTransform(scrollYProgress, [0.26, 0.27, 0.34, 0.36], [0, 1, 1, 0]),
     solarSystemTextOpacity: useTransform(scrollYProgress, [0.28, 0.3, 0.33, 0.35], [0, 1, 1, 0]),
-    solarSystemScale: useTransform(scrollYProgress, [0.27, 0.36], [0.5, 3]), // Zoom effect
+    solarSystemScale: useTransform(scrollYProgress, [0.27, 0.36], [1.5, 3]), // Increased starting size
     
     // Scene 5: Earth
     earthOpacity: useTransform(scrollYProgress, [0.35, 0.36, 0.43, 0.45], [0, 1, 1, 0]),
     earthTextOpacity: useTransform(scrollYProgress, [0.37, 0.39, 0.42, 0.44], [0, 1, 1, 0]),
-    earthScale: useTransform(scrollYProgress, [0.36, 0.45], [0.5, 3]), // Zoom effect
+    earthScale: useTransform(scrollYProgress, [0.36, 0.45], [1.5, 3]), // Increased starting size
     
     // Scene 6: Telescope
     telescopeOpacity: useTransform(scrollYProgress, [0.44, 0.45, 0.52, 0.54], [0, 1, 1, 0]),
     telescopeTextOpacity: useTransform(scrollYProgress, [0.46, 0.48, 0.51, 0.53], [0, 1, 1, 0]),
-    telescopeScale: useTransform(scrollYProgress, [0.45, 0.54], [0.5, 3]), // Zoom effect
+    telescopeScale: useTransform(scrollYProgress, [0.45, 0.54], [1.5, 3]), // Increased starting size
     
     // Scene 7: Eye
     eyeOpacity: useTransform(scrollYProgress, [0.53, 0.54, 0.61, 0.63], [0, 1, 1, 0]),
     eyeTextOpacity: useTransform(scrollYProgress, [0.55, 0.57, 0.6, 0.62], [0, 1, 1, 0]),
-    eyeScale: useTransform(scrollYProgress, [0.54, 0.63], [0.5, 3]), // Zoom effect
+    eyeScale: useTransform(scrollYProgress, [0.54, 0.63], [1.5, 3]), // Increased starting size
     
     // Scene 8: DNA / Cell
     dnaOpacity: useTransform(scrollYProgress, [0.62, 0.63, 0.7, 0.72], [0, 1, 1, 0]),
     dnaTextOpacity: useTransform(scrollYProgress, [0.64, 0.66, 0.69, 0.71], [0, 1, 1, 0]),
-    dnaScale: useTransform(scrollYProgress, [0.63, 0.72], [0.5, 3]), // Zoom effect
+    dnaScale: useTransform(scrollYProgress, [0.63, 0.72], [1.5, 3]), // Increased starting size
     
     // Scene 9: Atom
     atomOpacity: useTransform(scrollYProgress, [0.71, 0.72, 0.79, 0.81], [0, 1, 1, 0]),
     atomTextOpacity: useTransform(scrollYProgress, [0.73, 0.75, 0.78, 0.8], [0, 1, 1, 0]),
-    atomScale: useTransform(scrollYProgress, [0.72, 0.81], [0.5, 3]), // Zoom effect
+    atomScale: useTransform(scrollYProgress, [0.72, 0.81], [1.5, 3]), // Increased starting size
     
     // Scene 10: Nucleus
     nucleusOpacity: useTransform(scrollYProgress, [0.8, 0.81, 0.88, 0.9], [0, 1, 1, 0]),
     nucleusTextOpacity: useTransform(scrollYProgress, [0.82, 0.84, 0.87, 0.89], [0, 1, 1, 0]),
-    nucleusScale: useTransform(scrollYProgress, [0.81, 0.9], [0.5, 3]), // Zoom effect
+    nucleusScale: useTransform(scrollYProgress, [0.81, 0.9], [1.5, 3]), // Increased starting size
     
     // Scene 11: Quarks / Gluons
     quarksOpacity: useTransform(scrollYProgress, [0.89, 0.9, 0.97, 0.99], [0, 1, 1, 0.8]),
     quarksTextOpacity: useTransform(scrollYProgress, [0.91, 0.93, 0.96, 0.98], [0, 1, 1, 0]),
-    quarksScale: useTransform(scrollYProgress, [0.9, 0.99], [0.5, 3]), // Zoom effect
+    quarksScale: useTransform(scrollYProgress, [0.9, 0.99], [1.5, 3]), // Increased starting size
     
     // Scene 12: Final Scene
     finalOpacity: useTransform(scrollYProgress, [0.98, 0.99], [0, 1]),
     finalTextOpacity: useTransform(scrollYProgress, [0.99, 1], [0, 1]),
-    finalScale: useTransform(scrollYProgress, [0.99, 1], [0.8, 1]), // Subtle zoom for final scene
+    finalScale: useTransform(scrollYProgress, [0.99, 1], [1.2, 1]), // Increased starting size for final scene
   };
   
   // Mouse interaction for final scene with reduced sensitivity
@@ -972,7 +972,7 @@ const Home = () => {
             }} 
             className="absolute inset-0"
           >
-            <div className="absolute inset-0 bg-gradient-to-b from-purple-900 to-black opacity-80"></div>
+            <div className="absolute inset-0 bg-gradient-to-b from-purple-900 to-black opacity-95"></div>
             <CosmicWebSVG />
           </motion.div>
           
@@ -999,7 +999,7 @@ const Home = () => {
             }} 
             className="absolute inset-0"
           >
-            <div className="absolute inset-0 bg-gradient-to-b from-blue-900 to-black opacity-80"></div>
+            <div className="absolute inset-0 bg-gradient-to-b from-blue-900 to-black opacity-95"></div>
             <GalaxySVG />
           </motion.div>
           
