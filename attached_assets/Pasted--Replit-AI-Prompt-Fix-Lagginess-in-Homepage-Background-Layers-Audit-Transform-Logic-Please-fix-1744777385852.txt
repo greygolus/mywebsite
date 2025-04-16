@@ -1,0 +1,63 @@
+✍️ Replit AI Prompt — Fix Lagginess in Homepage Background Layers + Audit Transform Logic
+Please fix the performance and lag issues affecting the animated backgrounds on my homepage. This does not affect the text card overlays — those are functioning correctly and should not be modified.
+
+✅ 1. Background Animation Lag Fixes
+Review and optimize all scroll-linked background layers across homepage scroll stages
+
+Focus specifically on reducing janky scroll behavior, skipped frames, or GPU overload
+
+Apply the following performance improvements:
+
+a. ✅ Use Only GPU-Friendly CSS Properties
+Animate only transform: scale(), rotate(), translate3d() — avoid top, left, width, height, filter, or background-position
+
+Add will-change: transform or will-change: opacity to any motion layer to hint GPU acceleration
+
+b. ✅ Throttle Scroll-based Updates
+If using framer-motion or scrollYProgress, ensure it’s throttled and not updating the DOM on every small scroll tick
+
+Use useMemo or useEffect to reduce recalculations
+
+Avoid nested motion.divs triggering layout reflows at the same time
+
+c. ✅ Use layout={false} for Non-layout Motion
+In framer-motion background layers, disable layout animation tracking unless absolutely needed:
+
+tsx
+Copy
+Edit
+<motion.div layout={false} />
+✅ 2. Style + Transform Conflicts Audit
+Please check for weird or conflicting CSS combinations that might be affecting performance:
+
+Look for any background layers that have multiple transforms applied simultaneously (e.g., a scale() from one animation and a translateZ() or rotate() from another at the same time)
+
+Eliminate any redundant transforms — don't nest scale() within another scale(), or apply opacity transitions within a component that is already being faded via scroll logic
+
+Avoid deeply nested transforms unless all parent layers are static or GPU-friendly
+
+If using custom scroll math to move or zoom elements:
+
+Normalize scroll values (e.g., use percentages or [0, 1] values) before applying to transforms
+
+Avoid multiplying values across layers without constraining the output — extreme values can cause weird visual behavior or overdraw
+
+✅ 3. Image / Video Background Optimization
+Make sure any background video has:
+
+playsInline, autoPlay, muted, loop
+
+poster fallback and appropriate compression (WebM or MP4 < 4MB)
+
+Make sure any image backgrounds are:
+
+.webp compressed and under 1MB
+
+Using bg-cover bg-center instead of bg-fixed (which causes repaints on some devices)
+
+🚫 Do Not Change:
+Any text cards or container styles
+
+Any recently fixed transparency or bubble styling
+
+Any scroll trigger timing or route logic

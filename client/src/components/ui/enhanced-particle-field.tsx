@@ -131,17 +131,21 @@ const EnhancedParticleField: React.FC<EnhancedParticleFieldProps> = ({
             key={`particle-${particle.id}`}
             className="absolute rounded-full"
             style={{
-              left: `${particle.x}%`,
-              top: `${particle.y}%`,
+              transform: `translate3d(${particle.x}%, ${particle.y}%, 0)`,
               width: `${particle.size}px`,
               height: `${particle.size}px`,
               backgroundColor: color,
               boxShadow: `0 0 ${glowIntensity * (particle.size + 2)}px ${color}`,
-              opacity: particle.opacity
+              opacity: particle.opacity,
+              willChange: "transform, opacity"
             }}
+            layout={false}
             animate={{
-              x: movement.x,
-              y: movement.y,
+              transform: [
+                `translate3d(${movement.x[0]}%, ${movement.y[0]}%, 0)`,
+                `translate3d(${movement.x[1]}%, ${movement.y[1]}%, 0)`,
+                `translate3d(${movement.x[2]}%, ${movement.y[2]}%, 0)`
+              ],
               opacity: [
                 particle.opacity,
                 particle.opacity * 0.6,

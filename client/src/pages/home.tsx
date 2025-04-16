@@ -948,11 +948,13 @@ const Home = () => {
     };
   }, []);
   
-  // Track scroll progress
+  // Track scroll progress with optimized performance
   // Use regular useEffect instead of layoutEffect to avoid Hook order warnings
   const { scrollYProgress } = useScroll({
     target: containerRef,
-    offset: ["start start", "end end"]
+    offset: ["start start", "end end"],
+    // Using layoutEffect: false to avoid Hook order warnings and improve performance
+    layoutEffect: false
   });
   
   // Define progress ranges for each of the 12 stages
@@ -1115,7 +1117,7 @@ const Home = () => {
       className="relative bg-black text-white overflow-x-hidden"
       onMouseMove={handleMouseMove}
     >
-      {/* Decorative floating particles */}
+      {/* Decorative floating particles - Optimized for GPU rendering */}
       <div className="fixed inset-0 z-10 pointer-events-none">
         {particles.map((particle, index) => (
           <motion.div 
@@ -1125,20 +1127,18 @@ const Home = () => {
               width: particle.size,
               height: particle.size,
               backgroundColor: particle.color,
-              left: particle.initialX,
-              top: particle.initialY,
+              transform: `translate3d(${particle.initialX}px, ${particle.initialY}px, 0)`,
               boxShadow: `0 0 ${particle.size * 2}px ${particle.color}`,
+              willChange: "transform, opacity",
+              opacity: particle.size > 2 ? 0.8 : 0.4
             }}
+            layout={false}
             animate={{
-              x: [
-                0,
-                Math.sin(particle.direction) * 100 * particle.speed,
-                0
-              ],
-              y: [
-                0,
-                Math.cos(particle.direction) * 100 * particle.speed,
-                0
+              transform: [
+                `translate3d(${particle.initialX}px, ${particle.initialY}px, 0)`,
+                `translate3d(${particle.initialX + Math.sin(particle.direction) * 100 * particle.speed}px, 
+                              ${particle.initialY + Math.cos(particle.direction) * 100 * particle.speed}px, 0)`,
+                `translate3d(${particle.initialX}px, ${particle.initialY}px, 0)`
               ],
               opacity: [
                 particle.size > 2 ? 0.8 : 0.4,
@@ -1149,7 +1149,9 @@ const Home = () => {
             transition={{
               duration: 30 + particle.size * 10, // Much slower animation
               repeat: Infinity,
-              ease: "easeInOut"
+              ease: "easeInOut",
+              delay: Math.random() * 3,
+              type: "tween" // More efficient animation type
             }}
           />
         ))}
@@ -1162,8 +1164,10 @@ const Home = () => {
           <motion.div 
             style={{ 
               opacity: stageRanges.cosmicWebOpacity,
-              scale: stageRanges.cosmicWebScale
+              scale: stageRanges.cosmicWebScale,
+              willChange: "transform, opacity"
             }} 
+            layout={false}
             className="absolute inset-0"
           >
             <div className="absolute inset-0 bg-gradient-to-b from-purple-900 via-violet-950 to-black opacity-95"></div>
@@ -1199,8 +1203,10 @@ const Home = () => {
           <motion.div 
             style={{ 
               opacity: stageRanges.galaxyOpacity,
-              scale: stageRanges.galaxyScale
+              scale: stageRanges.galaxyScale,
+              willChange: "transform, opacity"
             }} 
+            layout={false}
             className="absolute inset-0"
           >
             <div className="absolute inset-0 bg-gradient-to-b from-blue-900 via-indigo-900 to-black opacity-95"></div>
