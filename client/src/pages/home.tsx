@@ -964,62 +964,62 @@ const Home = () => {
   }, []);
   
   const stageRanges = {
-    // Scene 1: Cosmic Web - ORIGINAL TIMING
+    // Scene 1: Cosmic Web - EXTENDED TEXT DISPLAY
     cosmicWebOpacity: useTransform(scrollYProgress, [0, 0.07, 0.09], [1, 0.5, 0]),
-    cosmicWebTextOpacity: useTransform(scrollYProgress, [0.01, 0.03, 0.06, 0.08], [0, 1, 1, 0]),
-    cosmicWebScale: useTransform(scrollYProgress, [0, 0.09], [1, 4]), // Original zoom effect
-    // Text depth effect for Scene 1
-    cosmicWebTextScale: useTransform(scrollYProgress, [0.01, 0.03, 0.06, 0.08], [0.8, 1.1, 1.1, 0.8]),
-    cosmicWebTextY: useTransform(scrollYProgress, [0.01, 0.03, 0.06, 0.08], [30, 0, 0, -20]),
+    cosmicWebTextOpacity: useTransform(scrollYProgress, [0.01, 0.03, 0.065, 0.08], [0, 1, 1, 0]),
+    cosmicWebScale: useTransform(scrollYProgress, [0, 0.09], [1, 4]), 
+    // Text depth effect with extended full-size duration
+    cosmicWebTextScale: useTransform(scrollYProgress, [0.01, 0.03, 0.065, 0.08], [0.8, 1.1, 1.1, 0.8]),
+    cosmicWebTextY: useTransform(scrollYProgress, [0.01, 0.03, 0.065, 0.08], [30, 0, 0, -20]),
     
-    // Scene 2: Galaxy - ORIGINAL TIMING
+    // Scene 2: Galaxy - EXTENDED TEXT DISPLAY
     galaxyOpacity: useTransform(scrollYProgress, [0.08, 0.09, 0.16, 0.18], [0, 1, 1, 0]),
-    galaxyTextOpacity: useTransform(scrollYProgress, [0.1, 0.12, 0.15, 0.17], [0, 1, 1, 0]),
-    galaxyScale: useTransform(scrollYProgress, [0.09, 0.18], [1, 2.5]), // Original scale,
-    galaxyTextScale: useTransform(scrollYProgress, [0.1, 0.12, 0.15, 0.17], [0.8, 1.1, 1.1, 0.8]),
-    galaxyTextY: useTransform(scrollYProgress, [0.1, 0.12, 0.15, 0.17], [30, 0, 0, -20]),
+    galaxyTextOpacity: useTransform(scrollYProgress, [0.1, 0.12, 0.155, 0.17], [0, 1, 1, 0]),
+    galaxyScale: useTransform(scrollYProgress, [0.09, 0.18], [1, 2.5]),
+    galaxyTextScale: useTransform(scrollYProgress, [0.1, 0.12, 0.155, 0.17], [0.8, 1.1, 1.1, 0.8]),
+    galaxyTextY: useTransform(scrollYProgress, [0.1, 0.12, 0.155, 0.17], [30, 0, 0, -20]),
     
-    // Scene 3: Oort Cloud - ORIGINAL TIMING
+    // Scene 3: Oort Cloud - EXTENDED TEXT DISPLAY
     oortCloudOpacity: useTransform(scrollYProgress, [0.17, 0.18, 0.25, 0.27], [0, 1, 1, 0]),
-    oortCloudTextOpacity: useTransform(scrollYProgress, [0.19, 0.21, 0.24, 0.26], [0, 1, 1, 0]),
-    oortCloudScale: useTransform(scrollYProgress, [0.18, 0.27], [1, 2.5]), // Original scale
-    oortCloudTextScale: useTransform(scrollYProgress, [0.19, 0.21, 0.24, 0.26], [0.8, 1.1, 1.1, 0.8]),
-    oortCloudTextY: useTransform(scrollYProgress, [0.19, 0.21, 0.24, 0.26], [30, 0, 0, -20]),
+    oortCloudTextOpacity: useTransform(scrollYProgress, [0.19, 0.21, 0.245, 0.26], [0, 1, 1, 0]),
+    oortCloudScale: useTransform(scrollYProgress, [0.18, 0.27], [1, 2.5]),
+    oortCloudTextScale: useTransform(scrollYProgress, [0.19, 0.21, 0.245, 0.26], [0.8, 1.1, 1.1, 0.8]),
+    oortCloudTextY: useTransform(scrollYProgress, [0.19, 0.21, 0.245, 0.26], [30, 0, 0, -20]),
     
-    // Scene 4: Solar System - ORIGINAL TIMING
+    // Scene 4: Solar System - EXTENDED TEXT DISPLAY
     solarSystemOpacity: useTransform(scrollYProgress, [0.26, 0.27, 0.34, 0.36], [0, 1, 1, 0]),
-    solarSystemTextOpacity: useTransform(scrollYProgress, [0.28, 0.3, 0.33, 0.35], [0, 1, 1, 0]),
-    solarSystemScale: useTransform(scrollYProgress, [0.27, 0.36], [1, 2.5]), // Original scale
-    solarSystemTextScale: useTransform(scrollYProgress, [0.28, 0.3, 0.33, 0.35], [0.8, 1.1, 1.1, 0.8]),
-    solarSystemTextY: useTransform(scrollYProgress, [0.28, 0.3, 0.33, 0.35], [30, 0, 0, -20]),
+    solarSystemTextOpacity: useTransform(scrollYProgress, [0.28, 0.3, 0.335, 0.35], [0, 1, 1, 0]),
+    solarSystemScale: useTransform(scrollYProgress, [0.27, 0.36], [1, 2.5]),
+    solarSystemTextScale: useTransform(scrollYProgress, [0.28, 0.3, 0.335, 0.35], [0.8, 1.1, 1.1, 0.8]),
+    solarSystemTextY: useTransform(scrollYProgress, [0.28, 0.3, 0.335, 0.35], [30, 0, 0, -20]),
     
-    // Scene 5: Earth - ORIGINAL TIMING
+    // Scene 5: Earth - EXTENDED TEXT DISPLAY
     earthOpacity: useTransform(scrollYProgress, [0.35, 0.36, 0.43, 0.45], [0, 1, 1, 0]),
-    earthTextOpacity: useTransform(scrollYProgress, [0.37, 0.39, 0.42, 0.44], [0, 1, 1, 0]),
-    earthScale: useTransform(scrollYProgress, [0.36, 0.45], [1, 2.5]), // Original scale
-    earthTextScale: useTransform(scrollYProgress, [0.37, 0.39, 0.42, 0.44], [0.8, 1.1, 1.1, 0.8]),
-    earthTextY: useTransform(scrollYProgress, [0.37, 0.39, 0.42, 0.44], [30, 0, 0, -20]),
+    earthTextOpacity: useTransform(scrollYProgress, [0.37, 0.39, 0.425, 0.44], [0, 1, 1, 0]),
+    earthScale: useTransform(scrollYProgress, [0.36, 0.45], [1, 2.5]),
+    earthTextScale: useTransform(scrollYProgress, [0.37, 0.39, 0.425, 0.44], [0.8, 1.1, 1.1, 0.8]),
+    earthTextY: useTransform(scrollYProgress, [0.37, 0.39, 0.425, 0.44], [30, 0, 0, -20]),
     
-    // Scene 6: Telescope - ORIGINAL TIMING
+    // Scene 6: Telescope - EXTENDED TEXT DISPLAY
     telescopeOpacity: useTransform(scrollYProgress, [0.44, 0.45, 0.52, 0.54], [0, 1, 1, 0]),
-    telescopeTextOpacity: useTransform(scrollYProgress, [0.46, 0.48, 0.51, 0.53], [0, 1, 1, 0]),
-    telescopeScale: useTransform(scrollYProgress, [0.45, 0.54], [1, 2.5]), // Original scale
-    telescopeTextScale: useTransform(scrollYProgress, [0.46, 0.48, 0.51, 0.53], [0.8, 1.1, 1.1, 0.8]),
-    telescopeTextY: useTransform(scrollYProgress, [0.46, 0.48, 0.51, 0.53], [30, 0, 0, -20]),
+    telescopeTextOpacity: useTransform(scrollYProgress, [0.46, 0.48, 0.515, 0.53], [0, 1, 1, 0]),
+    telescopeScale: useTransform(scrollYProgress, [0.45, 0.54], [1, 2.5]),
+    telescopeTextScale: useTransform(scrollYProgress, [0.46, 0.48, 0.515, 0.53], [0.8, 1.1, 1.1, 0.8]),
+    telescopeTextY: useTransform(scrollYProgress, [0.46, 0.48, 0.515, 0.53], [30, 0, 0, -20]),
     
-    // Scene 7: Eye - ORIGINAL TIMING
+    // Scene 7: Eye - EXTENDED TEXT DISPLAY
     eyeOpacity: useTransform(scrollYProgress, [0.53, 0.54, 0.61, 0.63], [0, 1, 1, 0]),
-    eyeTextOpacity: useTransform(scrollYProgress, [0.55, 0.57, 0.6, 0.62], [0, 1, 1, 0]),
-    eyeScale: useTransform(scrollYProgress, [0.54, 0.63], [1, 2.5]), // Original scale
-    eyeTextScale: useTransform(scrollYProgress, [0.55, 0.57, 0.6, 0.62], [0.8, 1.1, 1.1, 0.8]),
-    eyeTextY: useTransform(scrollYProgress, [0.55, 0.57, 0.6, 0.62], [30, 0, 0, -20]),
+    eyeTextOpacity: useTransform(scrollYProgress, [0.55, 0.57, 0.605, 0.62], [0, 1, 1, 0]),
+    eyeScale: useTransform(scrollYProgress, [0.54, 0.63], [1, 2.5]),
+    eyeTextScale: useTransform(scrollYProgress, [0.55, 0.57, 0.605, 0.62], [0.8, 1.1, 1.1, 0.8]),
+    eyeTextY: useTransform(scrollYProgress, [0.55, 0.57, 0.605, 0.62], [30, 0, 0, -20]),
     
-    // Scene 8: DNA / Cell - ORIGINAL TIMING
+    // Scene 8: DNA / Cell - EXTENDED TEXT DISPLAY
     dnaOpacity: useTransform(scrollYProgress, [0.62, 0.63, 0.7, 0.72], [0, 1, 1, 0]),
-    dnaTextOpacity: useTransform(scrollYProgress, [0.64, 0.66, 0.69, 0.71], [0, 1, 1, 0]),
-    dnaScale: useTransform(scrollYProgress, [0.63, 0.72], [1, 2.5]), // Original scale
-    dnaTextScale: useTransform(scrollYProgress, [0.64, 0.66, 0.69, 0.71], [0.8, 1.1, 1.1, 0.8]),
-    dnaTextY: useTransform(scrollYProgress, [0.64, 0.66, 0.69, 0.71], [30, 0, 0, -20]),
+    dnaTextOpacity: useTransform(scrollYProgress, [0.64, 0.66, 0.695, 0.71], [0, 1, 1, 0]),
+    dnaScale: useTransform(scrollYProgress, [0.63, 0.72], [1, 2.5]),
+    dnaTextScale: useTransform(scrollYProgress, [0.64, 0.66, 0.695, 0.71], [0.8, 1.1, 1.1, 0.8]),
+    dnaTextY: useTransform(scrollYProgress, [0.64, 0.66, 0.695, 0.71], [30, 0, 0, -20]),
     
     // Scene 9: Atom - ORIGINAL TIMING
     atomOpacity: useTransform(scrollYProgress, [0.71, 0.72, 0.79, 0.81], [0, 1, 1, 0]),
@@ -2824,7 +2824,7 @@ const Home = () => {
       
       {/* Vertical scroll progress indicator */}
       <motion.div 
-        className="fixed right-6 top-1/2 transform -translate-y-1/2 h-1/3 w-2 bg-gray-800/60 rounded-full backdrop-blur-md shadow-inner border border-white/5"
+        className="fixed right-6 top-[45%] transform -translate-y-1/2 h-1/3 w-2 bg-gray-800/60 rounded-full backdrop-blur-md shadow-inner border border-white/5"
         initial={{ opacity: 0, x: 10 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ 
