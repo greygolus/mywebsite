@@ -2836,11 +2836,11 @@ const Home = () => {
         whileHover={{ width: "0.7rem", x: -2, transition: { duration: 0.3 } }}
       >
         <motion.div 
-          className="w-full bg-gradient-to-b from-glow-purple via-glow-blue to-glow-cyan rounded-full shadow-[0_0_15px_rgba(139,92,246,0.6)]"
+          className="absolute top-0 left-0 w-full bg-gradient-to-b from-glow-purple via-glow-blue to-glow-cyan rounded-full shadow-[0_0_15px_rgba(139,92,246,0.6)]"
           style={{ 
             height: progressBar, 
             originY: 0,
-            filter: "blur(1px)"
+            filter: "blur(1px)" 
           }}
           initial={{ filter: "blur(1px)" }}
           animate={{ filter: "blur(1px)" }}
@@ -2851,12 +2851,10 @@ const Home = () => {
         />
         {/* Animated dot indicator */}
         <motion.div 
-          className="absolute w-4 h-4 right-0 transform -translate-x-1/2 rounded-full bg-white shadow-[0_0_20px_rgba(255,255,255,0.7)]"
+          className="absolute w-4 h-4 transform -translate-x-1/2 -translate-y-1/2 rounded-full bg-white shadow-[0_0_20px_rgba(255,255,255,0.7)]"
           style={{ 
             top: progressBar,
-            left: "50%",
-            translateY: "-50%",
-            translateX: "-50%"
+            left: "50%"
           }}
           initial={{ scale: 0.7 }}
           animate={{ scale: [0.7, 0.9, 0.7], opacity: [0.7, 1, 0.7] }}
