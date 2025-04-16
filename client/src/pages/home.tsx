@@ -1019,8 +1019,14 @@ const Home = () => {
           </motion.div>
           
           {/* Scene 3: Oort Cloud */}
-          <motion.div style={{ opacity: stageRanges.oortCloudOpacity }} className="absolute inset-0">
-            <div className="absolute inset-0 bg-gradient-to-b from-slate-900 to-slate-950 opacity-80"></div>
+          <motion.div 
+            style={{ 
+              opacity: stageRanges.oortCloudOpacity,
+              scale: stageRanges.oortCloudScale
+            }} 
+            className="absolute inset-0"
+          >
+            <div className="absolute inset-0 bg-gradient-to-b from-slate-900 to-slate-950 opacity-90"></div>
             <OortCloudSVG />
           </motion.div>
           
@@ -1028,15 +1034,26 @@ const Home = () => {
             className="absolute inset-0 flex items-center justify-center pointer-events-none"
             style={{ opacity: stageRanges.oortCloudTextOpacity }}
           >
-            <div className="bg-black bg-opacity-30 backdrop-blur-sm rounded-xl p-6 max-w-md text-center">
+            <motion.div 
+              className="bg-black bg-opacity-20 backdrop-blur-md border border-slate-500/10 rounded-xl p-6 max-w-md text-center shadow-lg"
+              initial={{ y: 20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ duration: 0.7 }}
+            >
               <h2 className="text-3xl font-bold gradient-text mb-2">Zoom in, past frozen dust and ancient comets.</h2>
               <p className="text-gray-300">The outer edges of our solar system, where remnants of creation drift.</p>
-            </div>
+            </motion.div>
           </motion.div>
           
           {/* Scene 4: Solar System */}
-          <motion.div style={{ opacity: stageRanges.solarSystemOpacity }} className="absolute inset-0">
-            <div className="absolute inset-0 bg-gradient-to-b from-indigo-950 to-black opacity-80"></div>
+          <motion.div 
+            style={{ 
+              opacity: stageRanges.solarSystemOpacity,
+              scale: stageRanges.solarSystemScale
+            }} 
+            className="absolute inset-0"
+          >
+            <div className="absolute inset-0 bg-gradient-to-b from-indigo-950 to-black opacity-90"></div>
             <SolarSystemSVG />
           </motion.div>
           
@@ -1044,15 +1061,26 @@ const Home = () => {
             className="absolute inset-0 flex items-center justify-center pointer-events-none"
             style={{ opacity: stageRanges.solarSystemTextOpacity }}
           >
-            <div className="bg-black bg-opacity-30 backdrop-blur-sm rounded-xl p-6 max-w-md text-center">
+            <motion.div 
+              className="bg-black bg-opacity-20 backdrop-blur-md border border-indigo-500/10 rounded-xl p-6 max-w-md text-center shadow-lg"
+              initial={{ y: 20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ duration: 0.7 }}
+            >
               <h2 className="text-3xl font-bold gradient-text mb-2">Into the solar system, a dance of motion and fire.</h2>
               <p className="text-gray-300">Where planets follow eternal orbits around our central star.</p>
-            </div>
+            </motion.div>
           </motion.div>
           
           {/* Scene 5: Earth */}
-          <motion.div style={{ opacity: stageRanges.earthOpacity }} className="absolute inset-0">
-            <div className="absolute inset-0 bg-gradient-to-b from-blue-950 to-indigo-950 opacity-80"></div>
+          <motion.div 
+            style={{ 
+              opacity: stageRanges.earthOpacity,
+              scale: stageRanges.earthScale
+            }} 
+            className="absolute inset-0"
+          >
+            <div className="absolute inset-0 bg-gradient-to-b from-blue-950 to-indigo-950 opacity-90"></div>
             <EarthSVG />
           </motion.div>
           
@@ -1060,16 +1088,27 @@ const Home = () => {
             className="absolute inset-0 flex items-center justify-center pointer-events-none"
             style={{ opacity: stageRanges.earthTextOpacity }}
           >
-            <div className="bg-black bg-opacity-30 backdrop-blur-sm rounded-xl p-6 max-w-md text-center">
+            <motion.div 
+              className="bg-black bg-opacity-20 backdrop-blur-md border border-blue-500/10 rounded-xl p-6 max-w-md text-center shadow-lg"
+              initial={{ y: 20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ duration: 0.7 }}
+            >
               <h2 className="text-3xl font-bold gradient-text mb-2">Toward a pale blue dot...</h2>
               <p className="text-gray-300">Our home among the stars, where all of human history has unfolded.</p>
-            </div>
+            </motion.div>
           </motion.div>
           
           {/* Scene 6: Telescope */}
-          <motion.div style={{ opacity: stageRanges.telescopeOpacity }} className="absolute inset-0">
+          <motion.div 
+            style={{ 
+              opacity: stageRanges.telescopeOpacity,
+              scale: stageRanges.telescopeScale
+            }} 
+            className="absolute inset-0"
+          >
             <StarField />
-            <div className="absolute inset-0 bg-gradient-to-b from-gray-900 to-indigo-950 opacity-80"></div>
+            <div className="absolute inset-0 bg-gradient-to-b from-gray-900 to-indigo-950 opacity-90"></div>
             <div className="relative w-full h-full flex items-center justify-center">
               <TelescopeSVG />
             </div>
@@ -1079,15 +1118,26 @@ const Home = () => {
             className="absolute inset-0 flex items-center justify-center pointer-events-none"
             style={{ opacity: stageRanges.telescopeTextOpacity }}
           >
-            <div className="bg-black bg-opacity-30 backdrop-blur-sm rounded-xl p-6 max-w-md text-center">
+            <motion.div 
+              className="bg-black bg-opacity-20 backdrop-blur-md border border-gray-500/10 rounded-xl p-6 max-w-md text-center shadow-lg"
+              initial={{ y: 20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ duration: 0.7 }}
+            >
               <h2 className="text-3xl font-bold gradient-text mb-2">Where we watch the skies from the ground.</h2>
               <p className="text-gray-300">Our tools of observation extend our vision into the cosmos.</p>
-            </div>
+            </motion.div>
           </motion.div>
           
           {/* Scene 7: Eye */}
-          <motion.div style={{ opacity: stageRanges.eyeOpacity }} className="absolute inset-0">
-            <div className="absolute inset-0 bg-gradient-to-b from-blue-900 to-indigo-900 opacity-80"></div>
+          <motion.div 
+            style={{ 
+              opacity: stageRanges.eyeOpacity,
+              scale: stageRanges.eyeScale
+            }} 
+            className="absolute inset-0"
+          >
+            <div className="absolute inset-0 bg-gradient-to-b from-blue-900 to-indigo-900 opacity-90"></div>
             <div className="relative w-full h-full flex items-center justify-center">
               <EyeSVG />
             </div>
@@ -1097,15 +1147,26 @@ const Home = () => {
             className="absolute inset-0 flex items-center justify-center pointer-events-none"
             style={{ opacity: stageRanges.eyeTextOpacity }}
           >
-            <div className="bg-black bg-opacity-30 backdrop-blur-sm rounded-xl p-6 max-w-md text-center">
+            <motion.div 
+              className="bg-black bg-opacity-20 backdrop-blur-md border border-blue-500/10 rounded-xl p-6 max-w-md text-center shadow-lg"
+              initial={{ y: 20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ duration: 0.7 }}
+            >
               <h2 className="text-3xl font-bold gradient-text mb-2">And see, not just through instruments...</h2>
               <p className="text-gray-300">But through the remarkable optical system we were born with.</p>
-            </div>
+            </motion.div>
           </motion.div>
           
           {/* Scene 8: DNA / Cell */}
-          <motion.div style={{ opacity: stageRanges.dnaOpacity }} className="absolute inset-0">
-            <div className="absolute inset-0 bg-gradient-to-b from-blue-800 to-cyan-900 opacity-80"></div>
+          <motion.div 
+            style={{ 
+              opacity: stageRanges.dnaOpacity,
+              scale: stageRanges.dnaScale
+            }} 
+            className="absolute inset-0"
+          >
+            <div className="absolute inset-0 bg-gradient-to-b from-blue-800 to-cyan-900 opacity-90"></div>
             <div className="relative w-full h-full flex items-center justify-center">
               <DNASVG />
             </div>
@@ -1115,15 +1176,26 @@ const Home = () => {
             className="absolute inset-0 flex items-center justify-center pointer-events-none"
             style={{ opacity: stageRanges.dnaTextOpacity }}
           >
-            <div className="bg-black bg-opacity-30 backdrop-blur-sm rounded-xl p-6 max-w-md text-center">
+            <motion.div 
+              className="bg-black bg-opacity-20 backdrop-blur-md border border-cyan-500/10 rounded-xl p-6 max-w-md text-center shadow-lg"
+              initial={{ y: 20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ duration: 0.7 }}
+            >
               <h2 className="text-3xl font-bold gradient-text mb-2">...but through biology.</h2>
               <p className="text-gray-300">The molecular structures that encode our ability to perceive light.</p>
-            </div>
+            </motion.div>
           </motion.div>
           
           {/* Scene 9: Atom */}
-          <motion.div style={{ opacity: stageRanges.atomOpacity }} className="absolute inset-0">
-            <div className="absolute inset-0 bg-gradient-to-b from-pink-900 to-purple-950 opacity-80"></div>
+          <motion.div 
+            style={{ 
+              opacity: stageRanges.atomOpacity,
+              scale: stageRanges.atomScale
+            }} 
+            className="absolute inset-0"
+          >
+            <div className="absolute inset-0 bg-gradient-to-b from-pink-900 to-purple-950 opacity-90"></div>
             <AtomSVG />
           </motion.div>
           
@@ -1131,15 +1203,26 @@ const Home = () => {
             className="absolute inset-0 flex items-center justify-center pointer-events-none"
             style={{ opacity: stageRanges.atomTextOpacity }}
           >
-            <div className="bg-black bg-opacity-30 backdrop-blur-sm rounded-xl p-6 max-w-md text-center">
+            <motion.div 
+              className="bg-black bg-opacity-20 backdrop-blur-md border border-pink-500/10 rounded-xl p-6 max-w-md text-center shadow-lg"
+              initial={{ y: 20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ duration: 0.7 }}
+            >
               <h2 className="text-3xl font-bold gradient-text mb-2">Through the tiniest building blocks.</h2>
               <p className="text-gray-300">Where electrons orbit nuclei, and light is both particle and wave.</p>
-            </div>
+            </motion.div>
           </motion.div>
           
           {/* Scene 10: Nucleus */}
-          <motion.div style={{ opacity: stageRanges.nucleusOpacity }} className="absolute inset-0">
-            <div className="absolute inset-0 bg-gradient-to-b from-red-950 to-gray-950 opacity-80"></div>
+          <motion.div 
+            style={{ 
+              opacity: stageRanges.nucleusOpacity,
+              scale: stageRanges.nucleusScale
+            }} 
+            className="absolute inset-0"
+          >
+            <div className="absolute inset-0 bg-gradient-to-b from-red-950 to-gray-950 opacity-95"></div>
             <NucleusSVG />
           </motion.div>
           
@@ -1147,15 +1230,26 @@ const Home = () => {
             className="absolute inset-0 flex items-center justify-center pointer-events-none"
             style={{ opacity: stageRanges.nucleusTextOpacity }}
           >
-            <div className="bg-black bg-opacity-30 backdrop-blur-sm rounded-xl p-6 max-w-md text-center">
+            <motion.div 
+              className="bg-black bg-opacity-20 backdrop-blur-md border border-red-500/10 rounded-xl p-6 max-w-md text-center shadow-lg"
+              initial={{ y: 20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ duration: 0.7 }}
+            >
               <h2 className="text-3xl font-bold gradient-text mb-2">Deeper still, past protons and neutrons...</h2>
               <p className="text-gray-300">Into the strong nuclear forces that bind matter together.</p>
-            </div>
+            </motion.div>
           </motion.div>
           
           {/* Scene 11: Quarks */}
-          <motion.div style={{ opacity: stageRanges.quarksOpacity }} className="absolute inset-0">
-            <div className="absolute inset-0 bg-gradient-to-b from-gray-900 to-black opacity-90"></div>
+          <motion.div 
+            style={{ 
+              opacity: stageRanges.quarksOpacity,
+              scale: stageRanges.quarksScale
+            }} 
+            className="absolute inset-0"
+          >
+            <div className="absolute inset-0 bg-gradient-to-b from-gray-900 to-black opacity-95"></div>
             <QuarksSVG />
           </motion.div>
           
@@ -1163,10 +1257,15 @@ const Home = () => {
             className="absolute inset-0 flex items-center justify-center pointer-events-none"
             style={{ opacity: stageRanges.quarksTextOpacity }}
           >
-            <div className="bg-black bg-opacity-30 backdrop-blur-sm rounded-xl p-6 max-w-md text-center">
+            <motion.div 
+              className="bg-black bg-opacity-20 backdrop-blur-md border border-gray-500/10 rounded-xl p-6 max-w-md text-center shadow-lg"
+              initial={{ y: 20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ duration: 0.7 }}
+            >
               <h2 className="text-3xl font-bold gradient-text mb-2">...to the fabric of everything.</h2>
               <p className="text-gray-300">Where quantum fields fluctuate and the fundamental forces arise.</p>
-            </div>
+            </motion.div>
           </motion.div>
           
           {/* Scene 12: Final Scene */}
@@ -1174,11 +1273,12 @@ const Home = () => {
             className="absolute inset-0"
             style={{ 
               opacity: stageRanges.finalOpacity,
+              scale: stageRanges.finalScale,
               x: mousePosition.x * 20,
               y: mousePosition.y * 20
             }}
           >
-            <div className="absolute inset-0 bg-gradient-to-b from-gray-900 to-black opacity-90"></div>
+            <div className="absolute inset-0 bg-gradient-to-b from-gray-900 to-black opacity-95"></div>
             <QuarksSVG />
           </motion.div>
           
@@ -1186,7 +1286,12 @@ const Home = () => {
             className="absolute inset-0 flex flex-col items-center justify-center"
             style={{ opacity: stageRanges.finalTextOpacity }}
           >
-            <div className="bg-black bg-opacity-50 backdrop-blur-md rounded-xl p-8 max-w-lg text-center">
+            <motion.div 
+              className="bg-black bg-opacity-20 backdrop-blur-md border border-purple-500/10 rounded-xl p-8 max-w-lg text-center shadow-lg"
+              initial={{ y: 20, opacity: 0, scale: 0.95 }}
+              animate={{ y: 0, opacity: 1, scale: 1 }}
+              transition={{ duration: 0.9, delay: 0.2 }}
+            >
               <h1 className="text-4xl md:text-5xl font-bold gradient-text mb-6">This is the scale of optics.</h1>
               <p className="text-xl text-gray-300 mb-8">Welcome to greygolus.com</p>
               
@@ -1201,7 +1306,7 @@ const Home = () => {
                   <span className="gradient-text font-bold">All Tools</span>
                 </Link>
               </div>
-            </div>
+            </motion.div>
           </motion.div>
         </div>
       </div>
