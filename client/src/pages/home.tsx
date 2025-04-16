@@ -951,7 +951,8 @@ const Home = () => {
   // Track scroll progress
   const { scrollYProgress } = useScroll({
     target: containerRef,
-    offset: ["start start", "end end"]
+    offset: ["start start", "end end"],
+    layoutEffect: false
   });
   
   // Define progress ranges for each of the 12 stages
@@ -1021,26 +1022,26 @@ const Home = () => {
     dnaTextScale: useTransform(scrollYProgress, [0.64, 0.66, 0.695, 0.71], [0.8, 1.1, 1.1, 0.8]),
     dnaTextY: useTransform(scrollYProgress, [0.64, 0.66, 0.695, 0.71], [30, 0, 0, -20]),
     
-    // Scene 9: Atom - ORIGINAL TIMING
+    // Scene 9: Atom - EXTENDED TEXT DISPLAY
     atomOpacity: useTransform(scrollYProgress, [0.71, 0.72, 0.79, 0.81], [0, 1, 1, 0]),
-    atomTextOpacity: useTransform(scrollYProgress, [0.73, 0.75, 0.78, 0.8], [0, 1, 1, 0]),
-    atomScale: useTransform(scrollYProgress, [0.72, 0.81], [1, 2.5]), // Original scale
-    atomTextScale: useTransform(scrollYProgress, [0.73, 0.75, 0.78, 0.8], [0.8, 1.1, 1.1, 0.8]),
-    atomTextY: useTransform(scrollYProgress, [0.73, 0.75, 0.78, 0.8], [30, 0, 0, -20]),
+    atomTextOpacity: useTransform(scrollYProgress, [0.73, 0.75, 0.785, 0.8], [0, 1, 1, 0]),
+    atomScale: useTransform(scrollYProgress, [0.72, 0.81], [1, 2.5]),
+    atomTextScale: useTransform(scrollYProgress, [0.73, 0.75, 0.785, 0.8], [0.8, 1.1, 1.1, 0.8]),
+    atomTextY: useTransform(scrollYProgress, [0.73, 0.75, 0.785, 0.8], [30, 0, 0, -20]),
     
-    // Scene 10: Nucleus - ORIGINAL TIMING
+    // Scene 10: Nucleus - EXTENDED TEXT DISPLAY
     nucleusOpacity: useTransform(scrollYProgress, [0.8, 0.81, 0.88, 0.9], [0, 1, 1, 0]),
-    nucleusTextOpacity: useTransform(scrollYProgress, [0.82, 0.84, 0.87, 0.89], [0, 1, 1, 0]),
-    nucleusScale: useTransform(scrollYProgress, [0.81, 0.9], [1, 2.5]), // Original scale
-    nucleusTextScale: useTransform(scrollYProgress, [0.82, 0.84, 0.87, 0.89], [0.8, 1.1, 1.1, 0.8]),
-    nucleusTextY: useTransform(scrollYProgress, [0.82, 0.84, 0.87, 0.89], [30, 0, 0, -20]),
+    nucleusTextOpacity: useTransform(scrollYProgress, [0.82, 0.84, 0.875, 0.89], [0, 1, 1, 0]),
+    nucleusScale: useTransform(scrollYProgress, [0.81, 0.9], [1, 2.5]),
+    nucleusTextScale: useTransform(scrollYProgress, [0.82, 0.84, 0.875, 0.89], [0.8, 1.1, 1.1, 0.8]),
+    nucleusTextY: useTransform(scrollYProgress, [0.82, 0.84, 0.875, 0.89], [30, 0, 0, -20]),
     
-    // Scene 11: Quarks / Gluons - ORIGINAL TIMING
+    // Scene 11: Quarks / Gluons - EXTENDED TEXT DISPLAY
     quarksOpacity: useTransform(scrollYProgress, [0.89, 0.9, 0.97, 0.99], [0, 1, 1, 0.8]),
-    quarksTextOpacity: useTransform(scrollYProgress, [0.91, 0.93, 0.96, 0.98], [0, 1, 1, 0]),
-    quarksScale: useTransform(scrollYProgress, [0.9, 0.99], [1, 2.5]), // Original scale
-    quarksTextScale: useTransform(scrollYProgress, [0.91, 0.93, 0.96, 0.98], [0.8, 1.1, 1.1, 0.8]),
-    quarksTextY: useTransform(scrollYProgress, [0.91, 0.93, 0.96, 0.98], [30, 0, 0, -20]),
+    quarksTextOpacity: useTransform(scrollYProgress, [0.91, 0.93, 0.965, 0.98], [0, 1, 1, 0]),
+    quarksScale: useTransform(scrollYProgress, [0.9, 0.99], [1, 2.5]),
+    quarksTextScale: useTransform(scrollYProgress, [0.91, 0.93, 0.965, 0.98], [0.8, 1.1, 1.1, 0.8]),
+    quarksTextY: useTransform(scrollYProgress, [0.91, 0.93, 0.965, 0.98], [30, 0, 0, -20]),
     
     // Scene 12: Final Scene - ORIGINAL TIMING
     finalOpacity: useTransform(scrollYProgress, [0.98, 0.99], [0, 1]),
