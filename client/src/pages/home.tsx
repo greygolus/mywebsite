@@ -1581,7 +1581,7 @@ const Home = () => {
             </DepthAwareTextBox>
           </motion.div>
           
-          {/* Scene 6: Telescope */}
+          {/* Scene 6: Telescope - Enhanced with better starfield and light trails */}
           <motion.div 
             style={{ 
               opacity: stageRanges.telescopeOpacity,
@@ -1590,8 +1590,123 @@ const Home = () => {
             className="absolute inset-0"
           >
             <StarField />
-            <div className="absolute inset-0 bg-gradient-to-b from-gray-900 to-indigo-950 opacity-90"></div>
+            <div className="absolute inset-0 bg-gradient-to-b from-gray-900 via-slate-900 to-indigo-950 opacity-90"></div>
+            
+            {/* Light pollution gradient in the "horizon" */}
+            <div className="absolute bottom-0 left-0 right-0 h-1/4 bg-gradient-to-t from-amber-900/10 to-transparent"></div>
+            
+            {/* Telescope light cone effect */}
+            <div className="absolute inset-0 flex items-center justify-center">
+              <motion.div 
+                className="absolute w-1/3 h-3/4 bg-gradient-to-t from-transparent to-slate-200/5"
+                style={{ 
+                  transformOrigin: 'bottom center',
+                  rotate: '25deg',
+                  filter: 'blur(8px)'
+                }}
+                animate={{
+                  opacity: [0.05, 0.07, 0.05]
+                }}
+                transition={{
+                  duration: 5,
+                  repeat: Infinity,
+                  ease: "easeInOut"
+                }}
+              />
+            </div>
+            
+            {/* Collection of light streaks (meteors/satellites) */}
+            <div className="absolute inset-0 overflow-hidden">
+              {Array.from({ length: 5 }).map((_, i) => {
+                const startX = Math.random() * 100;
+                const startY = Math.random() * 100;
+                const angle = Math.random() * 60 - 30; // -30 to +30 degrees
+                const length = 20 + Math.random() * 30;
+                const endX = startX + Math.cos(angle * Math.PI / 180) * length;
+                const endY = startY + Math.sin(angle * Math.PI / 180) * length;
+                
+                return (
+                  <motion.div
+                    key={`meteor-${i}`}
+                    className="absolute bg-gradient-to-r from-white to-transparent"
+                    style={{
+                      height: '1px',
+                      width: `${length}px`,
+                      left: `${startX}%`,
+                      top: `${startY}%`,
+                      rotate: `${angle}deg`,
+                      opacity: 0
+                    }}
+                    animate={{
+                      opacity: [0, 0.8, 0],
+                      width: [`2px`, `${length}px`, `2px`],
+                    }}
+                    transition={{
+                      duration: 2 + Math.random(),
+                      repeat: Infinity,
+                      repeatDelay: 7 + Math.random() * 15,
+                      ease: "easeInOut",
+                      delay: i * 2
+                    }}
+                  />
+                );
+              })}
+            </div>
+            
+            {/* Enhanced star field - brighter stars with twinkling */}
+            <div className="absolute inset-0">
+              {Array.from({ length: 15 }).map((_, i) => (
+                <motion.div
+                  key={`bright-star-${i}`}
+                  className="absolute rounded-full bg-white"
+                  style={{
+                    width: Math.random() * 2 + 1 + 'px',
+                    height: Math.random() * 2 + 1 + 'px',
+                    left: `${Math.random() * 100}%`,
+                    top: `${Math.random() * 100}%`,
+                    boxShadow: `0 0 ${Math.random() * 4 + 2}px rgba(255,255,255,0.8)`,
+                    opacity: Math.random() * 0.5 + 0.5
+                  }}
+                  animate={{
+                    opacity: [
+                      Math.random() * 0.5 + 0.5,
+                      Math.random() * 0.3 + 0.3,
+                      Math.random() * 0.5 + 0.5
+                    ],
+                    scale: [
+                      1,
+                      Math.random() * 0.2 + 0.9,
+                      1
+                    ]
+                  }}
+                  transition={{
+                    duration: 1 + Math.random() * 2,
+                    repeat: Infinity,
+                    ease: "easeInOut"
+                  }}
+                />
+              ))}
+            </div>
+            
             <div className="relative w-full h-full flex items-center justify-center">
+              {/* Lens flare effect */}
+              <motion.div
+                className="absolute rounded-full bg-blue-100 mix-blend-screen"
+                style={{
+                  width: '4rem',
+                  height: '4rem',
+                  filter: 'blur(10px)',
+                  transform: 'translate(30%, -40%)'
+                }}
+                animate={{
+                  opacity: [0.1, 0.2, 0.1]
+                }}
+                transition={{
+                  duration: 4,
+                  repeat: Infinity,
+                  ease: "easeInOut"
+                }}
+              />
               <TelescopeSVG />
             </div>
           </motion.div>
@@ -1610,7 +1725,7 @@ const Home = () => {
             </DepthAwareTextBox>
           </motion.div>
           
-          {/* Scene 7: Eye */}
+          {/* Scene 7: Eye - Enhanced with light refraction and neural signals */}
           <motion.div 
             style={{ 
               opacity: stageRanges.eyeOpacity,
@@ -1618,9 +1733,148 @@ const Home = () => {
             }} 
             className="absolute inset-0"
           >
-            <div className="absolute inset-0 bg-gradient-to-b from-blue-900 to-indigo-900 opacity-90"></div>
+            <div className="absolute inset-0 bg-gradient-radial from-blue-800 via-blue-900 to-indigo-950 opacity-90"></div>
+            
+            {/* Light beams/rays converging at eye */}
+            <div className="absolute inset-0 flex items-center justify-center overflow-hidden">
+              {Array.from({ length: 12 }).map((_, i) => {
+                const angle = i * 30; // 12 rays evenly distributed
+                const distance = 100; // start far away
+                
+                return (
+                  <motion.div
+                    key={`light-ray-${i}`}
+                    className="absolute bg-gradient-to-t from-transparent via-blue-300/10 to-transparent"
+                    style={{
+                      width: '1px',
+                      height: '100vh',
+                      left: '50%',
+                      top: '50%',
+                      transformOrigin: 'center',
+                      rotate: `${angle}deg`,
+                      opacity: 0.2
+                    }}
+                    animate={{
+                      opacity: [0.1, 0.3, 0.1]
+                    }}
+                    transition={{
+                      duration: 3,
+                      repeat: Infinity,
+                      ease: "easeInOut",
+                      delay: i * 0.2
+                    }}
+                  />
+                );
+              })}
+            </div>
+            
+            {/* Neural signal pulses */}
+            <div className="absolute inset-0 flex items-center justify-center">
+              <div className="relative" style={{ width: '30rem', height: '30rem' }}>
+                <motion.div
+                  className="absolute right-0 w-1/2 h-px bg-gradient-to-r from-transparent via-cyan-200/40 to-transparent"
+                  style={{
+                    top: '50%',
+                    transformOrigin: 'right center'
+                  }}
+                  animate={{
+                    scaleX: [0, 1, 0],
+                    opacity: [0, 0.6, 0]
+                  }}
+                  transition={{
+                    duration: 1.5,
+                    repeat: Infinity,
+                    repeatDelay: 2,
+                    ease: "easeInOut"
+                  }}
+                />
+                
+                <motion.div
+                  className="absolute right-0 w-1/2 h-px bg-gradient-to-r from-transparent via-blue-200/40 to-transparent"
+                  style={{
+                    top: '48%',
+                    transformOrigin: 'right center'
+                  }}
+                  animate={{
+                    scaleX: [0, 1, 0],
+                    opacity: [0, 0.7, 0]
+                  }}
+                  transition={{
+                    duration: 1.3,
+                    repeat: Infinity,
+                    repeatDelay: 1.8,
+                    ease: "easeInOut",
+                    delay: 0.5
+                  }}
+                />
+                
+                <motion.div
+                  className="absolute right-0 w-1/2 h-px bg-gradient-to-r from-transparent via-indigo-200/40 to-transparent"
+                  style={{
+                    top: '52%',
+                    transformOrigin: 'right center'
+                  }}
+                  animate={{
+                    scaleX: [0, 1, 0],
+                    opacity: [0, 0.5, 0]
+                  }}
+                  transition={{
+                    duration: 1.7,
+                    repeat: Infinity,
+                    repeatDelay: 2.2,
+                    ease: "easeInOut",
+                    delay: 0.3
+                  }}
+                />
+              </div>
+            </div>
+            
+            {/* Colored light reflections */}
+            <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+              <motion.div
+                className="absolute rounded-full bg-gradient-to-r from-cyan-500/10 to-transparent"
+                style={{
+                  width: '30rem',
+                  height: '30rem',
+                  transform: 'translateX(-40%)',
+                  filter: 'blur(30px)'
+                }}
+                animate={{
+                  opacity: [0.1, 0.2, 0.1]
+                }}
+                transition={{
+                  duration: 5,
+                  repeat: Infinity,
+                  ease: "easeInOut"
+                }}
+              />
+            </div>
+            
             <div className="relative w-full h-full flex items-center justify-center">
               <EyeSVG />
+            </div>
+            
+            {/* Focal point glow effect */}
+            <div className="absolute inset-0 flex items-center justify-center">
+              <motion.div
+                className="absolute bg-white rounded-full"
+                style={{
+                  width: '2rem',
+                  height: '2rem',
+                  filter: 'blur(10px)',
+                  opacity: 0.2,
+                  transform: 'translateX(5rem)'
+                }}
+                animate={{
+                  opacity: [0.1, 0.3, 0.1],
+                  scale: [0.9, 1.1, 0.9]
+                }}
+                transition={{
+                  duration: 3,
+                  repeat: Infinity,
+                  ease: "easeInOut"
+                }}
+              />
             </div>
           </motion.div>
           
@@ -1638,7 +1892,7 @@ const Home = () => {
             </DepthAwareTextBox>
           </motion.div>
           
-          {/* Scene 8: DNA / Cell */}
+          {/* Scene 8: DNA / Cell - Enhanced with liquid environment and bio-chemical effects */}
           <motion.div 
             style={{ 
               opacity: stageRanges.dnaOpacity,
@@ -1646,9 +1900,99 @@ const Home = () => {
             }} 
             className="absolute inset-0"
           >
-            <div className="absolute inset-0 bg-gradient-to-b from-blue-800 to-cyan-900 opacity-90"></div>
+            <div className="absolute inset-0 bg-gradient-radial from-cyan-900 via-blue-900 to-blue-950 opacity-90"></div>
+            
+            {/* Watery/fluid environment effect */}
+            <motion.div 
+              className="absolute inset-0 opacity-20"
+              style={{
+                filter: "url('data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\"><filter id=\"filter\"><feTurbulence baseFrequency=\"0.01 0.005\" numOctaves=\"2\" seed=\"1\" type=\"fractalNoise\" /><feDisplacementMap in=\"SourceGraphic\" scale=\"10\" /></filter></svg>#filter')",
+                backgroundImage: "linear-gradient(to bottom, rgba(6, 182, 212, 0.1), rgba(59, 130, 246, 0.1))"
+              }}
+              animate={{
+                filter: [
+                  "url('data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\"><filter id=\"filter\"><feTurbulence baseFrequency=\"0.01 0.005\" numOctaves=\"2\" seed=\"1\" type=\"fractalNoise\" /><feDisplacementMap in=\"SourceGraphic\" scale=\"10\" /></filter></svg>#filter')",
+                  "url('data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\"><filter id=\"filter\"><feTurbulence baseFrequency=\"0.01 0.005\" numOctaves=\"2\" seed=\"5\" type=\"fractalNoise\" /><feDisplacementMap in=\"SourceGraphic\" scale=\"10\" /></filter></svg>#filter')",
+                  "url('data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\"><filter id=\"filter\"><feTurbulence baseFrequency=\"0.01 0.005\" numOctaves=\"2\" seed=\"9\" type=\"fractalNoise\" /><feDisplacementMap in=\"SourceGraphic\" scale=\"10\" /></filter></svg>#filter')"
+                ]
+              }}
+              transition={{
+                duration: 10,
+                repeat: Infinity,
+                ease: "linear"
+              }}
+            />
+            
+            {/* Cell membrane shapes randomly placed floating */}
+            <div className="absolute inset-0">
+              {Array.from({ length: 15 }).map((_, i) => {
+                const size = Math.random() * 100 + 30;
+                return (
+                  <motion.div
+                    key={`cell-${i}`}
+                    className="absolute rounded-full border border-cyan-300/10"
+                    style={{
+                      width: size,
+                      height: size,
+                      left: `${Math.random() * 100}%`,
+                      top: `${Math.random() * 100}%`,
+                      opacity: Math.random() * 0.2 + 0.05,
+                      boxShadow: "inset 0 0 20px rgba(56, 189, 248, 0.05)"
+                    }}
+                    animate={{
+                      x: [0, Math.random() * 30 - 15, 0],
+                      y: [0, Math.random() * 30 - 15, 0],
+                      scale: [1, Math.random() * 0.2 + 0.9, 1],
+                      opacity: [
+                        Math.random() * 0.2 + 0.05, 
+                        Math.random() * 0.1 + 0.1,
+                        Math.random() * 0.2 + 0.05
+                      ]
+                    }}
+                    transition={{
+                      duration: 10 + Math.random() * 10,
+                      repeat: Infinity,
+                      ease: "easeInOut"
+                    }}
+                  />
+                );
+              })}
+            </div>
+            
+            {/* Bio-luminescent particles */}
+            <EnhancedParticleField 
+              color="#22D3EE" 
+              density={20} 
+              speed={15} 
+              opacity={0.3} 
+              glowIntensity={1.5} 
+              direction="random"
+              minSize={0.5}
+              maxSize={2}
+            />
+            
+            {/* Central DNA with stronger glow effect */}
             <div className="relative w-full h-full flex items-center justify-center">
-              <DNASVG />
+              <motion.div 
+                className="absolute" 
+                style={{
+                  filter: "drop-shadow(0 0 20px rgba(14, 165, 233, 0.3))"
+                }}
+                animate={{
+                  filter: [
+                    "drop-shadow(0 0 15px rgba(14, 165, 233, 0.2))",
+                    "drop-shadow(0 0 25px rgba(14, 165, 233, 0.3))",
+                    "drop-shadow(0 0 15px rgba(14, 165, 233, 0.2))"
+                  ]
+                }}
+                transition={{
+                  duration: 5,
+                  repeat: Infinity,
+                  ease: "easeInOut"
+                }}
+              >
+                <DNASVG />
+              </motion.div>
             </div>
           </motion.div>
           
@@ -1666,7 +2010,7 @@ const Home = () => {
             </DepthAwareTextBox>
           </motion.div>
           
-          {/* Scene 9: Atom */}
+          {/* Scene 9: Atom - Enhanced with quantum effects and electron clouds */}
           <motion.div 
             style={{ 
               opacity: stageRanges.atomOpacity,
@@ -1674,8 +2018,187 @@ const Home = () => {
             }} 
             className="absolute inset-0"
           >
-            <div className="absolute inset-0 bg-gradient-to-b from-pink-900 to-purple-950 opacity-90"></div>
+            <div className="absolute inset-0 bg-gradient-radial from-pink-800 via-pink-900 to-purple-950 opacity-90"></div>
+            
+            {/* Quantum energy waves */}
+            <div className="absolute inset-0">
+              <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                  <radialGradient id="electronGradient" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
+                    <stop offset="0%" stopColor="rgba(244, 114, 182, 0.2)" />
+                    <stop offset="100%" stopColor="rgba(244, 114, 182, 0)" />
+                  </radialGradient>
+                  <filter id="glow">
+                    <feGaussianBlur stdDeviation="5" result="blur" />
+                    <feComposite in="SourceGraphic" in2="blur" operator="over" />
+                  </filter>
+                </defs>
+                
+                {/* Probability clouds - different electron orbitals */}
+                <motion.ellipse 
+                  cx="50%" 
+                  cy="50%" 
+                  rx="20%" 
+                  ry="10%" 
+                  fill="url(#electronGradient)"
+                  opacity="0.3"
+                  animate={{
+                    rx: ["20%", "22%", "20%"],
+                    ry: ["10%", "12%", "10%"],
+                    opacity: [0.3, 0.4, 0.3]
+                  }}
+                  transition={{
+                    duration: 10,
+                    repeat: Infinity,
+                    ease: "easeInOut"
+                  }}
+                />
+                
+                <motion.ellipse 
+                  cx="50%" 
+                  cy="50%" 
+                  rx="10%" 
+                  ry="20%" 
+                  fill="url(#electronGradient)"
+                  opacity="0.3"
+                  animate={{
+                    rx: ["10%", "12%", "10%"],
+                    ry: ["20%", "18%", "20%"],
+                    opacity: [0.3, 0.2, 0.3]
+                  }}
+                  transition={{
+                    duration: 8,
+                    repeat: Infinity,
+                    ease: "easeInOut"
+                  }}
+                />
+                
+                <motion.ellipse 
+                  cx="50%" 
+                  cy="50%" 
+                  rx="15%" 
+                  ry="15%" 
+                  fill="url(#electronGradient)"
+                  opacity="0.2"
+                  animate={{
+                    rx: ["15%", "17%", "15%"],
+                    ry: ["15%", "16%", "15%"],
+                    opacity: [0.2, 0.3, 0.2]
+                  }}
+                  transition={{
+                    duration: 12,
+                    repeat: Infinity,
+                    ease: "easeInOut"
+                  }}
+                />
+              </svg>
+            </div>
+            
+            {/* Energy waves and quantum field fluctuations */}
+            <div className="absolute inset-0 overflow-hidden">
+              {Array.from({ length: 5 }).map((_, i) => {
+                const radius = 20 + i * 10; // Increasing radiuses
+                return (
+                  <motion.div 
+                    key={`wave-ring-${i}`}
+                    className="absolute rounded-full border border-pink-400/10"
+                    style={{
+                      width: `${radius}%`,
+                      height: `${radius}%`,
+                      left: '50%',
+                      top: '50%',
+                      x: '-50%',
+                      y: '-50%',
+                      boxShadow: "0 0 15px rgba(236, 72, 153, 0.1)"
+                    }}
+                    animate={{
+                      scale: [1, 1.1, 1],
+                      opacity: [0.1, 0.2, 0.1]
+                    }}
+                    transition={{
+                      duration: 4 + i,
+                      repeat: Infinity,
+                      ease: "easeInOut",
+                      delay: i * 0.5
+                    }}
+                  />
+                );
+              })}
+            </div>
+            
+            {/* Electron particles */}
+            <div className="absolute inset-0 flex items-center justify-center">
+              {Array.from({ length: 12 }).map((_, i) => {
+                const angle = i * 30; // 12 electrons evenly spaced
+                const radius = 20; // Distance from center
+                return (
+                  <motion.div
+                    key={`electron-${i}`}
+                    className="absolute rounded-full bg-pink-300 shadow-glow"
+                    style={{
+                      width: '5px',
+                      height: '5px',
+                      boxShadow: '0 0 8px rgba(236, 72, 153, 0.8)',
+                      left: '50%',
+                      top: '50%',
+                      x: '-50%',
+                      y: '-50%'
+                    }}
+                    animate={{
+                      x: [`calc(${radius}vh * cos(${angle}deg) - 50%)`, `calc(${radius}vh * cos(${angle + 360}deg) - 50%)`],
+                      y: [`calc(${radius}vh * sin(${angle}deg) - 50%)`, `calc(${radius}vh * sin(${angle + 360}deg) - 50%)`],
+                      opacity: [0.8, 0.5, 0.8],
+                      scale: [1, 1.2, 1]
+                    }}
+                    transition={{
+                      x: {
+                        duration: 8 + Math.random() * 4,
+                        repeat: Infinity,
+                        ease: "linear"
+                      },
+                      y: {
+                        duration: 8 + Math.random() * 4,
+                        repeat: Infinity,
+                        ease: "linear"
+                      },
+                      opacity: {
+                        duration: 2,
+                        repeat: Infinity,
+                        ease: "easeInOut"
+                      },
+                      scale: {
+                        duration: 3,
+                        repeat: Infinity,
+                        ease: "easeInOut"
+                      }
+                    }}
+                  />
+                );
+              })}
+            </div>
+            
             <AtomSVG />
+            
+            {/* Central nucleus glow */}
+            <div className="absolute inset-0 flex items-center justify-center">
+              <motion.div
+                className="absolute rounded-full bg-pink-500/30"
+                style={{
+                  width: '3rem',
+                  height: '3rem',
+                  filter: 'blur(10px)'
+                }}
+                animate={{
+                  scale: [1, 1.2, 1],
+                  opacity: [0.3, 0.4, 0.3]
+                }}
+                transition={{
+                  duration: 4,
+                  repeat: Infinity,
+                  ease: "easeInOut"
+                }}
+              />
+            </div>
           </motion.div>
           
           <motion.div 
@@ -1692,7 +2215,7 @@ const Home = () => {
             </DepthAwareTextBox>
           </motion.div>
           
-          {/* Scene 10: Nucleus */}
+          {/* Scene 10: Nucleus - Enhanced with strong nuclear force visualization */}
           <motion.div 
             style={{ 
               opacity: stageRanges.nucleusOpacity,
@@ -1700,7 +2223,166 @@ const Home = () => {
             }} 
             className="absolute inset-0"
           >
-            <div className="absolute inset-0 bg-gradient-to-b from-red-950 to-gray-950 opacity-95"></div>
+            <div className="absolute inset-0 bg-gradient-radial from-red-900 via-red-950 to-gray-950 opacity-95"></div>
+            
+            {/* Energy field surrounding the nucleus */}
+            <div className="absolute inset-0 flex items-center justify-center">
+              <motion.div
+                className="absolute w-1/3 h-1/3 rounded-full bg-gradient-radial from-red-500/10 to-transparent"
+                animate={{
+                  scale: [1, 1.1, 1],
+                  opacity: [0.1, 0.15, 0.1]
+                }}
+                transition={{
+                  duration: 4,
+                  repeat: Infinity,
+                  ease: "easeInOut"
+                }}
+              />
+            </div>
+            
+            {/* Strong force interactions */}
+            <div className="absolute inset-0 flex items-center justify-center">
+              {Array.from({ length: 15 }).map((_, i) => {
+                const angle = Math.random() * 360;
+                const distance = Math.random() * 25 + 5;
+                const x = Math.cos(angle * Math.PI / 180) * distance;
+                const y = Math.sin(angle * Math.PI / 180) * distance;
+                
+                return (
+                  <motion.div
+                    key={`force-line-${i}`}
+                    className="absolute bg-red-400/20"
+                    style={{
+                      width: '1px',
+                      height: `${Math.random() * 10 + 5}vh`,
+                      left: '50%',
+                      top: '50%',
+                      x: `calc(${x}vh - 0.5px)`,
+                      y: `calc(${y}vh - 50%)`,
+                      transformOrigin: 'bottom center',
+                      rotate: `${angle}deg`
+                    }}
+                    animate={{
+                      height: [
+                        `${Math.random() * 10 + 5}vh`,
+                        `${Math.random() * 15 + 10}vh`,
+                        `${Math.random() * 10 + 5}vh`
+                      ],
+                      opacity: [0.2, 0.3, 0.2]
+                    }}
+                    transition={{
+                      duration: 2 + Math.random() * 3,
+                      repeat: Infinity,
+                      ease: "easeInOut"
+                    }}
+                  />
+                );
+              })}
+            </div>
+            
+            {/* Proton and neutron particles */}
+            <div className="absolute inset-0 flex items-center justify-center">
+              {Array.from({ length: 15 }).map((_, i) => {
+                const isProton = i % 2 === 0;
+                const particleClass = isProton ? "bg-red-400" : "bg-gray-300";
+                const shadowColor = isProton ? "rgba(248, 113, 113, 0.6)" : "rgba(209, 213, 219, 0.6)";
+                const angle = Math.random() * 360;
+                const distance = Math.random() * 10 + 2; // Keep closer to center
+                const x = Math.cos(angle * Math.PI / 180) * distance;
+                const y = Math.sin(angle * Math.PI / 180) * distance;
+                
+                return (
+                  <motion.div
+                    key={`nucleon-${i}`}
+                    className={`absolute rounded-full ${particleClass}`}
+                    style={{
+                      width: '8px',
+                      height: '8px',
+                      left: '50%',
+                      top: '50%',
+                      x: `calc(${x}vh - 4px)`,
+                      y: `calc(${y}vh - 4px)`,
+                      boxShadow: `0 0 8px ${shadowColor}`
+                    }}
+                    animate={{
+                      x: [
+                        `calc(${x}vh - 4px)`,
+                        `calc(${x + (Math.random() * 2 - 1)}vh - 4px)`,
+                        `calc(${x}vh - 4px)`
+                      ],
+                      y: [
+                        `calc(${y}vh - 4px)`,
+                        `calc(${y + (Math.random() * 2 - 1)}vh - 4px)`,
+                        `calc(${y}vh - 4px)`
+                      ],
+                      scale: [1, Math.random() * 0.2 + 0.9, 1]
+                    }}
+                    transition={{
+                      duration: 1 + Math.random() * 2,
+                      repeat: Infinity,
+                      ease: "easeInOut"
+                    }}
+                  />
+                );
+              })}
+            </div>
+            
+            {/* Gluon exchange particles */}
+            <div className="absolute inset-0 flex items-center justify-center">
+              {Array.from({ length: 20 }).map((_, i) => (
+                <motion.div
+                  key={`gluon-${i}`}
+                  className="absolute rounded-full bg-white"
+                  style={{
+                    width: '2px',
+                    height: '2px',
+                    left: '50%',
+                    top: '50%',
+                    opacity: 0,
+                    boxShadow: "0 0 3px rgba(255, 255, 255, 0.8)"
+                  }}
+                  animate={{
+                    x: [
+                      `calc(${Math.random() * 8 - 4}vh)`,
+                      `calc(${Math.random() * 16 - 8}vh)` 
+                    ],
+                    y: [
+                      `calc(${Math.random() * 8 - 4}vh)`,
+                      `calc(${Math.random() * 16 - 8}vh)`
+                    ],
+                    opacity: [0, 0.6, 0]
+                  }}
+                  transition={{
+                    duration: 0.5 + Math.random() * 0.8,
+                    repeat: Infinity,
+                    repeatDelay: Math.random() * 3,
+                    ease: "linear"
+                  }}
+                />
+              ))}
+            </div>
+            
+            {/* Central hot spot */}
+            <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+              <motion.div
+                className="absolute rounded-full bg-gradient-radial from-red-500/30 to-red-600/0"
+                style={{
+                  width: '10vh',
+                  height: '10vh'
+                }}
+                animate={{
+                  scale: [1, 1.1, 1],
+                  opacity: [0.3, 0.4, 0.3]
+                }}
+                transition={{
+                  duration: 2,
+                  repeat: Infinity,
+                  ease: "easeInOut"
+                }}
+              />
+            </div>
+            
             <NucleusSVG />
           </motion.div>
           
@@ -1718,7 +2400,7 @@ const Home = () => {
             </DepthAwareTextBox>
           </motion.div>
           
-          {/* Scene 11: Quarks */}
+          {/* Scene 11: Quarks - Enhanced with quantum foam and field fluctuations */}
           <motion.div 
             style={{ 
               opacity: stageRanges.quarksOpacity,
@@ -1726,8 +2408,166 @@ const Home = () => {
             }} 
             className="absolute inset-0"
           >
-            <div className="absolute inset-0 bg-gradient-to-b from-gray-900 to-black opacity-95"></div>
+            <div className="absolute inset-0 bg-gradient-radial from-gray-800 via-gray-900 to-black opacity-95"></div>
+            
+            {/* Quantum vacuum and spacetime ripples */}
+            <motion.div 
+              className="absolute inset-0 opacity-30"
+              style={{
+                filter: "url('data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\"><filter id=\"noise\"><feTurbulence type=\"fractalNoise\" baseFrequency=\"0.65\" numOctaves=\"3\" stitchTiles=\"stitch\" /></filter></svg>#noise')",
+                mixBlendMode: "overlay"
+              }}
+              animate={{
+                opacity: [0.3, 0.4, 0.3]
+              }}
+              transition={{
+                duration: 5,
+                repeat: Infinity,
+                ease: "easeInOut"
+              }}
+            />
+            
+            {/* Quantum foam particles - extremely small quantum fluctuations */}
+            <div className="absolute inset-0">
+              {Array.from({ length: 100 }).map((_, i) => (
+                <motion.div
+                  key={`quantum-fluc-${i}`}
+                  className="absolute rounded-full bg-white"
+                  style={{
+                    width: Math.random() * 1 + 0.2 + 'px',
+                    height: Math.random() * 1 + 0.2 + 'px',
+                    left: `${Math.random() * 100}%`,
+                    top: `${Math.random() * 100}%`,
+                    opacity: 0
+                  }}
+                  animate={{
+                    opacity: [0, Math.random() * 0.7 + 0.2, 0],
+                    scale: [0, 1, 0]
+                  }}
+                  transition={{
+                    duration: 0.3 + Math.random() * 0.5,
+                    repeat: Infinity,
+                    repeatDelay: Math.random() * 2,
+                    ease: "easeInOut"
+                  }}
+                />
+              ))}
+            </div>
+            
+            {/* Field lines representing quantum fields */}
+            <div className="absolute inset-0 overflow-hidden">
+              {Array.from({ length: 30 }).map((_, i) => {
+                const startX = Math.random() * 100;
+                const startY = Math.random() * 100;
+                const endX = startX + (Math.random() * 20 - 10);
+                const endY = startY + (Math.random() * 20 - 10);
+                
+                return (
+                  <motion.div
+                    key={`field-line-${i}`}
+                    className="absolute bg-gradient-to-r from-slate-300/0 via-slate-300/10 to-slate-300/0"
+                    style={{
+                      height: '1px',
+                      width: '0px',
+                      left: `${startX}%`,
+                      top: `${startY}%`,
+                      opacity: 0
+                    }}
+                    animate={{
+                      width: ['0px', '50px', '0px'],
+                      x: [0, endX - startX, 0],
+                      y: [0, endY - startY, 0],
+                      opacity: [0, 0.3, 0],
+                      rotate: [0, Math.random() * 360, 0]
+                    }}
+                    transition={{
+                      duration: 1 + Math.random(),
+                      repeat: Infinity,
+                      repeatDelay: Math.random() * 3,
+                      ease: "easeInOut"
+                    }}
+                  />
+                );
+              })}
+            </div>
+            
+            {/* Primary quark particles */}
+            <div className="absolute inset-0 flex items-center justify-center">
+              {['red', 'green', 'blue'].map((color, i) => {
+                const angle = i * 120; // Evenly space the three quarks
+                const distance = 8; // Distance from center
+                const x = Math.cos(angle * Math.PI / 180) * distance;
+                const y = Math.sin(angle * Math.PI / 180) * distance;
+                
+                // Color mapping
+                let particleColor;
+                let glowColor;
+                if (color === 'red') {
+                  particleColor = 'bg-red-400';
+                  glowColor = 'rgba(248, 113, 113, 0.7)';
+                } else if (color === 'green') {
+                  particleColor = 'bg-emerald-400';
+                  glowColor = 'rgba(52, 211, 153, 0.7)';
+                } else {
+                  particleColor = 'bg-blue-400';
+                  glowColor = 'rgba(96, 165, 250, 0.7)';
+                }
+                
+                return (
+                  <motion.div
+                    key={`quark-${i}`}
+                    className={`absolute rounded-full ${particleColor}`}
+                    style={{
+                      width: '6px',
+                      height: '6px',
+                      left: '50%',
+                      top: '50%',
+                      x: `calc(${x}vh - 3px)`,
+                      y: `calc(${y}vh - 3px)`,
+                      boxShadow: `0 0 10px ${glowColor}`,
+                      zIndex: 10
+                    }}
+                    animate={{
+                      x: [
+                        `calc(${x}vh - 3px)`,
+                        `calc(${x + (Math.random() * 4 - 2)}vh - 3px)`,
+                        `calc(${x}vh - 3px)`
+                      ],
+                      y: [
+                        `calc(${y}vh - 3px)`,
+                        `calc(${y + (Math.random() * 4 - 2)}vh - 3px)`,
+                        `calc(${y}vh - 3px)`
+                      ],
+                      scale: [1, 1.3, 1],
+                      opacity: [0.8, 1, 0.8]
+                    }}
+                    transition={{
+                      duration: 2 + Math.random() * 2,
+                      repeat: Infinity,
+                      ease: "easeInOut"
+                    }}
+                  />
+                );
+              })}
+            </div>
+            
             <QuarksSVG />
+            
+            {/* Energy bursts */}
+            <div className="absolute inset-0 flex items-center justify-center">
+              <motion.div
+                className="absolute w-16 h-16 rounded-full bg-gradient-radial from-white/10 to-transparent"
+                animate={{
+                  scale: [1, 2, 1],
+                  opacity: [0.1, 0.2, 0.1]
+                }}
+                transition={{
+                  duration: 3,
+                  repeat: Infinity,
+                  ease: "easeInOut"
+                }}
+              />
+            </div>
           </motion.div>
           
           <motion.div 
@@ -1744,7 +2584,7 @@ const Home = () => {
             </DepthAwareTextBox>
           </motion.div>
           
-          {/* Scene 12: Final Scene */}
+          {/* Scene 12: Final Scene - Enhanced with cosmic connection effect */}
           <motion.div 
             className="absolute inset-0"
             style={{ 
@@ -1754,8 +2594,159 @@ const Home = () => {
               y: mousePosition.y * 20
             }}
           >
-            <div className="absolute inset-0 bg-gradient-to-b from-gray-900 to-black opacity-95"></div>
+            <div className="absolute inset-0 bg-gradient-radial from-purple-950 via-gray-900 to-black opacity-95"></div>
+            
+            {/* Starfield background */}
+            <div className="absolute inset-0">
+              {Array.from({ length: 200 }).map((_, i) => {
+                const size = Math.random() * 1.5 + 0.5;
+                const brightness = Math.random();
+                return (
+                  <motion.div
+                    key={`final-star-${i}`}
+                    className="absolute rounded-full bg-white"
+                    style={{
+                      width: `${size}px`,
+                      height: `${size}px`,
+                      left: `${Math.random() * 100}%`,
+                      top: `${Math.random() * 100}%`,
+                      boxShadow: brightness > 0.8 
+                        ? `0 0 ${Math.random() * 4 + 2}px rgba(255, 255, 255, 0.8)` 
+                        : 'none',
+                      opacity: brightness * 0.7 + 0.3
+                    }}
+                    animate={{
+                      opacity: [
+                        brightness * 0.7 + 0.3,
+                        brightness * 0.5 + 0.2,
+                        brightness * 0.7 + 0.3
+                      ]
+                    }}
+                    transition={{
+                      duration: 2 + Math.random() * 3,
+                      repeat: Infinity,
+                      ease: "easeInOut"
+                    }}
+                  />
+                );
+              })}
+            </div>
+            
+            {/* Cosmic web to quantum web connection particles */}
+            <div className="absolute inset-0 overflow-hidden">
+              <svg width="100%" height="100%" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                  <linearGradient id="cosmicEndStroke" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stopColor="#A78BFA" stopOpacity="0.4" />
+                    <stop offset="100%" stopColor="#60A5FA" stopOpacity="0.4" />
+                  </linearGradient>
+                </defs>
+                
+                {/* Connecting lines from macro to micro */}
+                {Array.from({ length: 20 }).map((_, i) => {
+                  const startX = Math.random() * 30 + 10;
+                  const startY = Math.random() * 30 + 10;
+                  const endX = Math.random() * 30 + 60;
+                  const endY = Math.random() * 30 + 60;
+                  
+                  return (
+                    <motion.path
+                      key={`connector-${i}`}
+                      d={`M ${startX},${startY} C ${(startX + endX) / 2 - 20},${(startY + endY) / 2 + 20} ${(startX + endX) / 2 + 20},${(startY + endY) / 2 - 20} ${endX},${endY}`}
+                      fill="none"
+                      stroke="url(#cosmicEndStroke)"
+                      strokeWidth="0.3"
+                      opacity={0}
+                      strokeDasharray="0.8 0.4"
+                      animate={{
+                        opacity: [0, Math.random() * 0.3 + 0.2, 0],
+                        strokeDashoffset: [0, -100]
+                      }}
+                      transition={{
+                        duration: 10 + Math.random() * 5,
+                        repeat: Infinity,
+                        ease: "linear",
+                        delay: Math.random() * 5
+                      }}
+                    />
+                  );
+                })}
+              </svg>
+            </div>
+            
+            {/* Ethereal light rays */}
+            <div className="absolute inset-0 overflow-hidden">
+              {Array.from({ length: 8 }).map((_, i) => {
+                const angle = i * 45;
+                return (
+                  <motion.div
+                    key={`light-ray-final-${i}`}
+                    className="absolute bg-gradient-to-t from-transparent via-indigo-300/5 to-transparent"
+                    style={{
+                      width: '1px',
+                      height: '100%',
+                      left: '50%',
+                      top: '0',
+                      transformOrigin: 'bottom center',
+                      rotate: `${angle}deg`
+                    }}
+                    animate={{
+                      height: ['0%', '100%', '0%'],
+                      opacity: [0, 0.3, 0]
+                    }}
+                    transition={{
+                      duration: 8,
+                      repeat: Infinity,
+                      ease: "easeInOut",
+                      delay: i * 1
+                    }}
+                  />
+                );
+              })}
+            </div>
+            
+            {/* Central cosmos-quantum connection glow */}
+            <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+              <motion.div
+                className="absolute w-32 h-32 rounded-full bg-gradient-radial from-purple-500/20 via-blue-500/10 to-transparent"
+                animate={{
+                  scale: [1, 1.2, 1],
+                  opacity: [0.2, 0.3, 0.2],
+                  rotate: [0, 360]
+                }}
+                transition={{
+                  scale: {
+                    duration: 4,
+                    repeat: Infinity,
+                    ease: "easeInOut"
+                  },
+                  opacity: {
+                    duration: 4,
+                    repeat: Infinity,
+                    ease: "easeInOut"
+                  },
+                  rotate: {
+                    duration: 60,
+                    repeat: Infinity,
+                    ease: "linear"
+                  }
+                }}
+              />
+            </div>
+            
             <QuarksSVG />
+            
+            {/* Particle system showing scale continuum */}
+            <EnhancedParticleField 
+              color="#E9D5FF" 
+              density={25} 
+              speed={8} 
+              opacity={0.3} 
+              glowIntensity={1.2} 
+              direction="inward"
+              minSize={0.3}
+              maxSize={1.5}
+            />
           </motion.div>
           
           <motion.div 
