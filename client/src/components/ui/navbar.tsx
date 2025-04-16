@@ -84,10 +84,9 @@ const Navbar = () => {
                   location.startsWith('/directory') || location.startsWith('/reference')
                     ? 'gradient-text font-medium' 
                     : 'text-white hover:text-opacity-80'
-                } ${isDropdownOpen ? 'bg-black/5 backdrop-blur-xl border-t border-l border-r border-white/10 rounded-t-lg' : ''}`}
+                }`}
                 style={{
-                  zIndex: isDropdownOpen ? 50 : 'auto', 
-                  borderBottomColor: isDropdownOpen ? 'transparent' : undefined
+                  zIndex: isDropdownOpen ? 50 : 'auto'
                 }}
                 onMouseEnter={openDropdown}
                 onMouseLeave={closeDropdown}
@@ -96,12 +95,11 @@ const Navbar = () => {
                 <ChevronDown className={`h-4 w-4 transition-transform duration-300 ${isDropdownOpen ? 'rotate-180' : ''}`} />
               </button>
               <div 
-                className={`absolute -mt-0.5 bg-black/5 backdrop-blur-xl border border-white/10 rounded-b-lg shadow-lg w-48 transition-all duration-300 ease-in-out overflow-hidden ${
+                className={`absolute bg-black/5 backdrop-blur-xl border border-white/10 rounded-lg shadow-lg w-48 transition-all duration-300 ease-in-out overflow-hidden ${
                   isDropdownOpen ? 'opacity-100 translate-y-0 block' : 'opacity-0 -translate-y-1 hidden'
                 }`}
                 style={{ 
-                  borderTopLeftRadius: '0',
-                  borderTopRightRadius: '0',
+                  top: 'calc(100% + 0.5rem)',  // Position at the bottom of the navbar with a small gap
                   left: '50%',
                   transform: 'translateX(-50%)'
                 }}
