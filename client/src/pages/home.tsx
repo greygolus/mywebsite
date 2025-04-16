@@ -957,21 +957,29 @@ const Home = () => {
     dnaOpacity: useTransform(scrollYProgress, [0.62, 0.63, 0.7, 0.72], [0, 1, 1, 0]),
     dnaTextOpacity: useTransform(scrollYProgress, [0.64, 0.66, 0.69, 0.71], [0, 1, 1, 0]),
     dnaScale: useTransform(scrollYProgress, [0.63, 0.72], [1, 2.5]), // Original scale
+    dnaTextScale: useTransform(scrollYProgress, [0.64, 0.66, 0.69, 0.71], [0.8, 1.1, 1.1, 0.8]),
+    dnaTextY: useTransform(scrollYProgress, [0.64, 0.66, 0.69, 0.71], [30, 0, 0, -20]),
     
     // Scene 9: Atom - ORIGINAL TIMING
     atomOpacity: useTransform(scrollYProgress, [0.71, 0.72, 0.79, 0.81], [0, 1, 1, 0]),
     atomTextOpacity: useTransform(scrollYProgress, [0.73, 0.75, 0.78, 0.8], [0, 1, 1, 0]),
     atomScale: useTransform(scrollYProgress, [0.72, 0.81], [1, 2.5]), // Original scale
+    atomTextScale: useTransform(scrollYProgress, [0.73, 0.75, 0.78, 0.8], [0.8, 1.1, 1.1, 0.8]),
+    atomTextY: useTransform(scrollYProgress, [0.73, 0.75, 0.78, 0.8], [30, 0, 0, -20]),
     
     // Scene 10: Nucleus - ORIGINAL TIMING
     nucleusOpacity: useTransform(scrollYProgress, [0.8, 0.81, 0.88, 0.9], [0, 1, 1, 0]),
     nucleusTextOpacity: useTransform(scrollYProgress, [0.82, 0.84, 0.87, 0.89], [0, 1, 1, 0]),
     nucleusScale: useTransform(scrollYProgress, [0.81, 0.9], [1, 2.5]), // Original scale
+    nucleusTextScale: useTransform(scrollYProgress, [0.82, 0.84, 0.87, 0.89], [0.8, 1.1, 1.1, 0.8]),
+    nucleusTextY: useTransform(scrollYProgress, [0.82, 0.84, 0.87, 0.89], [30, 0, 0, -20]),
     
     // Scene 11: Quarks / Gluons - ORIGINAL TIMING
     quarksOpacity: useTransform(scrollYProgress, [0.89, 0.9, 0.97, 0.99], [0, 1, 1, 0.8]),
     quarksTextOpacity: useTransform(scrollYProgress, [0.91, 0.93, 0.96, 0.98], [0, 1, 1, 0]),
     quarksScale: useTransform(scrollYProgress, [0.9, 0.99], [1, 2.5]), // Original scale
+    quarksTextScale: useTransform(scrollYProgress, [0.91, 0.93, 0.96, 0.98], [0.8, 1.1, 1.1, 0.8]),
+    quarksTextY: useTransform(scrollYProgress, [0.91, 0.93, 0.96, 0.98], [30, 0, 0, -20]),
     
     // Scene 12: Final Scene - ORIGINAL TIMING
     finalOpacity: useTransform(scrollYProgress, [0.98, 0.99], [0, 1]),
@@ -1191,15 +1199,14 @@ const Home = () => {
             className="absolute inset-0 flex items-center justify-center pointer-events-none"
             style={{ opacity: stageRanges.eyeTextOpacity }}
           >
-            <motion.div 
-              className="text-box"
-              initial={{ y: 20, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              transition={{ duration: 0.7 }}
+            <DepthAwareTextBox
+              scaleMotionValue={stageRanges.eyeTextScale}
+              yMotionValue={stageRanges.eyeTextY}
+              borderColor="border-blue-500/20"
             >
               <h2 className="text-3xl font-bold gradient-text mb-2">And see, not just through instruments...</h2>
               <p className="text-gray-300">But through the remarkable optical system we were born with.</p>
-            </motion.div>
+            </DepthAwareTextBox>
           </motion.div>
           
           {/* Scene 8: DNA / Cell */}
@@ -1220,15 +1227,14 @@ const Home = () => {
             className="absolute inset-0 flex items-center justify-center pointer-events-none"
             style={{ opacity: stageRanges.dnaTextOpacity }}
           >
-            <motion.div 
-              className="text-box"
-              initial={{ y: 20, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              transition={{ duration: 0.7 }}
+            <DepthAwareTextBox
+              scaleMotionValue={stageRanges.dnaTextScale}
+              yMotionValue={stageRanges.dnaTextY}
+              borderColor="border-cyan-500/20"
             >
               <h2 className="text-3xl font-bold gradient-text mb-2">...but through biology.</h2>
               <p className="text-gray-300">The molecular structures that encode our ability to perceive light.</p>
-            </motion.div>
+            </DepthAwareTextBox>
           </motion.div>
           
           {/* Scene 9: Atom */}
@@ -1247,15 +1253,14 @@ const Home = () => {
             className="absolute inset-0 flex items-center justify-center pointer-events-none"
             style={{ opacity: stageRanges.atomTextOpacity }}
           >
-            <motion.div 
-              className="text-box"
-              initial={{ y: 20, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              transition={{ duration: 0.7 }}
+            <DepthAwareTextBox
+              scaleMotionValue={stageRanges.atomTextScale}
+              yMotionValue={stageRanges.atomTextY}
+              borderColor="border-pink-500/20"
             >
               <h2 className="text-3xl font-bold gradient-text mb-2">Through the tiniest building blocks.</h2>
               <p className="text-gray-300">Where electrons orbit nuclei, and light is both particle and wave.</p>
-            </motion.div>
+            </DepthAwareTextBox>
           </motion.div>
           
           {/* Scene 10: Nucleus */}
@@ -1274,15 +1279,14 @@ const Home = () => {
             className="absolute inset-0 flex items-center justify-center pointer-events-none"
             style={{ opacity: stageRanges.nucleusTextOpacity }}
           >
-            <motion.div 
-              className="text-box"
-              initial={{ y: 20, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              transition={{ duration: 0.7 }}
+            <DepthAwareTextBox
+              scaleMotionValue={stageRanges.nucleusTextScale}
+              yMotionValue={stageRanges.nucleusTextY}
+              borderColor="border-red-500/20"
             >
               <h2 className="text-3xl font-bold gradient-text mb-2">Deeper still, past protons and neutrons...</h2>
               <p className="text-gray-300">Into the strong nuclear forces that bind matter together.</p>
-            </motion.div>
+            </DepthAwareTextBox>
           </motion.div>
           
           {/* Scene 11: Quarks */}
@@ -1301,15 +1305,14 @@ const Home = () => {
             className="absolute inset-0 flex items-center justify-center pointer-events-none"
             style={{ opacity: stageRanges.quarksTextOpacity }}
           >
-            <motion.div 
-              className="text-box"
-              initial={{ y: 20, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              transition={{ duration: 0.7 }}
+            <DepthAwareTextBox
+              scaleMotionValue={stageRanges.quarksTextScale}
+              yMotionValue={stageRanges.quarksTextY}
+              borderColor="border-gray-500/20"
             >
               <h2 className="text-3xl font-bold gradient-text mb-2">...to the fabric of everything.</h2>
               <p className="text-gray-300">Where quantum fields fluctuate and the fundamental forces arise.</p>
-            </motion.div>
+            </DepthAwareTextBox>
           </motion.div>
           
           {/* Scene 12: Final Scene */}
