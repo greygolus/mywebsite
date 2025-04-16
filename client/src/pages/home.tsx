@@ -3016,25 +3016,8 @@ const Home = () => {
             layout={false}
             className="absolute inset-0"
           >
-            <div className="absolute inset-0 bg-gradient-radial from-gray-800 via-gray-900 to-black opacity-95"></div>
-
-            {/* Quantum vacuum and spacetime ripples */}
-            <motion.div
-              className="absolute inset-0 opacity-30"
-              style={{
-                filter:
-                  'url(\'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg"><filter id="noise"><feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch" /></filter></svg>#noise\')',
-                mixBlendMode: "overlay",
-              }}
-              animate={{
-                opacity: [0.3, 0.4, 0.3],
-              }}
-              transition={{
-                duration: 5,
-                repeat: Infinity,
-                ease: "easeInOut",
-              }}
-            />
+            <div className="absolute inset-0 bg-black"></div>
+            <div className="absolute inset-0 bg-purple-900/10"></div>
 
             {/* Quantum foam particles - extremely small quantum fluctuations */}
             <div className="absolute inset-0">
@@ -3209,7 +3192,8 @@ const Home = () => {
             }}
             layout={false}
           >
-            <div className="absolute inset-0 bg-gradient-radial from-purple-950 via-gray-900 to-black opacity-95"></div>
+            <div className="absolute inset-0 bg-black"></div>
+            <div className="absolute inset-0 bg-purple-900/10"></div>
 
             {/* Starfield background */}
             <div className="absolute inset-0">
