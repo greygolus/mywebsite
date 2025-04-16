@@ -1,6 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { EnhancedParticleField } from "../../components/ui/enhanced-particle-field";
+import OptimizedParticleField from "../../components/ui/enhanced-particle-field";
 import { Link } from "wouter";
 
 interface SceneFinalProps {
@@ -271,7 +271,7 @@ const SceneFinal: React.FC<SceneFinalProps> = ({
         <QuarksSVG />
 
         {/* Particle system showing scale continuum */}
-        <EnhancedParticleField
+        <OptimizedParticleField
           color="#E9D5FF"
           density={25}
           speed={8}

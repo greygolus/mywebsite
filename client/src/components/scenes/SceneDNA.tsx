@@ -1,6 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { EnhancedParticleField } from "../../components/ui/enhanced-particle-field";
+import OptimizedParticleField from "../../components/ui/enhanced-particle-field";
 import { DepthAwareTextBox } from "../../lib/applyTextBoxStyles";
 
 interface SceneDNAProps {
@@ -140,7 +140,7 @@ const SceneDNA: React.FC<SceneDNAProps> = ({
         </div>
 
         {/* Bio-luminescent particles */}
-        <EnhancedParticleField
+        <OptimizedParticleField
           color="#67E8F9"
           density={60}
           speed={15}
