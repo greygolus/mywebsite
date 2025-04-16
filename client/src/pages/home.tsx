@@ -3509,8 +3509,15 @@ const Home = () => {
           </motion.div>
 
           <motion.div
-            className="absolute inset-0 flex flex-col items-center justify-center"
-            style={{ opacity: stageRanges.finalTextOpacity }}
+            className="absolute inset-0 flex flex-col items-center justify-center z-50"
+            style={{ 
+              opacity: stageRanges.finalTextOpacity,
+              position: 'fixed',
+              bottom: 0,
+              left: 0,
+              right: 0,
+              top: 0
+            }}
           >
             <motion.div
               className="card-glass border-purple-500/10 p-8 max-w-lg text-center backdrop-blur-xl shadow-lg bg-black/5"
@@ -3530,22 +3537,22 @@ const Home = () => {
                 Welcome to greygolus.com
               </p>
 
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-center">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-center relative z-50">
                 <Link
                   href="/directory#calculators"
-                  className="card-glass card-glass-hover transition-all duration-300 rounded-xl border border-white/10 p-4 hover:shadow-[0_0_15px_rgba(124,58,237,0.3)] hover:scale-105 ease-in-out bg-black/5 backdrop-blur-xl"
+                  className="card-glass card-glass-hover transition-all duration-300 rounded-xl border border-white/10 p-4 hover:shadow-[0_0_15px_rgba(124,58,237,0.3)] hover:scale-105 ease-in-out bg-black/5 backdrop-blur-xl final-link-card"
                 >
                   <span className="gradient-text font-bold">Calculators</span>
                 </Link>
                 <Link
                   href="/reference"
-                  className="card-glass card-glass-hover transition-all duration-300 rounded-xl border border-white/10 p-4 hover:shadow-[0_0_15px_rgba(56,189,248,0.3)] hover:scale-105 ease-in-out bg-black/5 backdrop-blur-xl"
+                  className="card-glass card-glass-hover transition-all duration-300 rounded-xl border border-white/10 p-4 hover:shadow-[0_0_15px_rgba(56,189,248,0.3)] hover:scale-105 ease-in-out bg-black/5 backdrop-blur-xl final-link-card"
                 >
                   <span className="gradient-text font-bold">References</span>
                 </Link>
                 <Link
                   href="/directory"
-                  className="card-glass card-glass-hover transition-all duration-300 rounded-xl border border-white/10 p-4 hover:shadow-[0_0_15px_rgba(94,234,212,0.3)] hover:scale-105 ease-in-out bg-black/5 backdrop-blur-xl"
+                  className="card-glass card-glass-hover transition-all duration-300 rounded-xl border border-white/10 p-4 hover:shadow-[0_0_15px_rgba(94,234,212,0.3)] hover:scale-105 ease-in-out bg-black/5 backdrop-blur-xl final-link-card"
                 >
                   <span className="gradient-text font-bold">All Tools</span>
                 </Link>
