@@ -36,14 +36,14 @@ interface StarData {
 }
 
 const SceneCosmicWeb: React.FC<SceneCosmicWebProps> = ({ opacity, scale }) => {
-  // Create a dynamic cosmic nebula effect 
+  // Create a dynamic cosmic nebula effect with more clouds
   const nebulaClouds = useMemo(() => {
-    return Array.from({ length: 5 }).map((_, i) => {
-      const size = 40 + Math.random() * 60;
-      const posX = Math.random() * 100;
-      const posY = Math.random() * 100;
+    return Array.from({ length: 8 }).map((_, i) => {
+      const size = 30 + Math.random() * 70; // More variation in size
+      const posX = Math.random() * 120 - 10; // Allow some to be slightly off-screen
+      const posY = Math.random() * 120 - 10; // for a more natural effect
       const rotation = Math.random() * 360;
-      const duration = 80 + Math.random() * 40;
+      const duration = 70 + Math.random() * 60; // More varied rotation speeds
       
       return { size, posX, posY, rotation, duration }
     });
@@ -127,31 +127,54 @@ const SceneCosmicWeb: React.FC<SceneCosmicWebProps> = ({ opacity, scale }) => {
       {/* Dynamic background glow */}
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(139,92,246,0.15),transparent_80%)]"></div>
       
-      {/* Nebula effect */}
-      {nebulaClouds.map((cloud, i) => (
-        <motion.div
-          key={`nebula-${i}`}
-          className="absolute blur-3xl rounded-full opacity-10"
-          style={{
-            width: `${cloud.size}%`,
-            height: `${cloud.size}%`,
-            left: `${cloud.posX}%`,
-            top: `${cloud.posY}%`,
-            background: i % 2 === 0 
-              ? "radial-gradient(circle, rgba(139,92,246,0.3), rgba(124,58,237,0.1), transparent)" 
-              : "radial-gradient(circle, rgba(167,139,250,0.2), rgba(196,181,253,0.1), transparent)",
-            transform: `rotate(${cloud.rotation}deg)`
-          }}
-          animate={{
-            rotate: cloud.rotation + 360
-          }}
-          transition={{
-            duration: cloud.duration,
-            repeat: Infinity,
-            ease: "linear"
-          }}
-        />
-      ))}
+      {/* Enhanced nebula effect with better blending */}
+      <div className="absolute inset-0 overflow-hidden">
+        {nebulaClouds.map((cloud, i) => (
+          <motion.div
+            key={`nebula-${i}`}
+            className="absolute rounded-full"
+            style={{
+              width: `${cloud.size}%`,
+              height: `${cloud.size}%`,
+              left: `${cloud.posX}%`,
+              top: `${cloud.posY}%`,
+              background: i % 3 === 0 
+                ? "radial-gradient(circle, rgba(139,92,246,0.2), rgba(124,58,237,0.05), transparent 70%)" 
+                : i % 3 === 1
+                  ? "radial-gradient(circle, rgba(167,139,250,0.15), rgba(196,181,253,0.08), transparent 70%)"
+                  : "radial-gradient(circle, rgba(109,40,217,0.18), rgba(79,70,229,0.06), transparent 70%)",
+              transform: `rotate(${cloud.rotation}deg)`,
+              filter: "blur(50px)",
+              mixBlendMode: "screen",
+              opacity: 0.5
+            }}
+            animate={{
+              rotate: cloud.rotation + 360,
+              scale: [1, 1.05, 1],
+              opacity: [0.5, 0.6, 0.5]
+            }}
+            transition={{
+              rotate: {
+                duration: cloud.duration,
+                repeat: Infinity,
+                ease: "linear"
+              },
+              scale: {
+                duration: cloud.duration / 4,
+                repeat: Infinity,
+                ease: "easeInOut",
+                repeatType: "reverse"
+              },
+              opacity: {
+                duration: cloud.duration / 5,
+                repeat: Infinity,
+                ease: "easeInOut",
+                repeatType: "mirror"
+              }
+            }}
+          />
+        ))}
+      </div>
       
       <svg
         className="w-full h-full"
@@ -173,11 +196,24 @@ const SceneCosmicWeb: React.FC<SceneCosmicWebProps> = ({ opacity, scale }) => {
             <stop offset="100%" stopColor="#4C1D95" stopOpacity="0" />
           </radialGradient>
           
-          {/* Glow filter for nodes */}
-          <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
-            <feGaussianBlur stdDeviation="1.5" result="blur" />
-            <feComposite in="SourceGraphic" in2="blur" operator="over" />
+          {/* Enhanced radial glow filter for nodes */}
+          <filter id="glow" x="-300%" y="-300%" width="700%" height="700%">
+            <feGaussianBlur stdDeviation="2.5" result="blur" />
+            <feColorMatrix in="blur" type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -7" result="glowAlpha" />
+            <feComposite in="glowAlpha" in2="SourceGraphic" operator="atop" result="softGlow" />
+            <feMerge>
+              <feMergeNode in="softGlow" />
+              <feMergeNode in="SourceGraphic" />
+            </feMerge>
           </filter>
+          
+          {/* Circular radial gradient glow filter */}
+          <radialGradient id="circleGlow" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
+            <stop offset="0%" stopColor="white" stopOpacity="1" />
+            <stop offset="40%" stopColor="white" stopOpacity="0.6" />
+            <stop offset="70%" stopColor="white" stopOpacity="0.3" />
+            <stop offset="100%" stopColor="white" stopOpacity="0" />
+          </radialGradient>
         </defs>
         
         {/* Background stars */}
@@ -224,48 +260,103 @@ const SceneCosmicWeb: React.FC<SceneCosmicWebProps> = ({ opacity, scale }) => {
           />
         ))}
         
-        {/* Enhanced cosmic nodes with glow effects */}
+        {/* Enhanced cosmic nodes with radial glow effects */}
         {nodes.map((node, i) => (
-          <motion.circle
-            key={`cosmic-node-${i}`}
-            cx={node.cx}
-            cy={node.cy}
-            r={node.r}
-            fill={node.color}
-            filter={node.glow ? "url(#glow)" : undefined}
-            initial={{ opacity: 0.2 }}
-            animate={{ 
-              opacity: [0.2, 0.8, 0.2],
-              cx: [node.cx, node.cx + node.driftX, node.cx],
-              cy: [node.cy, node.cy + node.driftY, node.cy],
-              scale: node.glow ? [1, 1.2, 1] : [1, 1.05, 1]
-            }}
-            transition={{ 
-              opacity: {
-                duration: node.duration,
-                repeat: Infinity,
-                ease: "easeInOut"
-              },
-              scale: {
-                duration: node.duration * 1.5,
-                repeat: Infinity,
-                ease: "easeInOut"
-              },
-              cx: {
-                duration: node.driftDuration,
-                repeat: Infinity,
-                repeatType: "reverse",
-                ease: "easeInOut"
-              },
-              cy: {
-                duration: node.driftDuration,
-                repeat: Infinity,
-                repeatType: "reverse",
-                ease: "easeInOut"
-              }
-            }}
-            style={{ willChange: "opacity, transform" }}
-          />
+          <g key={`cosmic-node-${i}`}>
+            {/* Outer glow for larger nodes */}
+            {node.glow && (
+              <motion.circle
+                cx={node.cx}
+                cy={node.cy}
+                r={node.r * 6} 
+                fill={`url(#node-glow-${i})`}
+                initial={{ opacity: 0.1 }}
+                animate={{ 
+                  opacity: [0.1, 0.3, 0.1],
+                  cx: [node.cx, node.cx + node.driftX, node.cx],
+                  cy: [node.cy, node.cy + node.driftY, node.cy],
+                  scale: [1, 1.1, 1]
+                }}
+                transition={{ 
+                  opacity: {
+                    duration: node.duration * 1.5,
+                    repeat: Infinity,
+                    ease: "easeInOut"
+                  },
+                  scale: {
+                    duration: node.duration * 2,
+                    repeat: Infinity,
+                    ease: "easeInOut"
+                  },
+                  cx: {
+                    duration: node.driftDuration,
+                    repeat: Infinity,
+                    repeatType: "reverse",
+                    ease: "easeInOut"
+                  },
+                  cy: {
+                    duration: node.driftDuration,
+                    repeat: Infinity,
+                    repeatType: "reverse",
+                    ease: "easeInOut"
+                  }
+                }}
+                style={{ willChange: "opacity, transform" }}
+              />
+            )}
+            
+            {/* Main node */}
+            <motion.circle
+              cx={node.cx}
+              cy={node.cy}
+              r={node.r}
+              fill={node.color}
+              filter={node.glow ? "url(#glow)" : undefined}
+              initial={{ opacity: 0.2 }}
+              animate={{ 
+                opacity: [0.2, 0.8, 0.2],
+                cx: [node.cx, node.cx + node.driftX, node.cx],
+                cy: [node.cy, node.cy + node.driftY, node.cy],
+                scale: node.glow ? [1, 1.2, 1] : [1, 1.05, 1]
+              }}
+              transition={{ 
+                opacity: {
+                  duration: node.duration,
+                  repeat: Infinity,
+                  ease: "easeInOut"
+                },
+                scale: {
+                  duration: node.duration * 1.5,
+                  repeat: Infinity,
+                  ease: "easeInOut"
+                },
+                cx: {
+                  duration: node.driftDuration,
+                  repeat: Infinity,
+                  repeatType: "reverse", 
+                  ease: "easeInOut"
+                },
+                cy: {
+                  duration: node.driftDuration,
+                  repeat: Infinity,
+                  repeatType: "reverse",
+                  ease: "easeInOut"
+                }
+              }}
+              style={{ willChange: "opacity, transform" }}
+            />
+            
+            {/* Dynamic gradient definitions specific to each node */}
+            <defs>
+              <radialGradient id={`node-glow-${i}`} cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
+                <stop offset="0%" stopColor={node.color} stopOpacity="0.4" />
+                <stop offset="20%" stopColor={node.color} stopOpacity="0.3" />
+                <stop offset="40%" stopColor={node.color} stopOpacity="0.2" />
+                <stop offset="60%" stopColor={node.color} stopOpacity="0.1" />
+                <stop offset="100%" stopColor={node.color} stopOpacity="0" />
+              </radialGradient>
+            </defs>
+          </g>
         ))}
       </svg>
       
