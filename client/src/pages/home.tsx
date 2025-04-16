@@ -2823,45 +2823,47 @@ const Home = () => {
         </motion.div>
       </motion.div>
       
-      {/* Vertical scroll progress indicator - positioned alongside text boxes */}
+      {/* Horizontal spectrum progress indicator (UV to IR) */}
       <motion.div 
-        className="fixed right-6 top-1/2 transform -translate-y-1/2 h-1/3 w-2 bg-gray-800/60 rounded-full backdrop-blur-md shadow-inner border border-white/5 overflow-hidden"
-        initial={{ opacity: 0, x: 10 }}
-        animate={{ opacity: 1, x: 0 }}
+        className="fixed bottom-6 left-1/2 transform -translate-x-1/2 w-1/3 h-2 bg-black/40 rounded-full backdrop-blur-md shadow-inner border border-white/10 overflow-hidden"
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
         transition={{ 
           duration: 0.6, 
-          ease: [0.22, 1, 0.36, 1] // Custom ease curve for more dynamic feel
+          ease: [0.22, 1, 0.36, 1]
         }}
         style={{ opacity: useTransform(scrollYProgress, [0, 0.05], [0, 1]) }}
-        whileHover={{ width: "0.7rem", x: -2, transition: { duration: 0.3 } }}
+        whileHover={{ height: "0.7rem", y: -2, transition: { duration: 0.3 } }}
       >
+        {/* UV to IR light spectrum background */}
+        <div className="absolute inset-0 bg-gradient-to-r from-violet-600 via-blue-500 via-green-500 via-yellow-500 via-orange-500 to-red-700 opacity-30"></div>
+        
+        {/* Active progress bar */}
         <motion.div 
-          className="absolute top-0 left-0 right-0 bg-gradient-to-b from-glow-purple via-glow-blue to-glow-cyan rounded-full shadow-[0_0_15px_rgba(139,92,246,0.6)]"
+          className="absolute top-0 left-0 h-full bg-gradient-to-r from-violet-600 via-blue-500 via-green-500 via-yellow-500 via-orange-500 to-red-700 rounded-full"
           style={{ 
-            height: progressBar, 
-            originY: 0,
-            filter: "blur(1px)" 
+            width: progressBar,
+            filter: "blur(0px)"
           }}
-          initial={{ filter: "blur(1px)" }}
-          animate={{ filter: "blur(1px)" }}
           whileHover={{ 
-            filter: "blur(0px)",
+            filter: "blur(1px)",
             transition: { duration: 0.3 }
           }}
         />
-        {/* Animated dot indicator */}
+        
+        {/* Animated indicator dot */}
         <motion.div 
-          className="absolute w-4 h-4 transform -translate-x-1/2 -translate-y-1/2 rounded-full bg-white shadow-[0_0_20px_rgba(255,255,255,0.7)]"
+          className="absolute top-1/2 transform -translate-y-1/2 w-3 h-3 rounded-full bg-white shadow-[0_0_15px_rgba(255,255,255,0.9)]"
           style={{ 
-            top: progressBar,
-            left: "50%"
+            left: progressBar,
+            translateX: "-50%"
           }}
           initial={{ scale: 0.7 }}
-          animate={{ scale: [0.7, 0.9, 0.7], opacity: [0.7, 1, 0.7] }}
+          animate={{ scale: [0.7, 1, 0.7], opacity: [0.7, 1, 0.7] }}
           transition={{ 
             duration: 2,
             repeat: Infinity,
-            easein: "easeInOut"
+            ease: "easeInOut"
           }}
         />
       </motion.div>
