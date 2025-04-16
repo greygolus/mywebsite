@@ -1,93 +1,6 @@
 import { Link } from 'wouter';
-import { motion, useScroll, useTransform, useMotionValueEvent, MotionValue } from 'framer-motion';
+import { motion, useScroll, useTransform, useMotionValueEvent } from 'framer-motion';
 import { useRef, useState, useEffect } from 'react';
-
-// Video Scrubber Component for scroll-based video playback
-interface VideoScrubberProps {
-  videoSrc: string;
-  scrollProgress: MotionValue<number>;
-  scrollRange: [number, number]; // [start, end] range in the scroll progress (0-1)
-  videoDuration: number; // total duration of video in seconds
-}
-
-const VideoScrubber: React.FC<VideoScrubberProps> = ({ videoSrc, scrollProgress, scrollRange, videoDuration }) => {
-  const videoRef = useRef<HTMLVideoElement>(null);
-  const [isVideoLoaded, setIsVideoLoaded] = useState(false);
-  const frameRef = useRef<number | null>(null);
-
-  // Handle video loading
-  useEffect(() => {
-    const video = videoRef.current;
-    if (!video) return;
-
-    const handleVideoLoaded = () => {
-      setIsVideoLoaded(true);
-      // Pause immediately to prevent autoplay
-      video.pause();
-      // Set initial frame
-      updateVideoTime(0);
-    };
-
-    video.addEventListener('loadeddata', handleVideoLoaded);
-    
-    return () => {
-      video.removeEventListener('loadeddata', handleVideoLoaded);
-      // Cleanup animation frame
-      if (frameRef.current) {
-        cancelAnimationFrame(frameRef.current);
-      }
-    };
-  }, []);
-
-  // Function to update video time based on scroll position
-  const updateVideoTime = (scrollPos: number) => {
-    const video = videoRef.current;
-    if (!video || !isVideoLoaded) return;
-
-    // Calculate normalized progress within the scroll range
-    const [start, end] = scrollRange;
-    const normalizedProgress = Math.max(0, Math.min(1, (scrollPos - start) / (end - start)));
-    
-    // Map normalized progress to video duration
-    const videoTime = normalizedProgress * videoDuration;
-    
-    // Update video time if it's different enough (to avoid unnecessary updates)
-    if (Math.abs(video.currentTime - videoTime) > 0.1) {
-      video.currentTime = videoTime;
-    }
-  };
-
-  // Subscribe to scroll progress changes
-  useEffect(() => {
-    const unsubscribe = scrollProgress.on("change", (latest) => {
-      if (frameRef.current) {
-        cancelAnimationFrame(frameRef.current);
-      }
-
-      frameRef.current = requestAnimationFrame(() => {
-        updateVideoTime(latest);
-      });
-    });
-
-    return () => {
-      unsubscribe();
-      if (frameRef.current) {
-        cancelAnimationFrame(frameRef.current);
-      }
-    };
-  }, [scrollProgress, scrollRange, videoDuration, isVideoLoaded]);
-
-  return (
-    <video
-      ref={videoRef}
-      className="absolute top-0 left-0 w-full h-full object-cover"
-      src={videoSrc}
-      muted
-      playsInline
-      preload="auto"
-    ></video>
-  );
-};
 
 // SVG Components for animation scenes
 const CosmicWebSVG = () => (
@@ -1038,24 +951,10 @@ const Home = () => {
       <div className="h-[1200vh]">
         {/* Fixed position container for all scenes */}
         <div className="fixed inset-0 w-full h-full overflow-hidden">
-          {/* Scene 1: Cosmic Web - With zoom and rotation animation */}
-          <motion.div 
-            style={{ 
-              opacity: stageRanges.cosmicWebOpacity,
-            }} 
-            className="absolute inset-0"
-          >
-            <motion.div 
-              className="absolute inset-0 bg-cover bg-center bg-no-repeat" 
-              style={{ 
-                backgroundImage: "url('/assets/scroll/1-cosmic-web.webp')",
-                scale: useTransform(scrollYProgress, [0, 0.08], [1, 100]),
-                rotate: useTransform(scrollYProgress, [0, 0.08], [0, 180]),
-                transformOrigin: "center center"
-              }}
-            ></motion.div>
-            {/* Add a subtle overlay to ensure text readability */}
-            <div className="absolute inset-0 bg-black bg-opacity-30"></div>
+          {/* Scene 1: Cosmic Web */}
+          <motion.div style={{ opacity: stageRanges.cosmicWebOpacity }} className="absolute inset-0">
+            <div className="absolute inset-0 bg-gradient-to-b from-purple-900 to-black opacity-80"></div>
+            <CosmicWebSVG />
           </motion.div>
           
           <motion.div 
@@ -1068,55 +967,12 @@ const Home = () => {
             </div>
           </motion.div>
           
-          {/* Scene 2: Galaxy - Scroll-controlled playback (smooth chunked scroll) */}
+          {/* Scene 2: Galaxy */}
           <motion.div style={{ opacity: stageRanges.galaxyOpacity }} className="absolute inset-0">
-            <div className="absolute inset-0 overflow-hidden">
-              <video
-                ref={(el) => {
-                  if (!el || typeof window === 'undefined') return;
-
-                  const chunk = 0.15; // seconds of video played per scroll "tick"
-                  let lastScroll = 0;
-                  let direction = 'forward';
-                  let targetTime = 0;
-
-                  const animateTo = () => {
-                    if (!el) return;
-                    const diff = targetTime - el.currentTime;
-                    if (Math.abs(diff) < 0.01) return;
-                    el.currentTime += diff * 0.2;
-                    requestAnimationFrame(animateTo);
-                  };
-
-                  const unsubscribe = scrollYProgress.on("change", (v) => {
-                    const [start, end] = [0.09, 0.16];
-                    if (v < start || v > end) return;
-
-                    const delta = v - lastScroll;
-                    if (Math.abs(delta) < 0.001) return;
-                    direction = delta > 0 ? "forward" : "backward";
-                    lastScroll = v;
-
-                    const localProgress = (v - start) / (end - start);
-                    const baseTime = localProgress * 48;
-                    targetTime = Math.max(0, Math.min(48, baseTime + (direction === "forward" ? chunk : -chunk)));
-
-                    animateTo();
-                  });
-
-                  // Cleanup
-                  return () => unsubscribe();
-                }}
-                src="/assets/scroll/2-milkyway-spin.mp4"
-                muted
-                playsInline
-                className="absolute top-0 left-0 w-full h-full object-cover"
-              />
-              {/* Overlay to improve contrast */}
-              <div className="absolute inset-0 bg-black bg-opacity-30"></div>
-            </div>
+            <div className="absolute inset-0 bg-gradient-to-b from-blue-900 to-black opacity-80"></div>
+            <GalaxySVG />
           </motion.div>
-
+          
           <motion.div 
             className="absolute inset-0 flex items-center justify-center pointer-events-none"
             style={{ opacity: stageRanges.galaxyTextOpacity }}
@@ -1126,7 +982,7 @@ const Home = () => {
               <p className="text-gray-300">From countless stars, shining across unimaginable distances.</p>
             </div>
           </motion.div>
-
+          
           {/* Scene 3: Oort Cloud */}
           <motion.div style={{ opacity: stageRanges.oortCloudOpacity }} className="absolute inset-0">
             <div className="absolute inset-0 bg-gradient-to-b from-slate-900 to-slate-950 opacity-80"></div>
