@@ -1115,6 +1115,7 @@ const Home = () => {
       id="homepage"
       ref={containerRef} 
       className="relative bg-black text-white overflow-x-hidden"
+      style={{ position: 'relative' }}
       onMouseMove={handleMouseMove}
     >
       {/* Decorative floating particles - Optimized for GPU rendering */}
@@ -2028,8 +2029,10 @@ const Home = () => {
           <motion.div 
             style={{ 
               opacity: stageRanges.atomOpacity,
-              scale: stageRanges.atomScale
+              scale: stageRanges.atomScale,
+              willChange: "transform, opacity"
             }} 
+            layout={false}
             className="absolute inset-0"
           >
             <div className="absolute inset-0 bg-gradient-radial from-pink-800 via-pink-900 to-purple-950 opacity-90"></div>
@@ -2233,8 +2236,10 @@ const Home = () => {
           <motion.div 
             style={{ 
               opacity: stageRanges.nucleusOpacity,
-              scale: stageRanges.nucleusScale
+              scale: stageRanges.nucleusScale,
+              willChange: "transform, opacity"
             }} 
+            layout={false}
             className="absolute inset-0"
           >
             <div className="absolute inset-0 bg-gradient-radial from-red-900 via-red-950 to-gray-950 opacity-95"></div>
@@ -2418,8 +2423,10 @@ const Home = () => {
           <motion.div 
             style={{ 
               opacity: stageRanges.quarksOpacity,
-              scale: stageRanges.quarksScale
+              scale: stageRanges.quarksScale,
+              willChange: "transform, opacity"
             }} 
+            layout={false}
             className="absolute inset-0"
           >
             <div className="absolute inset-0 bg-gradient-radial from-gray-800 via-gray-900 to-black opacity-95"></div>
@@ -2605,8 +2612,10 @@ const Home = () => {
               opacity: stageRanges.finalOpacity,
               scale: stageRanges.finalScale,
               x: mousePosition.x * 20,
-              y: mousePosition.y * 20
+              y: mousePosition.y * 20,
+              willChange: "transform, opacity"
             }}
+            layout={false}
           >
             <div className="absolute inset-0 bg-gradient-radial from-purple-950 via-gray-900 to-black opacity-95"></div>
             
