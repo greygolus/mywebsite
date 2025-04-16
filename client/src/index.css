@@ -28,19 +28,19 @@
   
   /* Text box styling for homepage */
   .text-box {
-    @apply bg-[#2a2a2d] bg-opacity-90 backdrop-blur-md border border-[#40404a]/30 rounded-xl p-8 max-w-md text-center shadow-xl;
+    @apply bg-black bg-opacity-40 backdrop-blur-sm border border-white/10 rounded-xl p-6 max-w-md text-center shadow-md;
   }
   
   /* Apple-inspired glass card styling */
   .apple-glass {
-    background-color: rgba(42, 42, 45, 0.9);
-    backdrop-filter: blur(12px);
+    background-color: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(8px);
     border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 0.75rem;
-    padding: 2rem;
+    padding: 1.5rem;
     max-width: 28rem;
     text-align: center;
-    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
   }
   
   /* Animation utilities for scroll effects */
