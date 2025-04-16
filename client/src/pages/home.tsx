@@ -10,9 +10,24 @@ import {
   useAppleGlassStyles,
   DepthAwareTextBox,
 } from "../lib/applyTextBoxStyles";
+import OptimizedParticleField from "@/components/ui/enhanced-particle-field";
 
-// Enhanced particle effect component for layering over scenes
-const EnhancedParticleField = ({
+// Import optimized scene components
+import SceneCosmicWeb from "@/components/scenes/SceneCosmicWeb";
+import SceneGalaxy from "@/components/scenes/SceneGalaxy";
+import SceneOortCloud from "@/components/scenes/SceneOortCloud";
+import SceneSolarSystem from "@/components/scenes/SceneSolarSystem";
+import SceneEarth from "@/components/scenes/SceneEarth";
+import SceneTelescope from "@/components/scenes/SceneTelescope";
+import SceneEye from "@/components/scenes/SceneEye";
+import SceneDNA from "@/components/scenes/SceneDNA";
+import SceneAtom from "@/components/scenes/SceneAtom";
+import SceneNucleus from "@/components/scenes/SceneNucleus";
+import SceneQuarks from "@/components/scenes/SceneQuarks";
+import SceneFinal from "@/components/scenes/SceneFinal";
+
+// Enhanced particle effect component for layering over scenes (legacy version)
+const LegacyParticleField = ({
   color = "#ffffff",
   density = 40,
   speed = 50,
@@ -1661,7 +1676,7 @@ const Home = () => {
             <div className="absolute inset-0 bg-gradient-to-b from-purple-900 via-violet-950 to-black opacity-95"></div>
             <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(167,139,250,0.15),transparent_70%)]"></div>
             <CosmicWebSVG />
-            <EnhancedParticleField
+            <OptimizedParticleField
               color="#C4B5FD"
               density={15}
               speed={20}
@@ -1723,7 +1738,7 @@ const Home = () => {
               />
             </div>
             <GalaxySVG />
-            <EnhancedParticleField
+            <OptimizedParticleField
               color="#93C5FD"
               density={30}
               speed={8}
@@ -1795,7 +1810,7 @@ const Home = () => {
                 />
               ))}
             </div>
-            <EnhancedParticleField
+            <OptimizedParticleField
               color="#E2E8F0"
               density={25}
               speed={5}
@@ -2523,7 +2538,7 @@ const Home = () => {
             </div>
 
             {/* Bio-luminescent particles */}
-            <EnhancedParticleField
+            <OptimizedParticleField
               color="#22D3EE"
               density={30}
               speed={15}
@@ -3346,7 +3361,7 @@ const Home = () => {
             <QuarksSVG />
 
             {/* Particle system showing scale continuum */}
-            <EnhancedParticleField
+            <OptimizedParticleField
               color="#E9D5FF"
               density={25}
               speed={8}
