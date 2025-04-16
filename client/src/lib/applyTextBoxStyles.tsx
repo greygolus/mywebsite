@@ -13,8 +13,8 @@ export function useAppleGlassStyles() {
       const textBoxes = document.querySelectorAll('.text-box');
       
       textBoxes.forEach(box => {
-        // Apply the transparent bubble glass styling
-        box.classList.add('bg-white/10', 'backdrop-blur-md', 'border', 'border-white/20', 'rounded-xl', 'shadow-inner');
+        // Apply the more translucent bubble glass styling with increased blur
+        box.classList.add('bg-black/5', 'backdrop-blur-xl', 'border', 'border-white/10', 'rounded-xl', 'shadow-inner');
         
         // Add text shadows for better readability
         const textElements = box.querySelectorAll('h1, h2, h3, h4, h5, h6, p');
@@ -111,7 +111,7 @@ export function DepthAwareTextBox({
   
   return (
     <motion.div 
-      className={`text-box ${borderColor} ${className} backdrop-blur-md p-6 bg-white/10 shadow-inner transition-all duration-300 ease-in-out`}
+      className={`text-box ${borderColor} ${className} backdrop-blur-xl p-6 bg-black/5 shadow-inner transition-all duration-300 ease-in-out border-white/10`}
       style={style}
       initial="initial"
       animate="animate"

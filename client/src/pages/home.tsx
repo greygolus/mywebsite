@@ -1034,7 +1034,7 @@ const Home = () => {
   const [particles, setParticles] = useState<Particle[]>([]);
   
   useEffect(() => {
-    // Create 20 particles
+    // Create particles with much slower movement
     const newParticles: Particle[] = [];
     for (let i = 0; i < 30; i++) {
       newParticles.push({
@@ -1044,7 +1044,7 @@ const Home = () => {
         color: `rgba(255, 255, 255, ${Math.random() * 0.5 + 0.1})`,
         initialX: Math.random() * window.innerWidth,
         initialY: Math.random() * window.innerHeight,
-        speed: Math.random() * 0.3 + 0.1,
+        speed: (Math.random() * 0.03 + 0.01), // Reduced speed by factor of 10
         direction: Math.random() * 360
       });
     }
@@ -1090,7 +1090,7 @@ const Home = () => {
               ]
             }}
             transition={{
-              duration: 10 + particle.size * 5,
+              duration: 30 + particle.size * 10, // Much slower animation
               repeat: Infinity,
               ease: "easeInOut"
             }}
@@ -1413,7 +1413,7 @@ const Home = () => {
             style={{ opacity: stageRanges.finalTextOpacity }}
           >
             <motion.div 
-              className="card-glass border-purple-500/20 p-8 max-w-lg text-center backdrop-blur-md shadow-lg"
+              className="card-glass border-purple-500/10 p-8 max-w-lg text-center backdrop-blur-xl shadow-lg bg-black/5"
               initial={{ y: 20, opacity: 0, scale: 0.95 }}
               animate={{ y: 0, opacity: 1, scale: 1 }}
               transition={{ 
@@ -1429,19 +1429,19 @@ const Home = () => {
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-center">
                 <Link 
                   href="/directory#calculators" 
-                  className="card-glass card-glass-hover transition-all duration-300 rounded-xl border border-white/20 p-4 hover:shadow-[0_0_15px_rgba(124,58,237,0.3)] hover:scale-105 ease-in-out"
+                  className="card-glass card-glass-hover transition-all duration-300 rounded-xl border border-white/10 p-4 hover:shadow-[0_0_15px_rgba(124,58,237,0.3)] hover:scale-105 ease-in-out bg-black/5 backdrop-blur-xl"
                 >
                   <span className="gradient-text font-bold">Calculators</span>
                 </Link>
                 <Link 
                   href="/reference" 
-                  className="card-glass card-glass-hover transition-all duration-300 rounded-xl border border-white/20 p-4 hover:shadow-[0_0_15px_rgba(56,189,248,0.3)] hover:scale-105 ease-in-out"
+                  className="card-glass card-glass-hover transition-all duration-300 rounded-xl border border-white/10 p-4 hover:shadow-[0_0_15px_rgba(56,189,248,0.3)] hover:scale-105 ease-in-out bg-black/5 backdrop-blur-xl"
                 >
                   <span className="gradient-text font-bold">References</span>
                 </Link>
                 <Link 
                   href="/directory" 
-                  className="card-glass card-glass-hover transition-all duration-300 rounded-xl border border-white/20 p-4 hover:shadow-[0_0_15px_rgba(94,234,212,0.3)] hover:scale-105 ease-in-out"
+                  className="card-glass card-glass-hover transition-all duration-300 rounded-xl border border-white/10 p-4 hover:shadow-[0_0_15px_rgba(94,234,212,0.3)] hover:scale-105 ease-in-out bg-black/5 backdrop-blur-xl"
                 >
                   <span className="gradient-text font-bold">All Tools</span>
                 </Link>
@@ -1457,7 +1457,7 @@ const Home = () => {
         initial={{ opacity: 1 }}
         animate={{ opacity: [1, 0.5, 1] }}
         transition={{ 
-          duration: 2.5, 
+          duration: 4, // Slower animation
           repeat: Infinity, 
           ease: "easeInOut" 
         }}
