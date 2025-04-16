@@ -1260,8 +1260,10 @@ const Home = () => {
           <motion.div 
             style={{ 
               opacity: stageRanges.oortCloudOpacity,
-              scale: stageRanges.oortCloudScale
+              scale: stageRanges.oortCloudScale,
+              willChange: "transform, opacity"
             }} 
+            layout={false}
             className="absolute inset-0"
           >
             <div className="absolute inset-0 bg-gradient-to-b from-slate-900 via-indigo-950 to-slate-950 opacity-90"></div>
@@ -1325,8 +1327,10 @@ const Home = () => {
           <motion.div 
             style={{ 
               opacity: stageRanges.solarSystemOpacity,
-              scale: stageRanges.solarSystemScale
+              scale: stageRanges.solarSystemScale,
+              willChange: "transform, opacity"
             }} 
+            layout={false}
             className="absolute inset-0"
           >
             <div className="absolute inset-0 bg-gradient-to-b from-indigo-950 via-blue-950 to-black opacity-90"></div>
@@ -1431,8 +1435,10 @@ const Home = () => {
           <motion.div 
             style={{ 
               opacity: stageRanges.earthOpacity,
-              scale: stageRanges.earthScale
+              scale: stageRanges.earthScale,
+              willChange: "transform, opacity"
             }} 
+            layout={false}
             className="absolute inset-0"
           >
             <div className="absolute inset-0 bg-gradient-radial from-blue-900 via-blue-950 to-indigo-950 opacity-90"></div>
@@ -1587,8 +1593,10 @@ const Home = () => {
           <motion.div 
             style={{ 
               opacity: stageRanges.telescopeOpacity,
-              scale: stageRanges.telescopeScale
+              scale: stageRanges.telescopeScale,
+              willChange: "transform, opacity"
             }} 
+            layout={false}
             className="absolute inset-0"
           >
             <StarField />
@@ -1731,8 +1739,10 @@ const Home = () => {
           <motion.div 
             style={{ 
               opacity: stageRanges.eyeOpacity,
-              scale: stageRanges.eyeScale
+              scale: stageRanges.eyeScale,
+              willChange: "transform, opacity"
             }} 
+            layout={false}
             className="absolute inset-0"
           >
             <div className="absolute inset-0 bg-gradient-radial from-blue-800 via-blue-900 to-indigo-950 opacity-90"></div>
@@ -1898,8 +1908,10 @@ const Home = () => {
           <motion.div 
             style={{ 
               opacity: stageRanges.dnaOpacity,
-              scale: stageRanges.dnaScale
+              scale: stageRanges.dnaScale,
+              willChange: "transform, opacity"
             }} 
+            layout={false}
             className="absolute inset-0"
           >
             <div className="absolute inset-0 bg-gradient-radial from-cyan-900 via-blue-900 to-blue-950 opacity-90"></div>
