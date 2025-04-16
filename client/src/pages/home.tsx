@@ -1649,7 +1649,10 @@ const Home = () => {
       id="homepage"
       ref={containerRef}
       className="relative bg-black text-white overflow-x-hidden"
-      style={{ position: "relative" }}
+      style={{ 
+        position: "relative",
+        willChange: "transform" 
+      }}
       onMouseMove={handleMouseMove}
     >
       {/* Decorative floating particles - Optimized for GPU rendering */}
@@ -1692,9 +1695,9 @@ const Home = () => {
         ))}
       </div>
       {/* Multiple viewport-height sections for scrolling - 12 sections */}
-      <div className="h-[1200vh]">
+      <div className="h-[1200vh] relative">
         {/* Fixed position container for all scenes */}
-        <div className="fixed inset-0 w-full h-full overflow-hidden">
+        <div className="fixed inset-0 w-full h-full overflow-hidden" style={{ position: "fixed" }}>
           {/* Scene 1: Cosmic Web - Enhanced with particles and depth */}
           <motion.div
             style={{
