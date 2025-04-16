@@ -956,6 +956,7 @@ const Home = () => {
 
   return (
     <div 
+      id="homepage"
       ref={containerRef} 
       className="relative bg-black text-white overflow-x-hidden"
       onMouseMove={handleMouseMove}

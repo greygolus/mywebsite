@@ -31,6 +31,18 @@
     @apply bg-[#2a2a2d] bg-opacity-90 backdrop-blur-md border border-[#40404a]/30 rounded-xl p-8 max-w-md text-center shadow-xl;
   }
   
+  /* Apple-inspired glass card styling */
+  .apple-glass {
+    background-color: rgba(42, 42, 45, 0.9);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 0.75rem;
+    padding: 2rem;
+    max-width: 28rem;
+    text-align: center;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+  }
+  
   /* Animation utilities for scroll effects */
   @keyframes fade-in {
     from { opacity: 0; }
