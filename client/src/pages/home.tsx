@@ -1321,8 +1321,9 @@ const Home = () => {
   // Apply styles on component mount
   useEffect(() => {
     applyStyles();
-  }, []);
+  }, [applyStyles]);
 
+  // Define stage ranges for scroll-based animations
   const stageRanges = {
     // Scene 1: Cosmic Web - EXTENDED TEXT DISPLAY
     cosmicWebOpacity: useTransform(
