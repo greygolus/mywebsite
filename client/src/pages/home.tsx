@@ -3511,6 +3511,13 @@ const Home = () => {
           <motion.div
             className="absolute inset-0 flex flex-col items-center justify-center"
             style={{ opacity: stageRanges.finalTextOpacity }}
+            initial={{ pointerEvents: "none" }}
+            animate={{
+              pointerEvents: "auto" 
+            }}
+            transition={{
+              delay: 0.98, // Only enable pointer events when scroll is close to the end
+            }}
           >
             <motion.div
               className="card-glass border-purple-500/10 p-8 max-w-lg text-center backdrop-blur-xl shadow-lg bg-black/5"
