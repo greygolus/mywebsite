@@ -167,4 +167,9 @@
   .gradient-glow:hover::after {
     opacity: 0.25;
   }
+  
+  /* Hide footer on homepage */
+  body.home-page footer {
+    display: none;
+  }
 }

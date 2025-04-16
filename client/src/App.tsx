@@ -1,4 +1,4 @@
-import { Switch, Route } from "wouter";
+import { Switch, Route, useLocation } from "wouter";
 import { queryClient } from "./lib/queryClient";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
@@ -17,6 +17,7 @@ import LensesMirrors from "@/pages/calculators/lenses-mirrors";
 import Diffraction from "@/pages/calculators/diffraction";
 import Power from "@/pages/calculators/power";
 import ColorEstimator from "@/pages/calculators/color-estimator";
+import { useEffect } from "react";
 
 function Router() {
   return (
@@ -40,6 +41,17 @@ function Router() {
 }
 
 function App() {
+  // Track current location to add a class to body when on homepage
+  const [location] = useLocation();
+  
+  useEffect(() => {
+    if (location === "/") {
+      document.body.classList.add('home-page');
+    } else {
+      document.body.classList.remove('home-page');
+    }
+  }, [location]);
+
   return (
     <QueryClientProvider client={queryClient}>
       <div className="flex flex-col min-h-screen bg-dark-background">
