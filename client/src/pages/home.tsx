@@ -74,7 +74,7 @@ const CosmicWebSVG = () => {
     path: string;
     duration: number;
   }
-  
+
   interface NodeData {
     cx: number;
     cy: number;
@@ -96,15 +96,13 @@ const CosmicWebSVG = () => {
       const endX = Math.random() * 100;
       const endY = Math.random() * 100;
       const duration = 3.5 + Math.random() * 2; // Random duration between 3.5-5.5s
-      
+
       return {
         path: `M${startX},${startY} C${cp1X},${cp1Y} ${cp2X},${cp2Y} ${endX},${endY}`,
-        duration
+        duration,
       };
     });
   }, []);
-
-
 
   // Precompute all random values for nodes (circles)
   const nodes = useMemo<NodeData[]>(() => {
@@ -127,7 +125,7 @@ const CosmicWebSVG = () => {
       className="w-full h-full"
       viewBox="0 0 100 100"
       preserveAspectRatio="xMidYMid slice"
-      style={{ transform: 'translateZ(0)' }} // Force GPU acceleration
+      style={{ transform: "translateZ(0)" }} // Force GPU acceleration
     >
       <defs>
         <radialGradient
@@ -144,7 +142,7 @@ const CosmicWebSVG = () => {
         </radialGradient>
       </defs>
       <rect width="100" height="100" fill="url(#cosmicGradient)" />
-      
+
       {/* Cosmic web-like structure with precomputed paths */}
       {webPaths.map((pathData, i) => (
         <motion.path
@@ -160,12 +158,12 @@ const CosmicWebSVG = () => {
             duration: pathData.duration,
             repeat: Infinity,
             repeatType: "reverse",
-            ease: "easeInOut"
+            ease: "easeInOut",
           }}
           style={{ willChange: "opacity, pathLength" }}
         />
       ))}
-      
+
       {/* Cosmic nodes (connection points) with precomputed values */}
       {nodes.map((node, i) => (
         <motion.circle
@@ -175,29 +173,29 @@ const CosmicWebSVG = () => {
           r={node.r}
           fill="#C4B5FD"
           initial={{ opacity: 0.2 }}
-          animate={{ 
+          animate={{
             opacity: [0.2, 0.8, 0.2],
             cx: [node.cx, node.cx + node.driftX, node.cx],
-            cy: [node.cy, node.cy + node.driftY, node.cy]
+            cy: [node.cy, node.cy + node.driftY, node.cy],
           }}
-          transition={{ 
+          transition={{
             opacity: {
               duration: node.duration,
               repeat: Infinity,
-              ease: "easeInOut"
+              ease: "easeInOut",
             },
             cx: {
               duration: node.driftDuration,
               repeat: Infinity,
               repeatType: "reverse",
-              ease: "easeInOut"
+              ease: "easeInOut",
             },
             cy: {
               duration: node.driftDuration,
               repeat: Infinity,
               repeatType: "reverse",
-              ease: "easeInOut"
-            }
+              ease: "easeInOut",
+            },
           }}
           style={{ willChange: "opacity, transform" }}
         />
