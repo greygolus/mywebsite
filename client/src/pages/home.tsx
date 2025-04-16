@@ -70,7 +70,22 @@ const EnhancedParticleField = ({
 // SVG Components for animation scenes
 const CosmicWebSVG = () => {
   // Precompute all random values for paths (cosmic web structure)
-  const webPaths = useMemo(() => {
+  interface PathData {
+    path: string;
+    duration: number;
+  }
+  
+  interface NodeData {
+    cx: number;
+    cy: number;
+    r: number;
+    duration: number;
+    driftX: number;
+    driftY: number;
+    driftDuration: number;
+  }
+
+  const webPaths = useMemo<PathData[]>(() => {
     return Array.from({ length: 20 }).map(() => {
       const startX = Math.random() * 100;
       const startY = Math.random() * 100;
@@ -89,8 +104,10 @@ const CosmicWebSVG = () => {
     });
   }, []);
 
+
+
   // Precompute all random values for nodes (circles)
-  const nodes = useMemo(() => {
+  const nodes = useMemo<NodeData[]>(() => {
     return Array.from({ length: 50 }).map(() => {
       const cx = Math.random() * 100;
       const cy = Math.random() * 100;
