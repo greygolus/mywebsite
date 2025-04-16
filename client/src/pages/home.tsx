@@ -987,12 +987,31 @@ const Home = () => {
     finalScale: useTransform(scrollYProgress, [0.99, 1], [1, 1]) // No scale change in final scene
   };
   
-  // Mouse interaction for final scene with reduced sensitivity
+  // Mouse interaction for final scene with reduced sensitivity and smooth interpolation
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [targetPosition, setTargetPosition] = useState({ x: 0, y: 0 });
+  
+  // Smoother mouse tracking with interpolation
+  useEffect(() => {
+    let animationFrame: number;
+    
+    const smoothMouseInterpolation = () => {
+      // Interpolate current position towards target with easing
+      setMousePosition(prev => ({
+        x: prev.x + (targetPosition.x - prev.x) * 0.08, // Smooth easing factor
+        y: prev.y + (targetPosition.y - prev.y) * 0.08
+      }));
+      
+      animationFrame = requestAnimationFrame(smoothMouseInterpolation);
+    };
+    
+    animationFrame = requestAnimationFrame(smoothMouseInterpolation);
+    return () => cancelAnimationFrame(animationFrame);
+  }, [targetPosition]);
   
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     // Reduce mouse movement sensitivity by 75% (multiplying by 0.25)
-    setMousePosition({
+    setTargetPosition({
       x: (e.clientX / window.innerWidth - 0.5) * 0.25,
       y: (e.clientY / window.innerHeight - 0.5) * 0.25
     });
@@ -1011,6 +1030,27 @@ const Home = () => {
     ["0%", "100%"]
   );
 
+  // Decorative particle animation effect
+  const [particles, setParticles] = useState<Particle[]>([]);
+  
+  useEffect(() => {
+    // Create 20 particles
+    const newParticles: Particle[] = [];
+    for (let i = 0; i < 30; i++) {
+      newParticles.push({
+        x: Math.random() * window.innerWidth,
+        y: Math.random() * window.innerHeight,
+        size: Math.random() * 3 + 1,
+        color: `rgba(255, 255, 255, ${Math.random() * 0.5 + 0.1})`,
+        initialX: Math.random() * window.innerWidth,
+        initialY: Math.random() * window.innerHeight,
+        speed: Math.random() * 0.3 + 0.1,
+        direction: Math.random() * 360
+      });
+    }
+    setParticles(newParticles);
+  }, []);
+
   return (
     <div 
       id="homepage"
@@ -1018,6 +1058,45 @@ const Home = () => {
       className="relative bg-black text-white overflow-x-hidden"
       onMouseMove={handleMouseMove}
     >
+      {/* Decorative floating particles */}
+      <div className="fixed inset-0 z-10 pointer-events-none">
+        {particles.map((particle, index) => (
+          <motion.div 
+            key={index}
+            className="absolute rounded-full"
+            style={{
+              width: particle.size,
+              height: particle.size,
+              backgroundColor: particle.color,
+              left: particle.initialX,
+              top: particle.initialY,
+              boxShadow: `0 0 ${particle.size * 2}px ${particle.color}`,
+            }}
+            animate={{
+              x: [
+                0,
+                Math.sin(particle.direction) * 100 * particle.speed,
+                0
+              ],
+              y: [
+                0,
+                Math.cos(particle.direction) * 100 * particle.speed,
+                0
+              ],
+              opacity: [
+                particle.size > 2 ? 0.8 : 0.4,
+                particle.size > 2 ? 0.4 : 0.2,
+                particle.size > 2 ? 0.8 : 0.4
+              ]
+            }}
+            transition={{
+              duration: 10 + particle.size * 5,
+              repeat: Infinity,
+              ease: "easeInOut"
+            }}
+          />
+        ))}
+      </div>
       {/* Multiple viewport-height sections for scrolling - 12 sections */}
       <div className="h-[1200vh]">
         {/* Fixed position container for all scenes */}
@@ -1404,15 +1483,46 @@ const Home = () => {
       
       {/* Vertical scroll progress indicator */}
       <motion.div 
-        className="fixed right-6 top-1/2 transform -translate-y-1/2 h-1/3 w-1.5 bg-gray-800/60 rounded-full backdrop-blur-sm shadow-inner"
+        className="fixed right-6 top-1/2 transform -translate-y-1/2 h-1/3 w-2 bg-gray-800/60 rounded-full backdrop-blur-md shadow-inner border border-white/5"
         initial={{ opacity: 0, x: 10 }}
         animate={{ opacity: 1, x: 0 }}
-        transition={{ duration: 0.6, ease: "easeOut" }}
+        transition={{ 
+          duration: 0.6, 
+          ease: [0.22, 1, 0.36, 1] // Custom ease curve for more dynamic feel
+        }}
         style={{ opacity: useTransform(scrollYProgress, [0, 0.05], [0, 1]) }}
+        whileHover={{ width: "0.7rem", x: -2, transition: { duration: 0.3 } }}
       >
         <motion.div 
-          className="w-full bg-gradient-to-b from-glow-purple via-glow-blue to-glow-cyan rounded-full shadow-[0_0_10px_rgba(139,92,246,0.5)]"
-          style={{ height: progressBar, originY: 0 }}
+          className="w-full bg-gradient-to-b from-glow-purple via-glow-blue to-glow-cyan rounded-full shadow-[0_0_15px_rgba(139,92,246,0.6)]"
+          style={{ 
+            height: progressBar, 
+            originY: 0,
+            filter: "blur(1px)"
+          }}
+          initial={{ filter: "blur(1px)" }}
+          animate={{ filter: "blur(1px)" }}
+          whileHover={{ 
+            filter: "blur(0px)",
+            transition: { duration: 0.3 }
+          }}
+        />
+        {/* Animated dot indicator */}
+        <motion.div 
+          className="absolute w-4 h-4 right-0 transform -translate-x-1/2 rounded-full bg-white shadow-[0_0_20px_rgba(255,255,255,0.7)]"
+          style={{ 
+            top: progressBar,
+            left: "50%",
+            translateY: "-50%",
+            translateX: "-50%"
+          }}
+          initial={{ scale: 0.7 }}
+          animate={{ scale: [0.7, 0.9, 0.7], opacity: [0.7, 1, 0.7] }}
+          transition={{ 
+            duration: 2,
+            repeat: Infinity,
+            easein: "easeInOut"
+          }}
         />
       </motion.div>
     </div>

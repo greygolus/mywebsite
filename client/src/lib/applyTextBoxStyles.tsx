@@ -60,14 +60,16 @@ export function DepthAwareTextBox({
   yMotionValue, 
   opacityMotionValue,
   className = "",
-  borderColor = "border-white/20" 
+  borderColor = "border-white/20",
+  hoverEffect = true 
 }: { 
   children: React.ReactNode, 
   scaleMotionValue?: any, 
   yMotionValue?: any, 
   opacityMotionValue?: any,
   className?: string,
-  borderColor?: string
+  borderColor?: string,
+  hoverEffect?: boolean
 }) {
   const style: any = {};
   
@@ -83,10 +85,44 @@ export function DepthAwareTextBox({
     style.opacity = opacityMotionValue;
   }
   
+  // Add filter for advanced shadow effects
+  style.filter = "drop-shadow(0px 10px 15px rgba(0, 0, 0, 0.1))";
+  
+  // Enhanced animation variants
+  const variants = {
+    initial: { 
+      opacity: 0, 
+      y: 20,
+      scale: 0.95,
+      filter: "blur(2px)" 
+    },
+    animate: { 
+      opacity: 1, 
+      y: 0,
+      scale: 1,
+      filter: "blur(0px)" 
+    },
+    hover: hoverEffect ? { 
+      scale: 1.02,
+      y: -5,
+      transition: { duration: 0.3, ease: [0.19, 1, 0.22, 1] } 
+    } : {}
+  };
+  
   return (
     <motion.div 
-      className={`text-box ${borderColor} ${className}`}
+      className={`text-box ${borderColor} ${className} backdrop-blur-md p-6 bg-white/10 shadow-inner transition-all duration-300 ease-in-out`}
       style={style}
+      initial="initial"
+      animate="animate"
+      whileHover={hoverEffect ? "hover" : undefined}
+      variants={variants}
+      transition={{ 
+        type: "spring", 
+        stiffness: 100, 
+        damping: 15,
+        opacity: { duration: 0.5, ease: "easeOut" }
+      }}
     >
       {children}
     </motion.div>
