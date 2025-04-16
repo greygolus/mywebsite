@@ -1,0 +1,29 @@
+Please improve the cosmic web animation in my homepage's React code to make it significantly smoother and more performant.
+
+Here’s what I need:
+
+1. **Precompute all randomness**:
+   - Currently, `Math.random()` is used directly inside the JSX. This causes every render to rerun the random values, leading to jittery animation and React re-mounting elements.
+   - Move all random generation into a `useMemo()` hook (or outside the component if static). This applies to path shapes, circle positions, radii, and animation durations.
+
+2. **Improve animation fluidity**:
+   - For `motion.path`, animate `pathLength` from `0` to `1`, but ensure the duration is still randomized between 3.5 and 5.5 seconds.
+   - For `motion.circle`, animate opacity between `[0.2, 0.8, 0.2]` with a randomized duration between 2 and 5 seconds.
+   - Use `repeat: Infinity` and `repeatType: "reverse"` where appropriate.
+
+3. **Ensure smoother rendering with CSS optimizations**:
+   - Add `will-change: opacity, pathLength, transform;` to the `<motion.path>` and `<motion.circle>` elements via CSS or inline styles.
+   - Wrap the containing SVG or element with `transform: translateZ(0);` to force GPU acceleration.
+
+4. **Avoid performance bottlenecks**:
+   - Keep the number of animated elements around 20 paths and 50 circles, but reduce if needed based on performance.
+   - If necessary, suggest switching to `<canvas>` or WebGL for heavy visual layers, but only as a fallback.
+
+5. **Preserve SVG scaling behavior**:
+   - Confirm that the `viewBox="0 0 100 100"` is present in the `<svg>` tag so the coordinates and animations scale properly across screen sizes.
+
+Additional tips (optional but appreciated):
+- Add a soft “cosmic drift” motion by slowly shifting `cx`/`cy` values of the circles over time using `useSpring` or `motionValue`.
+- Use slight variation in node sizes and timing for a natural feel.
+
+Please restructure the code accordingly and replace the original motion elements with the optimized version.
