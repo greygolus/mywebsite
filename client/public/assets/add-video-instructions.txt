@@ -1,0 +1,30 @@
+===================================================
+INSTRUCTIONS FOR ADDING THE PRELOADER VIDEO
+===================================================
+
+To add the lens distortion video to the preloader:
+
+1. Rename your video file to "lens-distortion.mp4"
+2. Place it in this directory: /client/public/assets/
+3. The preloader is already configured to use this video
+
+Requirements for best results:
+- MP4 format with H.264 encoding
+- Aspect ratio: 16:9 (1920x1080 or similar)
+- Short duration (5-10 seconds is ideal)
+- Keep file size under 5MB for fast loading
+
+If you need to make adjustments to the video's appearance,
+modify the className properties in the preloader.tsx component:
+
+<video
+  className="absolute inset-0 w-full h-full object-cover opacity-40"
+  autoPlay
+  muted
+  playsInline
+  src="/assets/lens-distortion.mp4" 
+>
+  Your browser does not support the video tag.
+</video>
+
+===================================================

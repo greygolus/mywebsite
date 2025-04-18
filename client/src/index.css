@@ -2,6 +2,21 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer utilities {
+  .animate-gradient-x {
+    animation: gradient-x 15s ease infinite;
+  }
+  
+  @keyframes gradient-x {
+    0%, 100% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+  }
+}
+
 /* Custom utilities */
 .pointer-events-opacity {
   pointer-events: var(--pointer-events-state, none);

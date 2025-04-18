@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Instructions</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        code {
+            background: #eee;
+            padding: 2px 4px;
+            border-radius: 4px;
+        }
+        pre {
+            background: #eee;
+            padding: 15px;
+            border-radius: 4px;
+            overflow-x: auto;
+        }
+        .note {
+            background: #fff3cd;
+            padding: 15px;
+            border-left: 4px solid #ffc107;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Adding the Preloader Video</h1>
+    
+    <div class="note">
+        <strong>Note:</strong> This file is a placeholder to help you understand how to add the video to your preloader.
+    </div>
+    
+    <h2>Instructions:</h2>
+    <ol>
+        <li>Rename your video file to <code>lens-distortion.mp4</code></li>
+        <li>Place the video in this directory (<code>/client/public/assets/</code>)</li>
+        <li>The preloader component is already set up to use this file</li>
+    </ol>
+    
+    <h2>Video Format Requirements:</h2>
+    <ul>
+        <li>Format: MP4 (H.264 codec recommended)</li>
+        <li>Resolution: 1920x1080 or similar 16:9 aspect ratio</li>
+        <li>Duration: Ideally 5-10 seconds (will loop)</li>
+        <li>Size: Keep under 5MB for fast loading</li>
+    </ul>
+    
+    <h2>Code Reference</h2>
+    <p>The preloader component loads the video like this:</p>
+    <pre>&lt;video
+  className="absolute inset-0 w-full h-full object-cover opacity-40"
+  autoPlay
+  muted
+  playsInline
+  src="/assets/lens-distortion.mp4" 
+&gt;
+  Your browser does not support the video tag.
+&lt;/video&gt;</pre>
+</body>
+</html>

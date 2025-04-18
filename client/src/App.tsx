@@ -5,6 +5,7 @@ import { Toaster } from "@/components/ui/toaster";
 import NotFound from "@/pages/not-found";
 import Navbar from "@/components/ui/navbar";
 import Footer from "@/components/ui/footer";
+import Preloader from "@/components/ui/preloader";
 import Home from "@/pages/home";
 import Directory from "@/pages/directory";
 import Reference from "@/pages/reference";
@@ -18,7 +19,7 @@ import LensesMirrors from "@/pages/calculators/lenses-mirrors";
 import Diffraction from "@/pages/calculators/diffraction";
 import Power from "@/pages/calculators/power";
 import ColorEstimator from "@/pages/calculators/color-estimator";
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 
 function Router() {
   return (
@@ -43,6 +44,9 @@ function Router() {
 }
 
 function App() {
+  // State to track if the app is ready after preloading
+  const [isLoaded, setIsLoaded] = useState(false);
+  
   // Track current location to add a class to body when on homepage
   const [location] = useLocation();
   
@@ -55,8 +59,17 @@ function App() {
     }
   }, [location]);
 
+  // Handle preloader completion
+  const handleLoadComplete = () => {
+    setIsLoaded(true);
+  };
+
   return (
     <QueryClientProvider client={queryClient}>
+      {/* Preloader */}
+      <Preloader onLoadComplete={handleLoadComplete} />
+      
+      {/* Main app */}
       <div className="flex flex-col min-h-screen bg-dark-background">
         <Navbar />
         <main className="flex-grow">
