@@ -6,9 +6,9 @@ interface PreloaderProps {
 }
 
 const Preloader = ({ onLoadComplete }: PreloaderProps) => {
-  const [loading, setLoading] = useState(true);
-  const [progress, setProgress] = useState(0);
-  const [videoLoaded, setVideoLoaded] = useState(false);
+  const [showing, setShowing] = useState(true);
+  const [videoEnded, setVideoEnded] = useState(false);
+  const [titleVisible, setTitleVisible] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
 
   // Handle video events
@@ -16,65 +16,59 @@ const Preloader = ({ onLoadComplete }: PreloaderProps) => {
     const videoElement = videoRef.current;
     
     if (videoElement) {
+      // Show title after a delay
+      setTimeout(() => {
+        setTitleVisible(true);
+      }, 1000);
+      
       const handleCanPlay = () => {
-        setVideoLoaded(true);
         videoElement.play().catch(err => {
           console.error("Video autoplay failed:", err);
-          // Continue with loading even if video fails
-          setVideoLoaded(true);
+          // Skip to end if video fails to play
+          handleVideoEnd();
         });
       };
       
-      videoElement.addEventListener('canplay', handleCanPlay);
-      
-      // Add error handling
-      videoElement.addEventListener('error', () => {
-        console.error("Video loading error");
-        // Continue with loading even if video fails
-        setVideoLoaded(true);
-      });
-      
-      return () => {
-        videoElement.removeEventListener('canplay', handleCanPlay);
-      };
-    }
-  }, []);
-
-  // Simulate progress and handle completion
-  useEffect(() => {
-    // Incrementally update progress to simulate loading
-    let interval: NodeJS.Timeout;
-    
-    // Start progress animation
-    interval = setInterval(() => {
-      setProgress(prevProgress => {
-        // Accelerate progress once video is loaded
-        const increment = videoLoaded ? 8 : 3;
-        const newProgress = Math.min(prevProgress + increment, 100);
+      const handleVideoEnd = () => {
+        setVideoEnded(true);
         
-        // If we've reached 100%, schedule completion
-        if (newProgress >= 100) {
-          clearInterval(interval);
+        // Fade out after video completes
+        setTimeout(() => {
+          setShowing(false);
           
-          // Give a slight delay after reaching 100%
+          // Notify parent when animation is complete
           setTimeout(() => {
-            setLoading(false);
             if (onLoadComplete) {
               onLoadComplete();
             }
-          }, 500);
+          }, 800); // Match the exit animation duration
+        }, 500); // Short delay after video ends before fading out
+      };
+      
+      const handleError = () => {
+        console.error("Video loading error");
+        // Skip to end if video fails to load
+        handleVideoEnd();
+      };
+      
+      // Listen for video events
+      videoElement.addEventListener('canplay', handleCanPlay);
+      videoElement.addEventListener('ended', handleVideoEnd);
+      videoElement.addEventListener('error', handleError);
+      
+      return () => {
+        if (videoElement) {
+          videoElement.removeEventListener('canplay', handleCanPlay);
+          videoElement.removeEventListener('ended', handleVideoEnd);
+          videoElement.removeEventListener('error', handleError);
         }
-        
-        return newProgress;
-      });
-    }, 50);
-
-    return () => clearInterval(interval);
-  }, [videoLoaded, onLoadComplete]);
+      };
+    }
+  }, [onLoadComplete]);
 
   return (
     <AnimatePresence>
-      {loading && (
+      {showing && (
         <motion.div
           className="fixed inset-0 z-[100] flex items-center justify-center bg-black"
           initial={{ opacity: 1 }}
@@ -82,83 +76,61 @@ const Preloader = ({ onLoadComplete }: PreloaderProps) => {
           transition={{ duration: 0.8, ease: "easeInOut" }}
         >
           <div className="relative w-full h-full overflow-hidden">
-            {/* Video Background */}
+            {/* Full-screen Video */}
             <video
               ref={videoRef}
-              className="absolute inset-0 w-full h-full object-cover opacity-50"
+              className="absolute inset-0 w-full h-full object-cover"
               autoPlay
               muted
               playsInline
-              loop
               src="/videos/Lens%20Distortion%20(Remix)%20(2).mp4"
             >
               Your browser does not support the video tag.
             </video>
             
-            {/* Animated gradient overlay */}
-            <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/20 to-black/60 backdrop-filter backdrop-blur-sm"></div>
+            {/* Subtle gradient overlay */}
+            <div className="absolute inset-0 bg-gradient-to-b from-black/10 via-transparent to-black/30"></div>
             
-            {/* Content */}
-            <div className="absolute inset-0 flex flex-col items-center justify-center z-10">
-              <motion.div
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: 0.2, duration: 0.8, ease: "easeOut" }}
-                className="text-center px-6"
-              >
+            {/* Title overlay */}
+            <AnimatePresence>
+              {titleVisible && (
                 <motion.div
-                  initial={{ y: 20, opacity: 0 }}
-                  animate={{ y: 0, opacity: 1 }}
-                  transition={{ duration: 0.8, delay: 0.4 }}
+                  className="absolute inset-0 flex flex-col items-center justify-center z-10"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 1, ease: "easeOut" }}
                 >
-                  <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold gradient-text mb-6">
-                    Grey Golus
-                  </h1>
+                  <motion.div
+                    initial={{ y: 20, opacity: 0 }}
+                    animate={{ y: 0, opacity: 1 }}
+                    transition={{ duration: 1.2, delay: 0.2, ease: "easeOut" }}
+                    className="text-center px-6"
+                  >
+                    <h1 className="text-5xl sm:text-6xl md:text-7xl font-bold gradient-text">
+                      Grey Golus
+                    </h1>
+                  </motion.div>
                 </motion.div>
-                
-                <div className="flex flex-col items-center">
-                  <div className="relative w-[280px] h-2 bg-gray-900/40 mb-8 rounded-full overflow-hidden backdrop-blur-sm border border-white/10">
-                    {/* Animated gradient background */}
-                    <div className="absolute inset-0 bg-gradient-to-r from-purple-600 via-blue-500 to-cyan-500 animate-gradient-x"></div>
-                    
-                    {/* Actual progress bar */}
-                    <motion.div
-                      className="relative h-full rounded-full bg-gradient-to-r from-purple-600 via-blue-500 to-cyan-500"
-                      initial={{ width: "0%" }}
-                      animate={{ width: `${progress}%` }}
-                      transition={{ duration: 0.3 }}
-                    >
-                      {/* Shine effect */}
-                      <motion.div 
-                        className="absolute top-0 right-0 h-full w-1/3 bg-gradient-to-r from-transparent to-white/30 skew-x-12"
-                        animate={{ x: ["-100%", "200%"] }}
-                        transition={{ duration: 1.5, repeat: Infinity, repeatDelay: 0.5 }}
-                      />
-                    </motion.div>
-                  </div>
-                  
-                  <div className="h-6">
-                    {progress < 100 ? (
-                      <motion.p 
-                        className="text-white/70 text-sm uppercase tracking-wider"
-                        animate={{ opacity: [0.5, 1, 0.5] }}
-                        transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-                      >
-                        Loading Experience {Math.round(progress)}%
-                      </motion.p>
-                    ) : (
-                      <motion.p
-                        initial={{ opacity: 0, y: 10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        className="text-white/90 text-sm uppercase tracking-wider"
-                      >
-                        Entering Site...
-                      </motion.p>
-                    )}
-                  </div>
-                </div>
-              </motion.div>
-            </div>
+              )}
+            </AnimatePresence>
+            
+            {/* Skip button */}
+            <motion.button
+              className="absolute bottom-8 right-8 px-4 py-2 rounded-lg bg-white/10 backdrop-blur-sm text-white/80 text-sm hover:bg-white/20 transition-colors duration-300"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 1.5, duration: 0.5 }}
+              onClick={() => {
+                setVideoEnded(true);
+                setShowing(false);
+                if (onLoadComplete) {
+                  onLoadComplete();
+                }
+              }}
+            >
+              Skip Intro
+            </motion.button>
           </div>
         </motion.div>
       )}
