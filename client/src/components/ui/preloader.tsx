@@ -72,10 +72,7 @@ const Preloader = ({ onLoadComplete }: PreloaderProps) => {
           muted
           playsInline
         >
-          {/* Try multiple sources in case one path works better in production */}
-          <source src="/Lens%20Distortion%20(Remix)%20(2).mp4" type="video/mp4" />
-          <source src="/videos/Lens%20Distortion%20(Remix)%20(2).mp4" type="video/mp4" />
-          <source src="Lens%20Distortion%20(Remix)%20(2).mp4" type="video/mp4" />
+          <source src="/assets/lens-distortion.mp4" type="video/mp4" />
           Your browser does not support the video tag.
         </video>
       </div>
