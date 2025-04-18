@@ -17,7 +17,7 @@ const Home = () => {
             <p className="text-gray-300 mb-6">
               Explore the scale of optical phenomena through an interactive visual journey from quantum to cosmic scales.
             </p>
-            <Link href="/directory" className="inline-block px-6 py-2 bg-gradient-to-r from-purple-600 to-blue-500 text-white rounded-lg hover:opacity-90 transition-opacity">
+            <Link href="/unified-optics" className="inline-block px-6 py-2 bg-gradient-to-r from-purple-600 to-blue-500 text-white rounded-lg hover:opacity-90 transition-opacity">
               Explore
             </Link>
           </div>
