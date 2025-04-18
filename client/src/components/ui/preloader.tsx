@@ -11,44 +11,54 @@ const Preloader = ({ onLoadComplete }: PreloaderProps) => {
   const [titleVisible, setTitleVisible] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
 
-  // Handle video events
+  // Handle video events and ensure timeout even if video fails
   useEffect(() => {
     const videoElement = videoRef.current;
     
-    if (videoElement) {
-      // Show title after a delay
-      setTimeout(() => {
-        setTitleVisible(true);
-      }, 1000);
+    // Show title after a delay regardless of video state
+    setTimeout(() => {
+      setTitleVisible(true);
+    }, 1000);
+    
+    // Set a maximum duration for the intro (backup timeout)
+    const maxIntroDuration = 12000; // 12 seconds max
+    const maxIntroTimer = setTimeout(() => {
+      endIntro();
+    }, maxIntroDuration);
+    
+    // Function to handle ending the intro sequence
+    const endIntro = () => {
+      setVideoEnded(true);
       
+      // Fade out
+      setTimeout(() => {
+        setShowing(false);
+        
+        // Notify parent when animation is complete
+        setTimeout(() => {
+          if (onLoadComplete) {
+            onLoadComplete();
+          }
+        }, 800); // Match the exit animation duration
+      }, 500); // Short delay before fading out
+    };
+    
+    if (videoElement) {
       const handleCanPlay = () => {
         videoElement.play().catch(err => {
           console.error("Video autoplay failed:", err);
-          // Skip to end if video fails to play
-          handleVideoEnd();
+          // We'll still rely on the max duration timeout
         });
       };
       
       const handleVideoEnd = () => {
-        setVideoEnded(true);
-        
-        // Fade out after video completes
-        setTimeout(() => {
-          setShowing(false);
-          
-          // Notify parent when animation is complete
-          setTimeout(() => {
-            if (onLoadComplete) {
-              onLoadComplete();
-            }
-          }, 800); // Match the exit animation duration
-        }, 500); // Short delay after video ends before fading out
+        clearTimeout(maxIntroTimer); // Clear the backup timer
+        endIntro();
       };
       
       const handleError = () => {
         console.error("Video loading error");
-        // Skip to end if video fails to load
-        handleVideoEnd();
+        // We'll still show the intro with just the title
       };
       
       // Listen for video events
@@ -57,6 +67,7 @@ const Preloader = ({ onLoadComplete }: PreloaderProps) => {
       videoElement.addEventListener('error', handleError);
       
       return () => {
+        clearTimeout(maxIntroTimer);
         if (videoElement) {
           videoElement.removeEventListener('canplay', handleCanPlay);
           videoElement.removeEventListener('ended', handleVideoEnd);
@@ -64,6 +75,8 @@ const Preloader = ({ onLoadComplete }: PreloaderProps) => {
         }
       };
     }
+    
+    return () => clearTimeout(maxIntroTimer);
   }, [onLoadComplete]);
 
   return (
@@ -84,7 +97,7 @@ const Preloader = ({ onLoadComplete }: PreloaderProps) => {
                 autoPlay
                 muted
                 playsInline
-                src="/videos/Lens%20Distortion%20(Remix)%20(2).mp4"
+                src="/Lens%20Distortion%20(Remix)%20(2).mp4"
               >
                 Your browser does not support the video tag.
               </video>
