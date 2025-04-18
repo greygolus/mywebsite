@@ -90,7 +90,7 @@ const Preloader = ({ onLoadComplete }: PreloaderProps) => {
               muted
               playsInline
               loop
-              src="/videos/lens-distortion.mp4"
+              src="/videos/Lens%20Distortion%20(Remix)%20(2).mp4"
             >
               Your browser does not support the video tag.
             </video>
