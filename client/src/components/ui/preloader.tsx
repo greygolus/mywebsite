@@ -75,18 +75,20 @@ const Preloader = ({ onLoadComplete }: PreloaderProps) => {
           exit={{ opacity: 0 }}
           transition={{ duration: 0.8, ease: "easeInOut" }}
         >
-          <div className="relative w-full h-full overflow-hidden">
+          <div className="relative w-full h-full overflow-hidden bg-[#080808]">
             {/* Full-screen Video */}
-            <video
-              ref={videoRef}
-              className="absolute inset-0 w-full h-full object-cover"
-              autoPlay
-              muted
-              playsInline
-              src="/videos/Lens%20Distortion%20(Remix)%20(2).mp4"
-            >
-              Your browser does not support the video tag.
-            </video>
+            <div className="absolute inset-0 flex items-center justify-center">
+              <video
+                ref={videoRef}
+                className="max-w-full max-h-full object-contain"
+                autoPlay
+                muted
+                playsInline
+                src="/videos/Lens%20Distortion%20(Remix)%20(2).mp4"
+              >
+                Your browser does not support the video tag.
+              </video>
+            </div>
             
             {/* Subtle gradient overlay */}
             <div className="absolute inset-0 bg-gradient-to-b from-black/10 via-transparent to-black/30"></div>
