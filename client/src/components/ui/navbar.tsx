@@ -107,7 +107,7 @@ const Navbar = () => {
                 onMouseLeave={closeDropdown}
               >
                 <Link 
-                  href="/directory" 
+                  href="/unified-optics" 
                   className="block px-4 py-2 text-white hover:bg-white/20 transition-all duration-300 ease-in-out rounded-md m-1"
                 >
                   Optics Unified
@@ -178,7 +178,7 @@ const Navbar = () => {
               {isDropdownOpen && (
                 <div className="pl-4 mt-1 space-y-1 animate-fade-in bg-black/5 backdrop-blur-xl rounded-md mx-2 border border-white/10 shadow-inner">
                   <Link 
-                    href="/directory" 
+                    href="/unified-optics" 
                     onClick={() => setIsMobileMenuOpen(false)}
                     className="block px-3 py-2 text-white hover:bg-white/20 rounded-md transition-all duration-300 ease-in-out"
                   >

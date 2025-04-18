@@ -9,6 +9,7 @@ import Home from "@/pages/home";
 import Directory from "@/pages/directory";
 import Reference from "@/pages/reference";
 import Countdown from "@/pages/countdown";
+import UnifiedOptics from "@/pages/unified-optics";
 import WavelengthEnergyFrequency from "@/pages/calculators/wavelength-energy-frequency";
 import SnellsLaw from "@/pages/calculators/snells-law";
 import CriticalAngle from "@/pages/calculators/critical-angle";
@@ -26,6 +27,7 @@ function Router() {
       <Route path="/directory" component={Directory} />
       <Route path="/reference" component={Reference} />
       <Route path="/countdown" component={Countdown} />
+      <Route path="/unified-optics" component={UnifiedOptics} />
       <Route path="/calculators/wavelength-energy-frequency" component={WavelengthEnergyFrequency} />
       <Route path="/calculators/snells-law" component={SnellsLaw} />
       <Route path="/calculators/critical-angle" component={CriticalAngle} />
@@ -45,7 +47,8 @@ function App() {
   const [location] = useLocation();
   
   useEffect(() => {
-    if (location === "/") {
+    // Add specific class for pages that need special CSS handling
+    if (location === "/" || location === "/unified-optics") {
       document.body.classList.add('home-page');
     } else {
       document.body.classList.remove('home-page');
